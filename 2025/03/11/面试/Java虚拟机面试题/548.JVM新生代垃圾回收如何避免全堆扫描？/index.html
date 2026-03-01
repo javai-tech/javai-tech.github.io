@@ -13,7 +13,7 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="https://javai.tech/2025/03/11/面试/java虚拟机面试题/548.jvm新生代垃圾回收如何避免全堆扫描？/"/>
+    <link rel="canonical" href="http://javai.tech/2025/03/11/面试/java虚拟机面试题/548.jvm新生代垃圾回收如何避免全堆扫描？/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
@@ -21,7 +21,7 @@
         <meta name="description" content="JVM 新生代垃圾回收如何避免全堆扫描？回答重点JVM 在进行新生代垃圾回收时，通过以下方式避免全堆扫描： 1）卡表（Card Table）机制：JVM 使用卡表记录老年代引用新生代对象的指针变化，从而在进行新生代回收时，只扫描那些老年代中确实有引用指向新生代的区域，避免了全堆扫描。 2）写屏障（Write Barrier）：当老年代中的对象引用新生代对象时，写屏障会拦截这种引用，并在卡表中标记相">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JVM 新生代垃圾回收如何避免全堆扫描？">
-<meta property="og:url" content="https://javai.tech/2025/03/11/%E9%9D%A2%E8%AF%95/Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%9D%A2%E8%AF%95%E9%A2%98/548.JVM%E6%96%B0%E7%94%9F%E4%BB%A3%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%E5%85%A8%E5%A0%86%E6%89%AB%E6%8F%8F%EF%BC%9F/index.html">
+<meta property="og:url" content="http://javai.tech/2025/03/11/%E9%9D%A2%E8%AF%95/Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%9D%A2%E8%AF%95%E9%A2%98/548.JVM%E6%96%B0%E7%94%9F%E4%BB%A3%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%E5%85%A8%E5%A0%86%E6%89%AB%E6%8F%8F%EF%BC%9F/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="JVM 新生代垃圾回收如何避免全堆扫描？回答重点JVM 在进行新生代垃圾回收时，通过以下方式避免全堆扫描： 1）卡表（Card Table）机制：JVM 使用卡表记录老年代引用新生代对象的指针变化，从而在进行新生代回收时，只扫描那些老年代中确实有引用指向新生代的区域，避免了全堆扫描。 2）写屏障（Write Barrier）：当老年代中的对象引用新生代对象时，写屏障会拦截这种引用，并在卡表中标记相">
 <meta property="og:locale" content="en_US">

@@ -13,7 +13,7 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="https://javai.tech/2025/03/11/面试/java虚拟机面试题/537.为什么java新生代被划分为s0、s1和eden区？/"/>
+    <link rel="canonical" href="http://javai.tech/2025/03/11/面试/java虚拟机面试题/537.为什么java新生代被划分为s0、s1和eden区？/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
@@ -21,7 +21,7 @@
         <meta name="description" content="为什么 Java 新生代被划分为 S0、S1 和 Eden 区？回答重点主要是为了提高新生代内存的利用率。 扩展知识详细分析因为新生代对象朝生夕死的特性，适合复制算法。按正常思路将新生代一分为二，划两块区域，每次只使用其中一个，GC 后将存活的复制到另一个区域，然后清理老区域非存活对象，这样替换使用两块区域可以避免内存碎片的存在。  但如果一分为二的话，空间利用率只有一半了（每次分配对象只能占据一">
 <meta property="og:type" content="article">
 <meta property="og:title" content="为什么 Java 新生代被划分为 S0、S1 和 Eden 区？">
-<meta property="og:url" content="https://javai.tech/2025/03/11/%E9%9D%A2%E8%AF%95/Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%9D%A2%E8%AF%95%E9%A2%98/537.%E4%B8%BA%E4%BB%80%E4%B9%88Java%E6%96%B0%E7%94%9F%E4%BB%A3%E8%A2%AB%E5%88%92%E5%88%86%E4%B8%BAS0%E3%80%81S1%E5%92%8CEden%E5%8C%BA%EF%BC%9F/index.html">
+<meta property="og:url" content="http://javai.tech/2025/03/11/%E9%9D%A2%E8%AF%95/Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%9D%A2%E8%AF%95%E9%A2%98/537.%E4%B8%BA%E4%BB%80%E4%B9%88Java%E6%96%B0%E7%94%9F%E4%BB%A3%E8%A2%AB%E5%88%92%E5%88%86%E4%B8%BAS0%E3%80%81S1%E5%92%8CEden%E5%8C%BA%EF%BC%9F/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="为什么 Java 新生代被划分为 S0、S1 和 Eden 区？回答重点主要是为了提高新生代内存的利用率。 扩展知识详细分析因为新生代对象朝生夕死的特性，适合复制算法。按正常思路将新生代一分为二，划两块区域，每次只使用其中一个，GC 后将存活的复制到另一个区域，然后清理老区域非存活对象，这样替换使用两块区域可以避免内存碎片的存在。  但如果一分为二的话，空间利用率只有一半了（每次分配对象只能占据一">
 <meta property="og:locale" content="en_US">

@@ -13,7 +13,7 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="https://javai.tech/2025/03/11/面试/java并发面试题/494.当java的synchronized升级到重量级锁后，所有线程都释放锁了，此时它还是重量级锁吗？/"/>
+    <link rel="canonical" href="http://javai.tech/2025/03/11/面试/java并发面试题/494.当java的synchronized升级到重量级锁后，所有线程都释放锁了，此时它还是重量级锁吗？/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
@@ -21,7 +21,7 @@
         <meta name="description" content="当 Java 的 synchronized 升级到重量级锁后，所有线程都释放锁了，此时它还是重量级锁吗？回答重点当重量级锁释放了之后，锁对象是无锁的。 有新的线程来竞争的话又会从轻量级锁开始。 扩展知识我们都知道 synchronized 的锁升级，也听过锁升级之后不会降级，所以理所当然的认为当一个锁升级为重量级锁之后，任何线程再来争抢之后会走重量级锁的逻辑。 不会再从无锁到偏向锁到轻量级锁再到重">
 <meta property="og:type" content="article">
 <meta property="og:title" content="当 Java 的 synchronized 升级到重量级锁后，所有线程都释放锁了，此时它还是重量级锁吗？">
-<meta property="og:url" content="https://javai.tech/2025/03/11/%E9%9D%A2%E8%AF%95/Java%E5%B9%B6%E5%8F%91%E9%9D%A2%E8%AF%95%E9%A2%98/494.%E5%BD%93Java%E7%9A%84synchronized%E5%8D%87%E7%BA%A7%E5%88%B0%E9%87%8D%E9%87%8F%E7%BA%A7%E9%94%81%E5%90%8E%EF%BC%8C%E6%89%80%E6%9C%89%E7%BA%BF%E7%A8%8B%E9%83%BD%E9%87%8A%E6%94%BE%E9%94%81%E4%BA%86%EF%BC%8C%E6%AD%A4%E6%97%B6%E5%AE%83%E8%BF%98%E6%98%AF%E9%87%8D%E9%87%8F%E7%BA%A7%E9%94%81%E5%90%97%EF%BC%9F/index.html">
+<meta property="og:url" content="http://javai.tech/2025/03/11/%E9%9D%A2%E8%AF%95/Java%E5%B9%B6%E5%8F%91%E9%9D%A2%E8%AF%95%E9%A2%98/494.%E5%BD%93Java%E7%9A%84synchronized%E5%8D%87%E7%BA%A7%E5%88%B0%E9%87%8D%E9%87%8F%E7%BA%A7%E9%94%81%E5%90%8E%EF%BC%8C%E6%89%80%E6%9C%89%E7%BA%BF%E7%A8%8B%E9%83%BD%E9%87%8A%E6%94%BE%E9%94%81%E4%BA%86%EF%BC%8C%E6%AD%A4%E6%97%B6%E5%AE%83%E8%BF%98%E6%98%AF%E9%87%8D%E9%87%8F%E7%BA%A7%E9%94%81%E5%90%97%EF%BC%9F/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="当 Java 的 synchronized 升级到重量级锁后，所有线程都释放锁了，此时它还是重量级锁吗？回答重点当重量级锁释放了之后，锁对象是无锁的。 有新的线程来竞争的话又会从轻量级锁开始。 扩展知识我们都知道 synchronized 的锁升级，也听过锁升级之后不会降级，所以理所当然的认为当一个锁升级为重量级锁之后，任何线程再来争抢之后会走重量级锁的逻辑。 不会再从无锁到偏向锁到轻量级锁再到重">
 <meta property="og:locale" content="en_US">

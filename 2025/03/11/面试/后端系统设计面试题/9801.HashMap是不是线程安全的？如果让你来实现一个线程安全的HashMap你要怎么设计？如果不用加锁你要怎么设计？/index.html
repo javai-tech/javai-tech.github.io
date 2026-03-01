@@ -13,7 +13,7 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="https://javai.tech/2025/03/11/面试/后端系统设计面试题/9801.hashmap是不是线程安全的？如果让你来实现一个线程安全的hashmap你要怎么设计？如果不用加锁你要怎么设计？/"/>
+    <link rel="canonical" href="http://javai.tech/2025/03/11/面试/后端系统设计面试题/9801.hashmap是不是线程安全的？如果让你来实现一个线程安全的hashmap你要怎么设计？如果不用加锁你要怎么设计？/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
@@ -21,7 +21,7 @@
         <meta name="description" content="HashMap 是不是线程安全的？如果让你来实现一个线程安全的 HashMap 你要怎么设计？如果不用加锁你要怎么设计？回答重点HashMap 是 非线程安全 的。因为 HashMap 的内部实现并没有加锁，多个线程同时访问和修改时可能会引发数据竞争，导致数据不一致或陷入死循环等问题。 如何实现一个线程安全的 HashMap要实现一个线程安全的 HashMap，有多种设计方案，下面是几种常见的实现">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HashMap 是不是线程安全的？如果让你来实现一个线程安全的 HashMap 你要怎么设计？如果不用加锁你要怎么设计？">
-<meta property="og:url" content="https://javai.tech/2025/03/11/%E9%9D%A2%E8%AF%95/%E5%90%8E%E7%AB%AF%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E9%9D%A2%E8%AF%95%E9%A2%98/9801.HashMap%E6%98%AF%E4%B8%8D%E6%98%AF%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E7%9A%84%EF%BC%9F%E5%A6%82%E6%9E%9C%E8%AE%A9%E4%BD%A0%E6%9D%A5%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E7%9A%84HashMap%E4%BD%A0%E8%A6%81%E6%80%8E%E4%B9%88%E8%AE%BE%E8%AE%A1%EF%BC%9F%E5%A6%82%E6%9E%9C%E4%B8%8D%E7%94%A8%E5%8A%A0%E9%94%81%E4%BD%A0%E8%A6%81%E6%80%8E%E4%B9%88%E8%AE%BE%E8%AE%A1%EF%BC%9F/index.html">
+<meta property="og:url" content="http://javai.tech/2025/03/11/%E9%9D%A2%E8%AF%95/%E5%90%8E%E7%AB%AF%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E9%9D%A2%E8%AF%95%E9%A2%98/9801.HashMap%E6%98%AF%E4%B8%8D%E6%98%AF%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E7%9A%84%EF%BC%9F%E5%A6%82%E6%9E%9C%E8%AE%A9%E4%BD%A0%E6%9D%A5%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E7%9A%84HashMap%E4%BD%A0%E8%A6%81%E6%80%8E%E4%B9%88%E8%AE%BE%E8%AE%A1%EF%BC%9F%E5%A6%82%E6%9E%9C%E4%B8%8D%E7%94%A8%E5%8A%A0%E9%94%81%E4%BD%A0%E8%A6%81%E6%80%8E%E4%B9%88%E8%AE%BE%E8%AE%A1%EF%BC%9F/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="HashMap 是不是线程安全的？如果让你来实现一个线程安全的 HashMap 你要怎么设计？如果不用加锁你要怎么设计？回答重点HashMap 是 非线程安全 的。因为 HashMap 的内部实现并没有加锁，多个线程同时访问和修改时可能会引发数据竞争，导致数据不一致或陷入死循环等问题。 如何实现一个线程安全的 HashMap要实现一个线程安全的 HashMap，有多种设计方案，下面是几种常见的实现">
 <meta property="og:locale" content="en_US">

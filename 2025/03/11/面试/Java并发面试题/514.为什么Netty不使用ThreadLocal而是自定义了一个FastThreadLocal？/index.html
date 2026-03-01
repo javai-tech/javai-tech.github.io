@@ -13,7 +13,7 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="https://javai.tech/2025/03/11/面试/java并发面试题/514.为什么netty不使用threadlocal而是自定义了一个fastthreadlocal？/"/>
+    <link rel="canonical" href="http://javai.tech/2025/03/11/面试/java并发面试题/514.为什么netty不使用threadlocal而是自定义了一个fastthreadlocal？/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
@@ -21,7 +21,7 @@
         <meta name="description" content="为什么 Netty 不使用 ThreadLocal 而是自定义了一个 FastThreadLocal ？我们先来思考下 ThreadLocal 有哪些不够好的地方，如果要改都需要改哪些实现。 ThreadLocal hash 冲突的线性探测法不好，还有 Entry 的弱引用可能会发生内存泄漏，这些都和 ThreadLocalMap 有关，所以需要搞个新的 map 来替换 ThreadLocalMa">
 <meta property="og:type" content="article">
 <meta property="og:title" content="为什么 Netty 不使用 ThreadLocal 而是自定义了一个 FastThreadLocal ？">
-<meta property="og:url" content="https://javai.tech/2025/03/11/%E9%9D%A2%E8%AF%95/Java%E5%B9%B6%E5%8F%91%E9%9D%A2%E8%AF%95%E9%A2%98/514.%E4%B8%BA%E4%BB%80%E4%B9%88Netty%E4%B8%8D%E4%BD%BF%E7%94%A8ThreadLocal%E8%80%8C%E6%98%AF%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BA%86%E4%B8%80%E4%B8%AAFastThreadLocal%EF%BC%9F/index.html">
+<meta property="og:url" content="http://javai.tech/2025/03/11/%E9%9D%A2%E8%AF%95/Java%E5%B9%B6%E5%8F%91%E9%9D%A2%E8%AF%95%E9%A2%98/514.%E4%B8%BA%E4%BB%80%E4%B9%88Netty%E4%B8%8D%E4%BD%BF%E7%94%A8ThreadLocal%E8%80%8C%E6%98%AF%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BA%86%E4%B8%80%E4%B8%AAFastThreadLocal%EF%BC%9F/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="为什么 Netty 不使用 ThreadLocal 而是自定义了一个 FastThreadLocal ？我们先来思考下 ThreadLocal 有哪些不够好的地方，如果要改都需要改哪些实现。 ThreadLocal hash 冲突的线性探测法不好，还有 Entry 的弱引用可能会发生内存泄漏，这些都和 ThreadLocalMap 有关，所以需要搞个新的 map 来替换 ThreadLocalMa">
 <meta property="og:locale" content="en_US">

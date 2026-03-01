@@ -13,7 +13,7 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="https://javai.tech/2025/03/11/面试/后端系统设计面试题/844.商家想要知道自己店铺卖的最好的top50商品，如何实现这个功能？/"/>
+    <link rel="canonical" href="http://javai.tech/2025/03/11/面试/后端系统设计面试题/844.商家想要知道自己店铺卖的最好的top50商品，如何实现这个功能？/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
@@ -21,7 +21,7 @@
         <meta name="description" content="商家想要知道自己店铺卖的最好的 top 50 商品，如何实现这个功能？根据问题推断这个排行榜是一个动态的排行榜，店铺内商品一直在售卖，因此排行榜也会一直在变，所以如果利用数据库来排行计算效率会非常低，总不能每卖一单就利用数据库排序计算得到排行榜吧？ 所以排除数据库这个方案。 应对数据库效率差的情况，我们常用的替代方案就是缓存，而 Redis 内有个 zset 可以实现排行榜的功能。 每个商家都对应">
 <meta property="og:type" content="article">
 <meta property="og:title" content="商家想要知道自己店铺卖的最好的 top 50 商品，如何实现这个功能？">
-<meta property="og:url" content="https://javai.tech/2025/03/11/%E9%9D%A2%E8%AF%95/%E5%90%8E%E7%AB%AF%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E9%9D%A2%E8%AF%95%E9%A2%98/844.%E5%95%86%E5%AE%B6%E6%83%B3%E8%A6%81%E7%9F%A5%E9%81%93%E8%87%AA%E5%B7%B1%E5%BA%97%E9%93%BA%E5%8D%96%E7%9A%84%E6%9C%80%E5%A5%BD%E7%9A%84top50%E5%95%86%E5%93%81%EF%BC%8C%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E8%BF%99%E4%B8%AA%E5%8A%9F%E8%83%BD%EF%BC%9F/index.html">
+<meta property="og:url" content="http://javai.tech/2025/03/11/%E9%9D%A2%E8%AF%95/%E5%90%8E%E7%AB%AF%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E9%9D%A2%E8%AF%95%E9%A2%98/844.%E5%95%86%E5%AE%B6%E6%83%B3%E8%A6%81%E7%9F%A5%E9%81%93%E8%87%AA%E5%B7%B1%E5%BA%97%E9%93%BA%E5%8D%96%E7%9A%84%E6%9C%80%E5%A5%BD%E7%9A%84top50%E5%95%86%E5%93%81%EF%BC%8C%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E8%BF%99%E4%B8%AA%E5%8A%9F%E8%83%BD%EF%BC%9F/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="商家想要知道自己店铺卖的最好的 top 50 商品，如何实现这个功能？根据问题推断这个排行榜是一个动态的排行榜，店铺内商品一直在售卖，因此排行榜也会一直在变，所以如果利用数据库来排行计算效率会非常低，总不能每卖一单就利用数据库排序计算得到排行榜吧？ 所以排除数据库这个方案。 应对数据库效率差的情况，我们常用的替代方案就是缓存，而 Redis 内有个 zset 可以实现排行榜的功能。 每个商家都对应">
 <meta property="og:locale" content="en_US">

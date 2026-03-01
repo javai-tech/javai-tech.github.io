@@ -13,7 +13,7 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="https://javai.tech/2025/03/11/面试/mysql面试题/619.如何在mysql中实现读写分离？/"/>
+    <link rel="canonical" href="http://javai.tech/2025/03/11/面试/mysql面试题/619.如何在mysql中实现读写分离？/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
@@ -21,7 +21,7 @@
         <meta name="description" content="如何在 MySQL 中实现读写分离？回答重点做法一：代码封装讲白了就是代码层面抽出一个中间层，由中间层来实现读写分离和数据库连接。 利用个代理类，对外暴露正常的读写接口，里面封装了逻辑，将读操作指向从库的数据源，写操作指向主库的数据源。  优点：简单，并且可以根据业务定制化变化，随心所欲。 缺点：如果数据库宕机了，发生主从切换了之后，就得修改配置重启。如果系统是多语言的话，需要为每个语言都实现一个">
 <meta property="og:type" content="article">
 <meta property="og:title" content="如何在 MySQL 中实现读写分离？">
-<meta property="og:url" content="https://javai.tech/2025/03/11/%E9%9D%A2%E8%AF%95/MySQL%E9%9D%A2%E8%AF%95%E9%A2%98/619.%E5%A6%82%E4%BD%95%E5%9C%A8MySQL%E4%B8%AD%E5%AE%9E%E7%8E%B0%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB%EF%BC%9F/index.html">
+<meta property="og:url" content="http://javai.tech/2025/03/11/%E9%9D%A2%E8%AF%95/MySQL%E9%9D%A2%E8%AF%95%E9%A2%98/619.%E5%A6%82%E4%BD%95%E5%9C%A8MySQL%E4%B8%AD%E5%AE%9E%E7%8E%B0%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB%EF%BC%9F/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="如何在 MySQL 中实现读写分离？回答重点做法一：代码封装讲白了就是代码层面抽出一个中间层，由中间层来实现读写分离和数据库连接。 利用个代理类，对外暴露正常的读写接口，里面封装了逻辑，将读操作指向从库的数据源，写操作指向主库的数据源。  优点：简单，并且可以根据业务定制化变化，随心所欲。 缺点：如果数据库宕机了，发生主从切换了之后，就得修改配置重启。如果系统是多语言的话，需要为每个语言都实现一个">
 <meta property="og:locale" content="en_US">

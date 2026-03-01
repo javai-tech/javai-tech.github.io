@@ -13,7 +13,7 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="https://javai.tech/2025/03/11/面试/springcloud面试题/899.为什么feign第一次调用耗时很长？/"/>
+    <link rel="canonical" href="http://javai.tech/2025/03/11/面试/springcloud面试题/899.为什么feign第一次调用耗时很长？/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
@@ -21,7 +21,7 @@
         <meta name="description" content="为什么 Feign 第一次调用耗时很长？回答重点这个主要是由于 Feign 内置的负载均衡组件 Ribbon 的懒加载机制。 当第一次进行服务调用的时候，Feign 才会触发 Ribbon 的加载流程，然后从服务注册中心拉取服务列表，建立起对应的连接池，这个过程会增加第一次调用的耗时。 解决方案：  主动预热：只需要在应用启动的时候进行服务预热，先自动执行一次随便的调用，提前加载 Ribbon 以">
 <meta property="og:type" content="article">
 <meta property="og:title" content="为什么 Feign 第一次调用耗时很长？">
-<meta property="og:url" content="https://javai.tech/2025/03/11/%E9%9D%A2%E8%AF%95/SpringCloud%E9%9D%A2%E8%AF%95%E9%A2%98/899.%E4%B8%BA%E4%BB%80%E4%B9%88Feign%E7%AC%AC%E4%B8%80%E6%AC%A1%E8%B0%83%E7%94%A8%E8%80%97%E6%97%B6%E5%BE%88%E9%95%BF%EF%BC%9F/index.html">
+<meta property="og:url" content="http://javai.tech/2025/03/11/%E9%9D%A2%E8%AF%95/SpringCloud%E9%9D%A2%E8%AF%95%E9%A2%98/899.%E4%B8%BA%E4%BB%80%E4%B9%88Feign%E7%AC%AC%E4%B8%80%E6%AC%A1%E8%B0%83%E7%94%A8%E8%80%97%E6%97%B6%E5%BE%88%E9%95%BF%EF%BC%9F/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="为什么 Feign 第一次调用耗时很长？回答重点这个主要是由于 Feign 内置的负载均衡组件 Ribbon 的懒加载机制。 当第一次进行服务调用的时候，Feign 才会触发 Ribbon 的加载流程，然后从服务注册中心拉取服务列表，建立起对应的连接池，这个过程会增加第一次调用的耗时。 解决方案：  主动预热：只需要在应用启动的时候进行服务预热，先自动执行一次随便的调用，提前加载 Ribbon 以">
 <meta property="og:locale" content="en_US">

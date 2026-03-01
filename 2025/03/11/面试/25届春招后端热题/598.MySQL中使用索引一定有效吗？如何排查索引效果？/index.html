@@ -13,7 +13,7 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="https://javai.tech/2025/03/11/面试/25届春招后端热题/598.mysql中使用索引一定有效吗？如何排查索引效果？/"/>
+    <link rel="canonical" href="http://javai.tech/2025/03/11/面试/25届春招后端热题/598.mysql中使用索引一定有效吗？如何排查索引效果？/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
@@ -21,7 +21,7 @@
         <meta name="description" content="MySQL 中使用索引一定有效吗？如何排查索引效果？回答重点索引不一定有效。 例如查询条件中不包含索引列、低基数列索引效果不佳，或查询条件复杂且不匹配索引的顺序。 对于一些小表，MySQL可能选择全表扫描而非使用索引，因为全表扫描的开销可能更小。 最终是否用上索引是根据 MySQL 成本计算决定的，评估 CPU 和 I&#x2F;O 成本最终选择用辅助索引还是全表扫描。有时候确实是全表扫描成本低所">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MySQL 中使用索引一定有效吗？如何排查索引效果？">
-<meta property="og:url" content="https://javai.tech/2025/03/11/%E9%9D%A2%E8%AF%95/25%E5%B1%8A%E6%98%A5%E6%8B%9B%E5%90%8E%E7%AB%AF%E7%83%AD%E9%A2%98/598.MySQL%E4%B8%AD%E4%BD%BF%E7%94%A8%E7%B4%A2%E5%BC%95%E4%B8%80%E5%AE%9A%E6%9C%89%E6%95%88%E5%90%97%EF%BC%9F%E5%A6%82%E4%BD%95%E6%8E%92%E6%9F%A5%E7%B4%A2%E5%BC%95%E6%95%88%E6%9E%9C%EF%BC%9F/index.html">
+<meta property="og:url" content="http://javai.tech/2025/03/11/%E9%9D%A2%E8%AF%95/25%E5%B1%8A%E6%98%A5%E6%8B%9B%E5%90%8E%E7%AB%AF%E7%83%AD%E9%A2%98/598.MySQL%E4%B8%AD%E4%BD%BF%E7%94%A8%E7%B4%A2%E5%BC%95%E4%B8%80%E5%AE%9A%E6%9C%89%E6%95%88%E5%90%97%EF%BC%9F%E5%A6%82%E4%BD%95%E6%8E%92%E6%9F%A5%E7%B4%A2%E5%BC%95%E6%95%88%E6%9E%9C%EF%BC%9F/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="MySQL 中使用索引一定有效吗？如何排查索引效果？回答重点索引不一定有效。 例如查询条件中不包含索引列、低基数列索引效果不佳，或查询条件复杂且不匹配索引的顺序。 对于一些小表，MySQL可能选择全表扫描而非使用索引，因为全表扫描的开销可能更小。 最终是否用上索引是根据 MySQL 成本计算决定的，评估 CPU 和 I&#x2F;O 成本最终选择用辅助索引还是全表扫描。有时候确实是全表扫描成本低所">
 <meta property="og:locale" content="en_US">

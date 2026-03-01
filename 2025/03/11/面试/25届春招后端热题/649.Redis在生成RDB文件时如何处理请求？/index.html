@@ -13,7 +13,7 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="https://javai.tech/2025/03/11/面试/25届春招后端热题/649.redis在生成rdb文件时如何处理请求？/"/>
+    <link rel="canonical" href="http://javai.tech/2025/03/11/面试/25届春招后端热题/649.redis在生成rdb文件时如何处理请求？/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
@@ -21,7 +21,7 @@
         <meta name="description" content="Redis 在生成 RDB 文件时如何处理请求？回答重点在 Redis 生成 RDB 文件时是异步的（使用 bgsave 命令），采用了 fork 子进程的方式来进行快照操作。生成 RDB 文件的过程由子进程执行，主进程继续处理客户端请求，所以可以保证 Redis 在生成快照的过程中依然对外提供服务，不会影响正常请求。 扩展知识生成 RDB 文件的时候，数据可以修改吗？当然可以。主进程会正常处理客">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Redis 在生成 RDB 文件时如何处理请求？">
-<meta property="og:url" content="https://javai.tech/2025/03/11/%E9%9D%A2%E8%AF%95/25%E5%B1%8A%E6%98%A5%E6%8B%9B%E5%90%8E%E7%AB%AF%E7%83%AD%E9%A2%98/649.Redis%E5%9C%A8%E7%94%9F%E6%88%90RDB%E6%96%87%E4%BB%B6%E6%97%B6%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E8%AF%B7%E6%B1%82%EF%BC%9F/index.html">
+<meta property="og:url" content="http://javai.tech/2025/03/11/%E9%9D%A2%E8%AF%95/25%E5%B1%8A%E6%98%A5%E6%8B%9B%E5%90%8E%E7%AB%AF%E7%83%AD%E9%A2%98/649.Redis%E5%9C%A8%E7%94%9F%E6%88%90RDB%E6%96%87%E4%BB%B6%E6%97%B6%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E8%AF%B7%E6%B1%82%EF%BC%9F/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="Redis 在生成 RDB 文件时如何处理请求？回答重点在 Redis 生成 RDB 文件时是异步的（使用 bgsave 命令），采用了 fork 子进程的方式来进行快照操作。生成 RDB 文件的过程由子进程执行，主进程继续处理客户端请求，所以可以保证 Redis 在生成快照的过程中依然对外提供服务，不会影响正常请求。 扩展知识生成 RDB 文件的时候，数据可以修改吗？当然可以。主进程会正常处理客">
 <meta property="og:locale" content="en_US">

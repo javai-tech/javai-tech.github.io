@@ -13,7 +13,7 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="https://javai.tech/2025/03/11/面试/25届春招后端热题/638.redis中跳表的实现原理是什么？/"/>
+    <link rel="canonical" href="http://javai.tech/2025/03/11/面试/25届春招后端热题/638.redis中跳表的实现原理是什么？/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
@@ -21,7 +21,7 @@
         <meta name="description" content="Redis 中跳表的实现原理是什么？回答重点跳表主要是通过多层链表来实现，底层链表保存所有元素，而每一层链表都是下一层的子集。  插入时，首先从最高层开始查找插入位置，然后随机决定新节点的层数，最后在相应的层中插入节点并更新指针。 删除时，同样从最高层开始查找要删除的节点，并在各层中更新指针，以保持跳表的结构。 查找时，从最高层开始，逐层向下，直到找到目标元素或确定元素不存在。查找效率高，时间复杂">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Redis 中跳表的实现原理是什么？">
-<meta property="og:url" content="https://javai.tech/2025/03/11/%E9%9D%A2%E8%AF%95/25%E5%B1%8A%E6%98%A5%E6%8B%9B%E5%90%8E%E7%AB%AF%E7%83%AD%E9%A2%98/638.Redis%E4%B8%AD%E8%B7%B3%E8%A1%A8%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/index.html">
+<meta property="og:url" content="http://javai.tech/2025/03/11/%E9%9D%A2%E8%AF%95/25%E5%B1%8A%E6%98%A5%E6%8B%9B%E5%90%8E%E7%AB%AF%E7%83%AD%E9%A2%98/638.Redis%E4%B8%AD%E8%B7%B3%E8%A1%A8%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="Redis 中跳表的实现原理是什么？回答重点跳表主要是通过多层链表来实现，底层链表保存所有元素，而每一层链表都是下一层的子集。  插入时，首先从最高层开始查找插入位置，然后随机决定新节点的层数，最后在相应的层中插入节点并更新指针。 删除时，同样从最高层开始查找要删除的节点，并在各层中更新指针，以保持跳表的结构。 查找时，从最高层开始，逐层向下，直到找到目标元素或确定元素不存在。查找效率高，时间复杂">
 <meta property="og:locale" content="en_US">

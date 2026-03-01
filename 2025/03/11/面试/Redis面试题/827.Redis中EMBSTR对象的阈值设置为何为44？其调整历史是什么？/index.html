@@ -13,7 +13,7 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="https://javai.tech/2025/03/11/面试/redis面试题/827.redis中embstr对象的阈值设置为何为44？其调整历史是什么？/"/>
+    <link rel="canonical" href="http://javai.tech/2025/03/11/面试/redis面试题/827.redis中embstr对象的阈值设置为何为44？其调整历史是什么？/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
@@ -21,7 +21,7 @@
         <meta name="description" content="Redis 中 EMBSTR 对象的阈值设置为何为 44？其调整历史是什么？为什么 EMBSTR 的阈值大小是 44 个字节？这个问题有几个关键点： 1）Redis 使用的是 jemalloc 作为内存分配器。 2）jemalloc 是以 64 字节作为内存单位进行内存分配的，如果超过了 64 字节，即超过了一个内存单元，使用的就是 raw 编码，反之使用的就是 EMBSTR 编码。 3）核心就是">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Redis 中 EMBSTR 对象的阈值设置为何为 44？其调整历史是什么？">
-<meta property="og:url" content="https://javai.tech/2025/03/11/%E9%9D%A2%E8%AF%95/Redis%E9%9D%A2%E8%AF%95%E9%A2%98/827.Redis%E4%B8%ADEMBSTR%E5%AF%B9%E8%B1%A1%E7%9A%84%E9%98%88%E5%80%BC%E8%AE%BE%E7%BD%AE%E4%B8%BA%E4%BD%95%E4%B8%BA44%EF%BC%9F%E5%85%B6%E8%B0%83%E6%95%B4%E5%8E%86%E5%8F%B2%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/index.html">
+<meta property="og:url" content="http://javai.tech/2025/03/11/%E9%9D%A2%E8%AF%95/Redis%E9%9D%A2%E8%AF%95%E9%A2%98/827.Redis%E4%B8%ADEMBSTR%E5%AF%B9%E8%B1%A1%E7%9A%84%E9%98%88%E5%80%BC%E8%AE%BE%E7%BD%AE%E4%B8%BA%E4%BD%95%E4%B8%BA44%EF%BC%9F%E5%85%B6%E8%B0%83%E6%95%B4%E5%8E%86%E5%8F%B2%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="Redis 中 EMBSTR 对象的阈值设置为何为 44？其调整历史是什么？为什么 EMBSTR 的阈值大小是 44 个字节？这个问题有几个关键点： 1）Redis 使用的是 jemalloc 作为内存分配器。 2）jemalloc 是以 64 字节作为内存单位进行内存分配的，如果超过了 64 字节，即超过了一个内存单元，使用的就是 raw 编码，反之使用的就是 EMBSTR 编码。 3）核心就是">
 <meta property="og:locale" content="en_US">

@@ -13,7 +13,7 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="https://javai.tech/2025/03/11/面试/java虚拟机面试题/535.为什么java的垃圾收集器将堆分为老年代和新生代？/"/>
+    <link rel="canonical" href="http://javai.tech/2025/03/11/面试/java虚拟机面试题/535.为什么java的垃圾收集器将堆分为老年代和新生代？/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
@@ -21,7 +21,7 @@
         <meta name="description" content="为什么 Java 的垃圾收集器将堆分为老年代和新生代？回答重点主要是为了提高垃圾回收效率，依据对象的生命周期特点来进行优化。 对象的生命周期特点：  大多数对象存活时间短：大部分对象会很快变成垃圾，不再被使用，这些短生命周期的对象会分配在新生代。 少部分对象存活时间长：一些长期存活的对象不会很快被回收，分配在新生代的对象经过多次垃圾回收仍存活的，将晋升到老年代。  所以按照存活时间分区管理更加高效">
 <meta property="og:type" content="article">
 <meta property="og:title" content="为什么 Java 的垃圾收集器将堆分为老年代和新生代？">
-<meta property="og:url" content="https://javai.tech/2025/03/11/%E9%9D%A2%E8%AF%95/Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%9D%A2%E8%AF%95%E9%A2%98/535.%E4%B8%BA%E4%BB%80%E4%B9%88Java%E7%9A%84%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8%E5%B0%86%E5%A0%86%E5%88%86%E4%B8%BA%E8%80%81%E5%B9%B4%E4%BB%A3%E5%92%8C%E6%96%B0%E7%94%9F%E4%BB%A3%EF%BC%9F/index.html">
+<meta property="og:url" content="http://javai.tech/2025/03/11/%E9%9D%A2%E8%AF%95/Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%9D%A2%E8%AF%95%E9%A2%98/535.%E4%B8%BA%E4%BB%80%E4%B9%88Java%E7%9A%84%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8%E5%B0%86%E5%A0%86%E5%88%86%E4%B8%BA%E8%80%81%E5%B9%B4%E4%BB%A3%E5%92%8C%E6%96%B0%E7%94%9F%E4%BB%A3%EF%BC%9F/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="为什么 Java 的垃圾收集器将堆分为老年代和新生代？回答重点主要是为了提高垃圾回收效率，依据对象的生命周期特点来进行优化。 对象的生命周期特点：  大多数对象存活时间短：大部分对象会很快变成垃圾，不再被使用，这些短生命周期的对象会分配在新生代。 少部分对象存活时间长：一些长期存活的对象不会很快被回收，分配在新生代的对象经过多次垃圾回收仍存活的，将晋升到老年代。  所以按照存活时间分区管理更加高效">
 <meta property="og:locale" content="en_US">

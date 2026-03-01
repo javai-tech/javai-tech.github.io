@@ -13,7 +13,7 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="https://javai.tech/2025/03/11/面试/elasticsearch优化面试题/5810.elasticsearch中的查询缓存和结果缓存是如何工作的？如何优化缓存？/"/>
+    <link rel="canonical" href="http://javai.tech/2025/03/11/面试/elasticsearch优化面试题/5810.elasticsearch中的查询缓存和结果缓存是如何工作的？如何优化缓存？/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
@@ -21,7 +21,7 @@
         <meta name="description" content="Elasticsearch 中的查询缓存和结果缓存是如何工作的？如何优化缓存？回答重点在Elasticsearch中，有两类重要的缓存：查询缓存（Query Cache）和结果缓存（Request Cache）。查询缓存用于加速过滤器查询，结果缓存用于缓存特定请求的响应结果。要优化这两类缓存，我们可以调整相关的配置参数，以及使用适当的查询策略。 1）查询缓存：缓存的是倒排索引查询的过滤结果，适用于">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Elasticsearch 中的查询缓存和结果缓存是如何工作的？如何优化缓存？">
-<meta property="og:url" content="https://javai.tech/2025/03/11/%E9%9D%A2%E8%AF%95/Elasticsearch%E4%BC%98%E5%8C%96%E9%9D%A2%E8%AF%95%E9%A2%98/5810.Elasticsearch%E4%B8%AD%E7%9A%84%E6%9F%A5%E8%AF%A2%E7%BC%93%E5%AD%98%E5%92%8C%E7%BB%93%E6%9E%9C%E7%BC%93%E5%AD%98%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84%EF%BC%9F%E5%A6%82%E4%BD%95%E4%BC%98%E5%8C%96%E7%BC%93%E5%AD%98%EF%BC%9F/index.html">
+<meta property="og:url" content="http://javai.tech/2025/03/11/%E9%9D%A2%E8%AF%95/Elasticsearch%E4%BC%98%E5%8C%96%E9%9D%A2%E8%AF%95%E9%A2%98/5810.Elasticsearch%E4%B8%AD%E7%9A%84%E6%9F%A5%E8%AF%A2%E7%BC%93%E5%AD%98%E5%92%8C%E7%BB%93%E6%9E%9C%E7%BC%93%E5%AD%98%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84%EF%BC%9F%E5%A6%82%E4%BD%95%E4%BC%98%E5%8C%96%E7%BC%93%E5%AD%98%EF%BC%9F/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="Elasticsearch 中的查询缓存和结果缓存是如何工作的？如何优化缓存？回答重点在Elasticsearch中，有两类重要的缓存：查询缓存（Query Cache）和结果缓存（Request Cache）。查询缓存用于加速过滤器查询，结果缓存用于缓存特定请求的响应结果。要优化这两类缓存，我们可以调整相关的配置参数，以及使用适当的查询策略。 1）查询缓存：缓存的是倒排索引查询的过滤结果，适用于">
 <meta property="og:locale" content="en_US">

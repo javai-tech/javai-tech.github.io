@@ -13,7 +13,7 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="https://javai.tech/2025/03/11/面试/mysql面试题/621.如何处理mysql的主从同步延迟？/"/>
+    <link rel="canonical" href="http://javai.tech/2025/03/11/面试/mysql面试题/621.如何处理mysql的主从同步延迟？/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
@@ -21,7 +21,7 @@
         <meta name="description" content="如何处理 MySQL 的主从同步延迟？回答重点 首先需要明确一个点延迟是必然存在的，无论怎么优化都无法避免延迟的存在，只能减少延迟的时间。  常见解决方式有以下几种：  二次查询。如果从库查不到数据，则再去主库查一遍，由 API 封装这个逻辑即可，算是一个兜底策略，比较简单。不过等于读的压力又转移到主库身上了，如果有不法分子故意查询必定查不到的查询，这就对主库产生冲击了。 强制将写之后立马读的操作">
 <meta property="og:type" content="article">
 <meta property="og:title" content="如何处理 MySQL 的主从同步延迟？">
-<meta property="og:url" content="https://javai.tech/2025/03/11/%E9%9D%A2%E8%AF%95/MySQL%E9%9D%A2%E8%AF%95%E9%A2%98/621.%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86MySQL%E7%9A%84%E4%B8%BB%E4%BB%8E%E5%90%8C%E6%AD%A5%E5%BB%B6%E8%BF%9F%EF%BC%9F/index.html">
+<meta property="og:url" content="http://javai.tech/2025/03/11/%E9%9D%A2%E8%AF%95/MySQL%E9%9D%A2%E8%AF%95%E9%A2%98/621.%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86MySQL%E7%9A%84%E4%B8%BB%E4%BB%8E%E5%90%8C%E6%AD%A5%E5%BB%B6%E8%BF%9F%EF%BC%9F/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="如何处理 MySQL 的主从同步延迟？回答重点 首先需要明确一个点延迟是必然存在的，无论怎么优化都无法避免延迟的存在，只能减少延迟的时间。  常见解决方式有以下几种：  二次查询。如果从库查不到数据，则再去主库查一遍，由 API 封装这个逻辑即可，算是一个兜底策略，比较简单。不过等于读的压力又转移到主库身上了，如果有不法分子故意查询必定查不到的查询，这就对主库产生冲击了。 强制将写之后立马读的操作">
 <meta property="og:locale" content="en_US">

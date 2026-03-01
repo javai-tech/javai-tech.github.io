@@ -13,7 +13,7 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="https://javai.tech/2025/03/11/面试/后端场景面试题/783.从网关再到各个后端服务，如何设置rpc的超时时间，要考虑哪些问题？/"/>
+    <link rel="canonical" href="http://javai.tech/2025/03/11/面试/后端场景面试题/783.从网关再到各个后端服务，如何设置rpc的超时时间，要考虑哪些问题？/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
@@ -21,7 +21,7 @@
         <meta name="description" content="从网关再到各个后端服务，如何设置 RPC 的超时时间，要考虑哪些问题？回答重点首先用户（客户端）的请求是先打到网关，再由网关请求各后端服务，因此需要确保客户端到网络连接的超时时间（通常是 HTTP 请求），需要大于网关调用后端服务（通常是 RPC 请求）的综合时间。    其中又有一些细节需要考虑： 1）网关调用几个服务的方式 网关调用后端需求可以是串行，也可以是并行，例如上面的图中的三个服务，假">
 <meta property="og:type" content="article">
 <meta property="og:title" content="从网关再到各个后端服务，如何设置 RPC 的超时时间，要考虑哪些问题？">
-<meta property="og:url" content="https://javai.tech/2025/03/11/%E9%9D%A2%E8%AF%95/%E5%90%8E%E7%AB%AF%E5%9C%BA%E6%99%AF%E9%9D%A2%E8%AF%95%E9%A2%98/783.%E4%BB%8E%E7%BD%91%E5%85%B3%E5%86%8D%E5%88%B0%E5%90%84%E4%B8%AA%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%EF%BC%8C%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AERPC%E7%9A%84%E8%B6%85%E6%97%B6%E6%97%B6%E9%97%B4%EF%BC%8C%E8%A6%81%E8%80%83%E8%99%91%E5%93%AA%E4%BA%9B%E9%97%AE%E9%A2%98%EF%BC%9F/index.html">
+<meta property="og:url" content="http://javai.tech/2025/03/11/%E9%9D%A2%E8%AF%95/%E5%90%8E%E7%AB%AF%E5%9C%BA%E6%99%AF%E9%9D%A2%E8%AF%95%E9%A2%98/783.%E4%BB%8E%E7%BD%91%E5%85%B3%E5%86%8D%E5%88%B0%E5%90%84%E4%B8%AA%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%EF%BC%8C%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AERPC%E7%9A%84%E8%B6%85%E6%97%B6%E6%97%B6%E9%97%B4%EF%BC%8C%E8%A6%81%E8%80%83%E8%99%91%E5%93%AA%E4%BA%9B%E9%97%AE%E9%A2%98%EF%BC%9F/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="从网关再到各个后端服务，如何设置 RPC 的超时时间，要考虑哪些问题？回答重点首先用户（客户端）的请求是先打到网关，再由网关请求各后端服务，因此需要确保客户端到网络连接的超时时间（通常是 HTTP 请求），需要大于网关调用后端服务（通常是 RPC 请求）的综合时间。    其中又有一些细节需要考虑： 1）网关调用几个服务的方式 网关调用后端需求可以是串行，也可以是并行，例如上面的图中的三个服务，假">
 <meta property="og:locale" content="en_US">

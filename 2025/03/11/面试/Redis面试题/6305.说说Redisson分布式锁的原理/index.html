@@ -13,7 +13,7 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="https://javai.tech/2025/03/11/面试/redis面试题/6305.说说redisson分布式锁的原理/"/>
+    <link rel="canonical" href="http://javai.tech/2025/03/11/面试/redis面试题/6305.说说redisson分布式锁的原理/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
@@ -21,7 +21,7 @@
         <meta name="description" content="说说 Redisson 分布式锁的原理?回答重点Redisson 是基于 Redis 实现的分布式锁，实际上是使用 Redis 的原子操作来确保多线程、多进程或多节点系统中，只有一个线程能获得锁，避免并发操作导致的数据不一致问题。 1）锁的获取：  Redisson 使用 Lua 脚本，利用 exists + hexists + hincrby 命令来保证只有一个线程能成功设置键（表示获得锁）。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="说说 Redisson 分布式锁的原理?">
-<meta property="og:url" content="https://javai.tech/2025/03/11/%E9%9D%A2%E8%AF%95/Redis%E9%9D%A2%E8%AF%95%E9%A2%98/6305.%E8%AF%B4%E8%AF%B4Redisson%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E7%9A%84%E5%8E%9F%E7%90%86/index.html">
+<meta property="og:url" content="http://javai.tech/2025/03/11/%E9%9D%A2%E8%AF%95/Redis%E9%9D%A2%E8%AF%95%E9%A2%98/6305.%E8%AF%B4%E8%AF%B4Redisson%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E7%9A%84%E5%8E%9F%E7%90%86/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="说说 Redisson 分布式锁的原理?回答重点Redisson 是基于 Redis 实现的分布式锁，实际上是使用 Redis 的原子操作来确保多线程、多进程或多节点系统中，只有一个线程能获得锁，避免并发操作导致的数据不一致问题。 1）锁的获取：  Redisson 使用 Lua 脚本，利用 exists + hexists + hincrby 命令来保证只有一个线程能成功设置键（表示获得锁）。">
 <meta property="og:locale" content="en_US">

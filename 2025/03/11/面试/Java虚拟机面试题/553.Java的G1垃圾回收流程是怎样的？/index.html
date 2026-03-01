@@ -13,7 +13,7 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="https://javai.tech/2025/03/11/面试/java虚拟机面试题/553.java的g1垃圾回收流程是怎样的？/"/>
+    <link rel="canonical" href="http://javai.tech/2025/03/11/面试/java虚拟机面试题/553.java的g1垃圾回收流程是怎样的？/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
@@ -21,7 +21,7 @@
         <meta name="description" content="Java 的 G1 垃圾回收流程是怎样的？回答重点G1 从大局上看分为两大阶段，分别是并发标记和对象拷贝。 并发标记并发标记是基于 SATB 的，可以分为四大阶段： **1）初始标记（initial marking)**，这个阶段是 STW 的，扫描根集合，标记根直接可达的对象即可。在G1中标记对象是利用外部的bitmap来记录，而不是对象头。 2、并发阶段（concurrent marking）">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java 的 G1 垃圾回收流程是怎样的？">
-<meta property="og:url" content="https://javai.tech/2025/03/11/%E9%9D%A2%E8%AF%95/Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%9D%A2%E8%AF%95%E9%A2%98/553.Java%E7%9A%84G1%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%B5%81%E7%A8%8B%E6%98%AF%E6%80%8E%E6%A0%B7%E7%9A%84%EF%BC%9F/index.html">
+<meta property="og:url" content="http://javai.tech/2025/03/11/%E9%9D%A2%E8%AF%95/Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%9D%A2%E8%AF%95%E9%A2%98/553.Java%E7%9A%84G1%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%B5%81%E7%A8%8B%E6%98%AF%E6%80%8E%E6%A0%B7%E7%9A%84%EF%BC%9F/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="Java 的 G1 垃圾回收流程是怎样的？回答重点G1 从大局上看分为两大阶段，分别是并发标记和对象拷贝。 并发标记并发标记是基于 SATB 的，可以分为四大阶段： **1）初始标记（initial marking)**，这个阶段是 STW 的，扫描根集合，标记根直接可达的对象即可。在G1中标记对象是利用外部的bitmap来记录，而不是对象头。 2、并发阶段（concurrent marking）">
 <meta property="og:locale" content="en_US">

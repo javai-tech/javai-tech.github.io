@@ -13,7 +13,7 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="https://javai.tech/2025/03/11/面试/后端场景面试题/785.线上数据库连接池爆满问题排查/"/>
+    <link rel="canonical" href="http://javai.tech/2025/03/11/面试/后端场景面试题/785.线上数据库连接池爆满问题排查/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
@@ -21,7 +21,7 @@
         <meta name="description" content="线上数据库连接池爆满问题排查回答重点如果出现了线上连接池爆满的情况，一般情况需要先“止损”，也就是重启服务。 现在一般都会用云上的服务，会有监控，对应监控能查到历史数据库的情况，包括连接池的占用情况。重启后我们快速分析定位事故反生之前一段时间 SQL 的执行情况，连接池的占用情况。 查看当时是否有大量的突发请求，例如做了运营活动，那么很可能请求数上来会导致数据库压力过大，处理缓慢使得连接池占用久导">
 <meta property="og:type" content="article">
 <meta property="og:title" content="线上数据库连接池爆满问题排查">
-<meta property="og:url" content="https://javai.tech/2025/03/11/%E9%9D%A2%E8%AF%95/%E5%90%8E%E7%AB%AF%E5%9C%BA%E6%99%AF%E9%9D%A2%E8%AF%95%E9%A2%98/785.%E7%BA%BF%E4%B8%8A%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5%E6%B1%A0%E7%88%86%E6%BB%A1%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5/index.html">
+<meta property="og:url" content="http://javai.tech/2025/03/11/%E9%9D%A2%E8%AF%95/%E5%90%8E%E7%AB%AF%E5%9C%BA%E6%99%AF%E9%9D%A2%E8%AF%95%E9%A2%98/785.%E7%BA%BF%E4%B8%8A%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5%E6%B1%A0%E7%88%86%E6%BB%A1%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="线上数据库连接池爆满问题排查回答重点如果出现了线上连接池爆满的情况，一般情况需要先“止损”，也就是重启服务。 现在一般都会用云上的服务，会有监控，对应监控能查到历史数据库的情况，包括连接池的占用情况。重启后我们快速分析定位事故反生之前一段时间 SQL 的执行情况，连接池的占用情况。 查看当时是否有大量的突发请求，例如做了运营活动，那么很可能请求数上来会导致数据库压力过大，处理缓慢使得连接池占用久导">
 <meta property="og:locale" content="en_US">

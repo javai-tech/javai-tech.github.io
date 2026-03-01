@@ -13,7 +13,7 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="https://javai.tech/2025/03/11/面试/mysql面试题/1214.mysql中`limit100000000,10`和`limit10`的执行速度是否相同？/"/>
+    <link rel="canonical" href="http://javai.tech/2025/03/11/面试/mysql面试题/1214.mysql中`limit100000000,10`和`limit10`的执行速度是否相同？/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
@@ -21,7 +21,7 @@
         <meta name="description" content="MySQL 中 LIMIT 100000000, 10 和 LIMIT 10 的执行速度是否相同？回答重点速度差很多，limit 10 快很多！ 原因如下： 1）LIMIT 100000000, 10 需要先处理（通常是读取并跳过）前 100000000 条记录，然后再获取到需要的 10 条记录，开销成本很大，因为需要扫描 100000000 数据才能得到后面的 10 条数据，会导致大量的磁盘 I">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MySQL 中 &#96;LIMIT 100000000, 10&#96; 和 &#96;LIMIT 10&#96; 的执行速度是否相同？">
-<meta property="og:url" content="https://javai.tech/2025/03/11/%E9%9D%A2%E8%AF%95/MySQL%E9%9D%A2%E8%AF%95%E9%A2%98/1214.MySQL%E4%B8%AD%60LIMIT100000000,10%60%E5%92%8C%60LIMIT10%60%E7%9A%84%E6%89%A7%E8%A1%8C%E9%80%9F%E5%BA%A6%E6%98%AF%E5%90%A6%E7%9B%B8%E5%90%8C%EF%BC%9F/index.html">
+<meta property="og:url" content="http://javai.tech/2025/03/11/%E9%9D%A2%E8%AF%95/MySQL%E9%9D%A2%E8%AF%95%E9%A2%98/1214.MySQL%E4%B8%AD%60LIMIT100000000,10%60%E5%92%8C%60LIMIT10%60%E7%9A%84%E6%89%A7%E8%A1%8C%E9%80%9F%E5%BA%A6%E6%98%AF%E5%90%A6%E7%9B%B8%E5%90%8C%EF%BC%9F/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="MySQL 中 LIMIT 100000000, 10 和 LIMIT 10 的执行速度是否相同？回答重点速度差很多，limit 10 快很多！ 原因如下： 1）LIMIT 100000000, 10 需要先处理（通常是读取并跳过）前 100000000 条记录，然后再获取到需要的 10 条记录，开销成本很大，因为需要扫描 100000000 数据才能得到后面的 10 条数据，会导致大量的磁盘 I">
 <meta property="og:locale" content="en_US">

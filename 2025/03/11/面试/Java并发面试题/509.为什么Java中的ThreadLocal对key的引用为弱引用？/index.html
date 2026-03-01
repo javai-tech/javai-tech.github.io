@@ -13,7 +13,7 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="https://javai.tech/2025/03/11/面试/java并发面试题/509.为什么java中的threadlocal对key的引用为弱引用？/"/>
+    <link rel="canonical" href="http://javai.tech/2025/03/11/面试/java并发面试题/509.为什么java中的threadlocal对key的引用为弱引用？/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
@@ -21,7 +21,7 @@
         <meta name="description" content="为什么 Java 中的 ThreadLocal 对 key 的引用为弱引用？回答重点使用弱引用作为 ThreadLocal 的键可以防止内存泄漏。若 ThreadLocal 实例被不再需要的线程持有为强引用，那么当该线程结束时，相关的 ThreadLocal 实例及其对应的数据可能无法被回收，导致内存持续占用。 而弱引用允许垃圾回收器在内存不足时回收对象。这样，当没有其他强引用指向某个 Threa">
 <meta property="og:type" content="article">
 <meta property="og:title" content="为什么 Java 中的 ThreadLocal 对 key 的引用为弱引用？">
-<meta property="og:url" content="https://javai.tech/2025/03/11/%E9%9D%A2%E8%AF%95/Java%E5%B9%B6%E5%8F%91%E9%9D%A2%E8%AF%95%E9%A2%98/509.%E4%B8%BA%E4%BB%80%E4%B9%88Java%E4%B8%AD%E7%9A%84ThreadLocal%E5%AF%B9key%E7%9A%84%E5%BC%95%E7%94%A8%E4%B8%BA%E5%BC%B1%E5%BC%95%E7%94%A8%EF%BC%9F/index.html">
+<meta property="og:url" content="http://javai.tech/2025/03/11/%E9%9D%A2%E8%AF%95/Java%E5%B9%B6%E5%8F%91%E9%9D%A2%E8%AF%95%E9%A2%98/509.%E4%B8%BA%E4%BB%80%E4%B9%88Java%E4%B8%AD%E7%9A%84ThreadLocal%E5%AF%B9key%E7%9A%84%E5%BC%95%E7%94%A8%E4%B8%BA%E5%BC%B1%E5%BC%95%E7%94%A8%EF%BC%9F/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="为什么 Java 中的 ThreadLocal 对 key 的引用为弱引用？回答重点使用弱引用作为 ThreadLocal 的键可以防止内存泄漏。若 ThreadLocal 实例被不再需要的线程持有为强引用，那么当该线程结束时，相关的 ThreadLocal 实例及其对应的数据可能无法被回收，导致内存持续占用。 而弱引用允许垃圾回收器在内存不足时回收对象。这样，当没有其他强引用指向某个 Threa">
 <meta property="og:locale" content="en_US">

@@ -13,7 +13,7 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="https://javai.tech/2025/03/11/面试/redis面试题/656.分布式锁在未完成逻辑前过期怎么办？/"/>
+    <link rel="canonical" href="http://javai.tech/2025/03/11/面试/redis面试题/656.分布式锁在未完成逻辑前过期怎么办？/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
@@ -21,7 +21,7 @@
         <meta name="description" content="分布式锁在未完成逻辑前过期怎么办？回答重点若锁在未完成逻辑前就过期，此时可能会产生数据不一致的问题。因为锁过期了，此时如果再出现一个客户端争抢锁，即可拿到锁然后同时进行业务操作，这等于锁失效了。    此时可以在逻辑执行过程中定期续期锁，确保锁在处理过程中不会过期。 扩展知识看门狗机制业界出了一个看门狗机制来防止这种情况的产生。 理论很简单，在抢到锁之后，后台会有一个任务，定时向 redis 进行">
 <meta property="og:type" content="article">
 <meta property="og:title" content="分布式锁在未完成逻辑前过期怎么办？">
-<meta property="og:url" content="https://javai.tech/2025/03/11/%E9%9D%A2%E8%AF%95/Redis%E9%9D%A2%E8%AF%95%E9%A2%98/656.%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E5%9C%A8%E6%9C%AA%E5%AE%8C%E6%88%90%E9%80%BB%E8%BE%91%E5%89%8D%E8%BF%87%E6%9C%9F%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F/index.html">
+<meta property="og:url" content="http://javai.tech/2025/03/11/%E9%9D%A2%E8%AF%95/Redis%E9%9D%A2%E8%AF%95%E9%A2%98/656.%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E5%9C%A8%E6%9C%AA%E5%AE%8C%E6%88%90%E9%80%BB%E8%BE%91%E5%89%8D%E8%BF%87%E6%9C%9F%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="分布式锁在未完成逻辑前过期怎么办？回答重点若锁在未完成逻辑前就过期，此时可能会产生数据不一致的问题。因为锁过期了，此时如果再出现一个客户端争抢锁，即可拿到锁然后同时进行业务操作，这等于锁失效了。    此时可以在逻辑执行过程中定期续期锁，确保锁在处理过程中不会过期。 扩展知识看门狗机制业界出了一个看门狗机制来防止这种情况的产生。 理论很简单，在抢到锁之后，后台会有一个任务，定时向 redis 进行">
 <meta property="og:locale" content="en_US">

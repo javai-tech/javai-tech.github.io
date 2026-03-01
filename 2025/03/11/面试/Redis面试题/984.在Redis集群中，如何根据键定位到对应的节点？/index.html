@@ -13,7 +13,7 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="https://javai.tech/2025/03/11/面试/redis面试题/984.在redis集群中，如何根据键定位到对应的节点？/"/>
+    <link rel="canonical" href="http://javai.tech/2025/03/11/面试/redis面试题/984.在redis集群中，如何根据键定位到对应的节点？/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
@@ -21,7 +21,7 @@
         <meta name="description" content="在 Redis 集群中，如何根据键定位到对应的节点？回答重点Redis 集群将数据分布到 16384 个哈希槽（slots） 中，每个键通过哈希函数计算出一个槽位编号，然后根据槽位编号定位到具体的节点，具体是使用 CRC16 哈希函数计算键的哈希值，然后对 16384 取模，得到哈希槽编号（范围是 0 到 16383）。 扩展知识Redis 集群节点的通信Redis 集群节点在一开始的时候，只知道">
 <meta property="og:type" content="article">
 <meta property="og:title" content="在 Redis 集群中，如何根据键定位到对应的节点？">
-<meta property="og:url" content="https://javai.tech/2025/03/11/%E9%9D%A2%E8%AF%95/Redis%E9%9D%A2%E8%AF%95%E9%A2%98/984.%E5%9C%A8Redis%E9%9B%86%E7%BE%A4%E4%B8%AD%EF%BC%8C%E5%A6%82%E4%BD%95%E6%A0%B9%E6%8D%AE%E9%94%AE%E5%AE%9A%E4%BD%8D%E5%88%B0%E5%AF%B9%E5%BA%94%E7%9A%84%E8%8A%82%E7%82%B9%EF%BC%9F/index.html">
+<meta property="og:url" content="http://javai.tech/2025/03/11/%E9%9D%A2%E8%AF%95/Redis%E9%9D%A2%E8%AF%95%E9%A2%98/984.%E5%9C%A8Redis%E9%9B%86%E7%BE%A4%E4%B8%AD%EF%BC%8C%E5%A6%82%E4%BD%95%E6%A0%B9%E6%8D%AE%E9%94%AE%E5%AE%9A%E4%BD%8D%E5%88%B0%E5%AF%B9%E5%BA%94%E7%9A%84%E8%8A%82%E7%82%B9%EF%BC%9F/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="在 Redis 集群中，如何根据键定位到对应的节点？回答重点Redis 集群将数据分布到 16384 个哈希槽（slots） 中，每个键通过哈希函数计算出一个槽位编号，然后根据槽位编号定位到具体的节点，具体是使用 CRC16 哈希函数计算键的哈希值，然后对 16384 取模，得到哈希槽编号（范围是 0 到 16383）。 扩展知识Redis 集群节点的通信Redis 集群节点在一开始的时候，只知道">
 <meta property="og:locale" content="en_US">
