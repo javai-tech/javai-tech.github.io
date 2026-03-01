@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Sherwin.Wei">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2025/03/11/面试/netty面试题/1469.介绍一下reactor线程模型？/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="介绍一下 Reactor 线程模型？回答重点Reactor 是服务端在网络编程时的一个编程模式，主要由一个基于 Selector （底层是 select&#x2F;poll&#x2F;epoll）的死循环线程，也称为 Reactor 线程。 基于事件驱动，将 I&#x2F;O 操作抽象成不同的事件，每个事件都配置对应的回调函数，由 Selector 监听连接上事件的发生，再进行分发调用相应的回调函">
+<meta property="og:type" content="article">
+<meta property="og:title" content="介绍一下 Reactor 线程模型？">
+<meta property="og:url" content="http://example.com/2025/03/11/%E9%9D%A2%E8%AF%95/Netty%E9%9D%A2%E8%AF%95%E9%A2%98/1469.%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%8BReactor%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B%EF%BC%9F/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="介绍一下 Reactor 线程模型？回答重点Reactor 是服务端在网络编程时的一个编程模式，主要由一个基于 Selector （底层是 select&#x2F;poll&#x2F;epoll）的死循环线程，也称为 Reactor 线程。 基于事件驱动，将 I&#x2F;O 操作抽象成不同的事件，每个事件都配置对应的回调函数，由 Selector 监听连接上事件的发生，再进行分发调用相应的回调函">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/USff0Yys_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/1AwE7XZj_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/N3fct7at_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/FdONCL3O_image_mianshiya.png">
+<meta property="article:published_time" content="2025-03-10T16:01:03.000Z">
+<meta property="article:modified_time" content="2025-03-10T16:01:03.068Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="后端">
+<meta property="article:tag" content="Netty">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/USff0Yys_image_mianshiya.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/javai-avatar.png" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/javai-avatar.png">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/javai-avatar.png">
+    <!--- Page Info-->
+    
+    <title>
+        
+            介绍一下 Reactor 线程模型？ | javai
+        
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    <!--- Inject Part-->
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css">
+
+    
+<link rel="stylesheet" href="/fonts/Geist/geist.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+    
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":false,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"java与ai","subtitle":{"text":["java与ai结合一定会更强更远!","今日事，今天毕!","明天会更好！","一个人可以走的很快，但是一群人却可以走的更远。","今人不见古时月，今月曾经照古人。"],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"style":"default","links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.7.3","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"面试":{"path":"/categories/面试/","icon":"fa-regular paper-plane"},"chat":{"path":"/chat","icon":"fa-regular wechat"},"learn":{"path":"/learn","icon":"fa-regular users"},"国学":{"path":"/guoxue"},"智医":{"path":"/zhiyi"},"五行":{"path":"/wuxing"},"关于我":{"path":"/aboutme","icon":"fa-regular user"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":null},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}}};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container flex flex-col justify-between min-h-dvh">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container px-6 md:px-12">
+    <div class="navbar-content transition-navbar ">
+        <div class="left">
+            
+                <a class="logo-image h-8 w-8 sm:w-10 sm:h-10 mr-3" href="/">
+                    <img src="/images/javai-avatar.png" class="w-full h-full rounded-sm">
+                </a>
+            
+            <a class="logo-title" href="/">
+                
+                javai
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/categories/%E9%9D%A2%E8%AF%95/"
+                                        >
+                                    <i class="fa-regular paper-plane fa-fw"></i>
+                                    面试
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/chat"
+                                        >
+                                    <i class="fa-regular wechat fa-fw"></i>
+                                    CHAT
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/learn"
+                                        >
+                                    <i class="fa-regular users fa-fw"></i>
+                                    LEARN
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/guoxue"
+                                        >
+                                    
+                                    国学
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/zhiyi"
+                                        >
+                                    
+                                    智医
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/wuxing"
+                                        >
+                                    
+                                    五行
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/aboutme"
+                                        >
+                                    <i class="fa-regular user fa-fw"></i>
+                                    关于我
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/categories/%E9%9D%A2%E8%AF%95/"
+                        >
+                            <span>
+                                面试
+                            </span>
+                            
+                                <i class="fa-regular paper-plane fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/chat"
+                        >
+                            <span>
+                                CHAT
+                            </span>
+                            
+                                <i class="fa-regular wechat fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/learn"
+                        >
+                            <span>
+                                LEARN
+                            </span>
+                            
+                                <i class="fa-regular users fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/guoxue"
+                        >
+                            <span>
+                                国学
+                            </span>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/zhiyi"
+                        >
+                            <span>
+                                智医
+                            </span>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/wuxing"
+                        >
+                            <span>
+                                五行
+                            </span>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/aboutme"
+                        >
+                            <span>
+                                关于我
+                            </span>
+                            
+                                <i class="fa-regular user fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+
+            
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">87</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">36</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">531</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                <div class="w-full flex items-center pt-6 justify-start">
+                    <h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">介绍一下 Reactor 线程模型？</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/javai-avatar.png">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">Sherwin.Wei</span>
+                        
+                            <span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv8</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2025-03-11 00:01:03</span>
+        <span class="mobile">2025-03-11 00:01:03</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2025-03-11 00:01:03</span>
+            <span class="mobile">2025-03-11 00:01:03</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E9%9D%A2%E8%AF%95/">面试</a>&nbsp;
+                        </li>
+                    
+                    
+                
+                    
+                        <li>
+                            | <a href="/categories/Netty-%E9%9D%A2%E8%AF%95%E9%A2%98/">Netty 面试题</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E5%90%8E%E7%AB%AF/">后端</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/Netty/">Netty</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <h1 id="介绍一下-Reactor-线程模型？"><a href="#介绍一下-Reactor-线程模型？" class="headerlink" title="介绍一下 Reactor 线程模型？"></a>介绍一下 Reactor 线程模型？</h1><h2 id="回答重点"><a href="#回答重点" class="headerlink" title="回答重点"></a>回答重点</h2><p>Reactor 是服务端在网络编程时的一个编程模式，主要由一个基于 Selector （底层是 select&#x2F;poll&#x2F;epoll）的死循环线程，也称为 Reactor 线程。</p>
+<p>基于事件驱动，将 I&#x2F;O 操作抽象成不同的事件，每个事件都配置对应的回调函数，由 Selector 监听连接上事件的发生，再进行分发调用相应的回调函数进行事件的处理。</p>
+<p>Reactor 线程模型分为三种，分别为单 Reactor 单线程模型、单 Reactor 多线程模型、主从 Reactor 多线程模型。</p>
+<p>1）单 Reactor 单线程模型：所有的操作都是由一个 I&#x2F;O 线程处理。</p>
+<ul>
+<li>优点：对系统资源消耗较少。</li>
+<li>缺点：没办法支持高并发场景。</li>
+</ul>
+<p align="center"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/USff0Yys_image_mianshiya.png"
+                      alt="image.png" width="588" 
+                ></p>
+
+<p>2）单 Reactor 多线程模型：一个线程负责接收建连事件和后续的连接 I&#x2F;O 处理（read、send等），线程池处理具体业务逻辑。</p>
+<ul>
+<li>优点：可以很好地应对大部分的场景 ，也提高了事件的处理效率。</li>
+<li>缺点：并发量大的时候，一个线程可能没办法接收所有的事件请求，可能导致性能瓶颈。</li>
+</ul>
+<p align="center"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/1AwE7XZj_image_mianshiya.png"
+                      alt="image.png" width="588" 
+                ></p>
+
+<p>3）主从 Reactor 多线程模型：主 Reactor 线程负责接收建连事件，从 Reactor 线程负责处理建连后的后续连接 I&#x2F;O 处理（read、send等），线程池处理具体业务逻辑。</p>
+<ul>
+<li>优点：解决海量并发请求。</li>
+<li>缺点：相对而言，实现复杂度较高，对系统资源的管理要求会高一点。</li>
+</ul>
+<p align="center"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/N3fct7at_image_mianshiya.png"
+                      alt="image.png" width="588" 
+                ></p>
+
+<h2 id="扩展知识"><a href="#扩展知识" class="headerlink" title="扩展知识"></a>扩展知识</h2><h3 id="理解-Reactor"><a href="#理解-Reactor" class="headerlink" title="理解 Reactor"></a>理解 Reactor</h3><p>Reactor 它算是一个编程模式或者说一个架构模式，常用在<strong>服务端</strong>网络通信相关的模块。</p>
+<p>Reactor 直译到中文是反应堆，虽然直译不贴切，但确实跟“反应”有关。</p>
+<p>反应什么呢？<strong>对触发的事件进行反应</strong>。</p>
+<p>在大学的时候，我相信很多人都做过图书管理系统等类似的大作业，这种都是基于 Java GUI 做的，当然具体如何实现的不重要，重要的是你完成之后的成品是不是点击一个按钮就会弹出一个对应的弹框？</p>
+<p>点击按钮就会弹框，不同的按钮弹不同的框，这就是反应。</p>
+<p>咱们计算机不就讲究抽象嘛，所以把这上面说的这些抽象一下，<strong>就是针对不同的事件需要有不同的处理逻辑（方法调用）</strong>。</p>
+<p>到这，我们得到了两个概念：事件（点击按钮）和处理逻辑（弹对应的框）。</p>
+<p>再回到弹框这个场景，思考下，到底是谁在监听着按钮被点击的动作来弹出不同的框呢？</p>
+<p>这里，我们很容易想到两种情况：</p>
+<ol>
+<li>一个按钮派一个线程在守着，只要按钮被点击了，这个线程就执行弹框</li>
+<li>一个线程轮询所有按钮的情况，死循环查看只要有一个按钮被点击了，就找出按钮绑定的框，然后弹</li>
+</ol>
+<p>如果按钮很少，其实多派几个线程守着影响不大，假设有一千个、一万个按钮呢？这种场景下第二种实现更优，毕竟按钮也不是一直会被点击着，对吧。</p>
+<p>我们把“人”、“点击按钮”、“弹框”对应到网络编程中，就是线程、事件、处理。</p>
+<p>第一种情况翻译过来就是一个线程接待一个连接，每当连接上有事件产生，则线程会对应事件作出响应。</p>
+<p>这对应着很早之前的网络编程模型，那时候网上没那么多用户，并且也就只有阻塞 I&#x2F;O，如果连接没有反应，那么线程就得阻塞等待着 I&#x2F;O 事件的发生。</p>
+<p>第二种情况翻译过来就是，由一个线程接待多个连接，不论哪个连接上有事件产生，这个线程都会根据事件找到对应的处理逻辑来作出响应。</p>
+<p>这就是对应现在流行的基于非阻塞 I&#x2F;O 的 I&#x2F;O 多路复用，这种场景就适合海量用户的情况，服务端可用很少线程来处理数量庞大的连接，就像我上面说的，毕竟连接（按钮）也不是一直会有请求过来（被点击）。</p>
+<p>至于我前头提到的事件，<strong>基础的</strong> I&#x2F;O 上的事件也就这三种：连接事件、读事件、写事件。</p>
+<p>现在回到网络 I&#x2F;O 上，我们再来看 Reactor：也就是有一个 selector（select&#x2F;poll&#x2F;epoll） 线程，它管理着很多连接，只要某个连接上有事件产生，就会唤醒 selector 线程，这个线程就会根据发生的事件类型做不同的处理。</p>
+<p>这就是 Reactor，对应的线程也叫 Reactor 线程（就靠它起反应啦）。</p>
+<p>那没 Reactor 的场景是怎样的？</p>
+<p>就是上面提的第一种情况，一个线程接待一条连接。不像第二种情况这样，由一个线程来接待许多连接，由一个“负责人”来接待多个客户，这种什么事都找一个人，是不是感受起来那个人就像一个 Reactor？</p>
+<p><strong>能一对多的根据不同请求做出不同响应实现</strong>，是我个人认为的 Reactor 核心。至于事件、调度器、Acceptor等玩意，我觉得是为了写论文或者文章必须要搞的一些概念，反正理解了之后，也就这么回事儿，因为要从流程上走通必须得有这么些个东西。</p>
+<p>就像我们所知的 SpringMVC，要想一个请求能找到对应的 Controller，那不就得有个统一入口判断路由嘛，所以必须要有这么个东西，不然请求到不了 Controller 了啊，那这个玩意叫啥？不就是 DispatcherServlet 吗， 中文名不就是前置控制器吗。</p>
+<p>所以，不是说 SpringMVC 需要有 DispatcherServlet 这么个玩意，而是 SpringMVC 需要有个统一入口判断路由，所以就弄了个实现类，这个实现类呢就叫 DispatcherServlet。</p>
+<p>你懂我的意思吧。</p>
+<p>同样看 Reactor 也是一样的。不是说 Reactor 需要有个叫 Demultiplexer、 Dispatcher、Handle、Event Handler 这么些组合起来才叫 Reactor 。</p>
+<p>而是在网络 I&#x2F;O 中基于非阻塞 I&#x2F;O ，且需要少量的线程接待大量的连接，这样一场景下，就必须要个”东西“作为一个监听者，监听底层这么多连接是否有请求，然后根据请求的类型（抽象的事件），指派调用不同的处理逻辑，才对应衍生出上面这么些个名词。</p>
+<p>在具体的实现上， Demultiplexer 和 Dispatcher 当然可以是同一个线程，同在一个死循环里面，这都是 ok 的，不要看着名词就理解着，代码里必须分这么两个玩意，不是的哈。</p>
+<p>基于上面的理解，然后再看看来自 Reactor 论文的这张图把，是不是好理解了。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/FdONCL3O_image_mianshiya.png"
+                      alt="image.png" width="560px" 
+                >
+
+
+<h3 id="Reactor-模式的核心意义"><a href="#Reactor-模式的核心意义" class="headerlink" title="Reactor 模式的核心意义"></a>Reactor 模式的核心意义</h3><p>Reactor 的核心在于“对事件作出反应”。用一个线程（或少量线程）来监听多个连接上的事件，根据事件类型分发调用相应的处理逻辑，从而避免为每个连接都分配一个线程。</p>
+<p>与传统模型对比，传统阻塞 I&#x2F;O 是一个线程对应一个连接，资源浪费严重；而 Reactor 模式能实现一对多的映射，更适合高并发场景。</p>
+
+        </div>
+
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/%E5%90%8E%E7%AB%AF/">#后端</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/Netty/">#Netty</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2025/03/11/%E9%9D%A2%E8%AF%95/Netty%E9%9D%A2%E8%AF%95%E9%A2%98/1468.%E8%AF%B4%E4%B8%80%E4%B8%8BNetty%E7%9A%84%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF%EF%BC%9F/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">说一下 Netty 的应用场景？</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2025/03/11/%E9%9D%A2%E8%AF%95/Netty%E9%9D%A2%E8%AF%95%E9%A2%98/1470.%E7%AE%80%E5%8D%95%E8%AF%B4%E8%AF%B4Netty%E7%9A%84%E9%9B%B6%E6%8B%B7%E8%B4%9D%E6%9C%BA%E5%88%B6%EF%BC%9F/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">简单说说 Netty 的零拷贝机制？</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+                <div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="gitalk-container"></div>
+    <script data-swup-reload-script
+            src="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js"></script>
+    <script data-swup-reload-script>
+
+        function loadGitalk() {
+            let __gitalk__pathname = decodeURI(location.pathname);
+            const __gitalk__pathnameLength = __gitalk__pathname.length;
+            const __gitalk__pathnameMaxLength = 50;
+            if (__gitalk__pathnameLength > __gitalk__pathnameMaxLength) {
+                __gitalk__pathname = __gitalk__pathname.substring(0, __gitalk__pathnameMaxLength - 3) + '...';
+            }
+
+            try {
+                Gitalk && new Gitalk({
+                    clientID: 'Ov23liThu5oe4YmmlNAw',
+                    clientSecret: 'bdde0e1d1af3b4e01fc6e172c7926c42ee09e8d3',
+                    repo: 'javai-comment',
+                    owner: 'sherwin28',
+                    admin: ['sherwin28'],
+                    id: __gitalk__pathname,
+                    language: 'en',
+                    proxy: 'https://github.com/login/oauth/access_token'
+                }).render('gitalk-container');
+
+            } catch (e) {
+                window.Gitalk = null;
+            }
+        }
+
+        if ('true') {
+            const loadGitalkTimeout = setTimeout(() => {
+                loadGitalk();
+                clearTimeout(loadGitalkTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadGitalk);
+        }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">介绍一下 Reactor 线程模型？</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%8B-Reactor-%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B%EF%BC%9F"><span class="nav-text">介绍一下 Reactor 线程模型？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9E%E7%AD%94%E9%87%8D%E7%82%B9"><span class="nav-text">回答重点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E7%9F%A5%E8%AF%86"><span class="nav-text">扩展知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%90%86%E8%A7%A3-Reactor"><span class="nav-text">理解 Reactor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reactor-%E6%A8%A1%E5%BC%8F%E7%9A%84%E6%A0%B8%E5%BF%83%E6%84%8F%E4%B9%89"><span class="nav-text">Reactor 模式的核心意义</span></a></li></ol></li></ol></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+            <div class="customize-info my-1">2024 Java+AI技术分享版权所有</div>
+        
+        
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+
+        
+            <div class="icp-info my-1"><a target="_blank" rel="nofollow" href="
+                
+                    https://beian.miit.gov.cn/
+                
+                ">粤ICP备2024326496号-1</a></div>
+        
+        
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+    
+<script src="/js/libs/anime.min.js"></script>
+
+
+
+
+
+    
+<script src="/js/tools/tocToggle.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/layouts/toc.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/plugins/tabs.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+<script src="/js/libs/moment-with-locales.min.js" data-swup-reload-script=""></script>
+
+
+<script src="/js/layouts/essays.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+</body>
+</html>

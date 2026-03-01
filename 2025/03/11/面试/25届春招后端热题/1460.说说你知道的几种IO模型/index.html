@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Sherwin.Wei">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2025/03/11/面试/25届春招后端热题/1460.说说你知道的几种io模型/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="说说你知道的几种 I&#x2F;O 模型回答重点1）同步阻塞 I&#x2F;O（Blocking I&#x2F;O，BIO）   线程调用 read 时，如果数据还未到来，线程会一直阻塞等待；数据从网卡到内核，再从内核拷贝到用户空间，这两个拷贝过程都为阻塞操作。    优点：实现简单，逻辑直观；调用后直接等待数据就绪。   缺点：每个连接都需要一个线程，即使没有数据到达，线程也会被占用，导致资源浪">
+<meta property="og:type" content="article">
+<meta property="og:title" content="说说你知道的几种 I&#x2F;O 模型">
+<meta property="og:url" content="http://example.com/2025/03/11/%E9%9D%A2%E8%AF%95/25%E5%B1%8A%E6%98%A5%E6%8B%9B%E5%90%8E%E7%AB%AF%E7%83%AD%E9%A2%98/1460.%E8%AF%B4%E8%AF%B4%E4%BD%A0%E7%9F%A5%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8DIO%E6%A8%A1%E5%9E%8B/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="说说你知道的几种 I&#x2F;O 模型回答重点1）同步阻塞 I&#x2F;O（Blocking I&#x2F;O，BIO）   线程调用 read 时，如果数据还未到来，线程会一直阻塞等待；数据从网卡到内核，再从内核拷贝到用户空间，这两个拷贝过程都为阻塞操作。    优点：实现简单，逻辑直观；调用后直接等待数据就绪。   缺点：每个连接都需要一个线程，即使没有数据到达，线程也会被占用，导致资源浪">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783397053004488705/JYDXiCf6_Snipaste_2024-06-22_17-09-42_mianshiya.jpg">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783397053004488705/5mBO3Ndc_Snipaste_2024-06-22_17-10-25_mianshiya.jpg">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783397053004488705/4DAbsAXC_Snipaste_2024-06-22_19-13-28_mianshiya.jpg">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/uiAkElm2_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783397053004488705/4VwJ1yFc_Snipaste_2024-06-22_17-11-01_mianshiya.jpg">
+<meta property="article:published_time" content="2025-03-10T16:01:02.000Z">
+<meta property="article:modified_time" content="2025-03-10T16:01:02.969Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="后端">
+<meta property="article:tag" content="Netty">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://pic.javai.tech/mianshiya/question_picture/1783397053004488705/JYDXiCf6_Snipaste_2024-06-22_17-09-42_mianshiya.jpg">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/javai-avatar.png" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/javai-avatar.png">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/javai-avatar.png">
+    <!--- Page Info-->
+    
+    <title>
+        
+            说说你知道的几种 I/O 模型 | javai
+        
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    <!--- Inject Part-->
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css">
+
+    
+<link rel="stylesheet" href="/fonts/Geist/geist.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+    
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":false,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"java与ai","subtitle":{"text":["java与ai结合一定会更强更远!","今日事，今天毕!","明天会更好！","一个人可以走的很快，但是一群人却可以走的更远。","今人不见古时月，今月曾经照古人。"],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"style":"default","links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.7.3","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"面试":{"path":"/categories/面试/","icon":"fa-regular paper-plane"},"chat":{"path":"/chat","icon":"fa-regular wechat"},"learn":{"path":"/learn","icon":"fa-regular users"},"国学":{"path":"/guoxue"},"智医":{"path":"/zhiyi"},"五行":{"path":"/wuxing"},"关于我":{"path":"/aboutme","icon":"fa-regular user"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":null},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}}};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container flex flex-col justify-between min-h-dvh">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container px-6 md:px-12">
+    <div class="navbar-content transition-navbar ">
+        <div class="left">
+            
+                <a class="logo-image h-8 w-8 sm:w-10 sm:h-10 mr-3" href="/">
+                    <img src="/images/javai-avatar.png" class="w-full h-full rounded-sm">
+                </a>
+            
+            <a class="logo-title" href="/">
+                
+                javai
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/categories/%E9%9D%A2%E8%AF%95/"
+                                        >
+                                    <i class="fa-regular paper-plane fa-fw"></i>
+                                    面试
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/chat"
+                                        >
+                                    <i class="fa-regular wechat fa-fw"></i>
+                                    CHAT
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/learn"
+                                        >
+                                    <i class="fa-regular users fa-fw"></i>
+                                    LEARN
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/guoxue"
+                                        >
+                                    
+                                    国学
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/zhiyi"
+                                        >
+                                    
+                                    智医
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/wuxing"
+                                        >
+                                    
+                                    五行
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/aboutme"
+                                        >
+                                    <i class="fa-regular user fa-fw"></i>
+                                    关于我
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/categories/%E9%9D%A2%E8%AF%95/"
+                        >
+                            <span>
+                                面试
+                            </span>
+                            
+                                <i class="fa-regular paper-plane fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/chat"
+                        >
+                            <span>
+                                CHAT
+                            </span>
+                            
+                                <i class="fa-regular wechat fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/learn"
+                        >
+                            <span>
+                                LEARN
+                            </span>
+                            
+                                <i class="fa-regular users fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/guoxue"
+                        >
+                            <span>
+                                国学
+                            </span>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/zhiyi"
+                        >
+                            <span>
+                                智医
+                            </span>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/wuxing"
+                        >
+                            <span>
+                                五行
+                            </span>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/aboutme"
+                        >
+                            <span>
+                                关于我
+                            </span>
+                            
+                                <i class="fa-regular user fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+
+            
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">87</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">36</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">531</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                <div class="w-full flex items-center pt-6 justify-start">
+                    <h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">说说你知道的几种 I/O 模型</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/javai-avatar.png">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">Sherwin.Wei</span>
+                        
+                            <span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv8</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2025-03-11 00:01:02</span>
+        <span class="mobile">2025-03-11 00:01:02</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2025-03-11 00:01:02</span>
+            <span class="mobile">2025-03-11 00:01:02</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E9%9D%A2%E8%AF%95/">面试</a>&nbsp;
+                        </li>
+                    
+                    
+                
+                    
+                        <li>
+                            | <a href="/categories/25-%E5%B1%8A%E6%98%A5%E6%8B%9B%E5%90%8E%E7%AB%AF%E7%83%AD%E9%A2%98/">25 届春招后端热题</a>&nbsp;
+                        </li>
+                    
+                    
+                
+                    
+                        <li>
+                            | <a href="/categories/Netty-%E9%9D%A2%E8%AF%95%E9%A2%98/">Netty 面试题</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E5%90%8E%E7%AB%AF/">后端</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/Netty/">Netty</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <h1 id="说说你知道的几种-I-O-模型"><a href="#说说你知道的几种-I-O-模型" class="headerlink" title="说说你知道的几种 I&#x2F;O 模型"></a>说说你知道的几种 I&#x2F;O 模型</h1><h2 id="回答重点"><a href="#回答重点" class="headerlink" title="回答重点"></a>回答重点</h2><p>1）<strong>同步阻塞 I&#x2F;O（Blocking I&#x2F;O，BIO）</strong>  </p>
+<p>线程调用 <code>read</code> 时，如果数据还未到来，线程会一直阻塞等待；数据从网卡到内核，再从内核拷贝到用户空间，这两个拷贝过程都为阻塞操作。  </p>
+<ul>
+<li><strong>优点</strong>：实现简单，逻辑直观；调用后直接等待数据就绪。  </li>
+<li><strong>缺点</strong>：每个连接都需要一个线程，即使没有数据到达，线程也会被占用，导致资源浪费，不适合高并发场景。</li>
+</ul>
+<p>2）<strong>同步非阻塞 I&#x2F;O（Non-blocking I&#x2F;O，NIO）</strong>  </p>
+<p>在非阻塞模式下，<code>read</code> 调用如果没有数据就绪会立即返回错误（或特定状态），不会阻塞线程；应用程序需要不断轮询判断数据是否就绪，但当数据拷贝到用户空间时依然是阻塞的。  </p>
+<ul>
+<li><strong>优点</strong>：线程不会长时间阻塞，可以在无数据时执行其他任务；适用于部分实时性要求较高的场景。  </li>
+<li><strong>缺点</strong>：轮询方式会频繁进行系统调用，上下文切换开销较大，CPU 占用率较高，不适合大规模连接。</li>
+</ul>
+<p>3）<strong>I&#x2F;O 多路复用</strong>  </p>
+<p>通过一个线程（或少量线程）使用 <code>select</code>、<code>poll</code>、<code>epoll</code> 等系统调用，监控多个连接的状态；只有当某个连接的数据就绪时，系统才通知应用程序，再由应用程序调用 <code>read</code> 进行数据读取（读取时仍为阻塞操作）。  </p>
+<ul>
+<li><strong>优点</strong>：大大减少了线程数量和上下文切换，能高效处理大量并发连接；资源利用率高。  </li>
+<li><strong>缺点</strong>：依赖系统内核的支持，不同的多路复用实现（如 select vs epoll）有各自局限。</li>
+</ul>
+<p>4）<strong>信号驱动 I&#x2F;O</strong>  </p>
+<p>由内核在数据就绪时发出信号通知应用程序，应用程序收到信号后再调用 <code>read</code>（依然阻塞）。</p>
+<ul>
+<li><strong>优点</strong>：理论上可以避免轮询，数据就绪时由内核主动通知。  </li>
+<li><strong>缺点</strong>：对于 TCP 协议，由于同一个信号可能对应多种事件，难以精确区分（所以实际应用中使用较少）。</li>
+</ul>
+<p>5）<strong>异步 I&#x2F;O（Asynchronous I&#x2F;O，AIO）</strong>  </p>
+<p>调用 <code>aio_read</code> 后，内核负责将数据从网卡拷贝到用户空间，拷贝完成后通过回调通知应用程序；整个过程用户线程没有阻塞。  </p>
+<ul>
+<li><strong>优点</strong>：真正实现了非阻塞，充分利用内核能力，适合高并发场景。  </li>
+<li><strong>缺点</strong>：编程模型复杂，错误处理和状态管理较难；在 Linux 下支持不完善，多数实际场景仍采用 I&#x2F;O 多路复用来模拟异步效果，而 Windows 则支持真正的 AIO。</li>
+</ul>
+<h2 id="扩展知识"><a href="#扩展知识" class="headerlink" title="扩展知识"></a>扩展知识</h2><p>从 read 调用，即读取网络数据为例子<strong>从演进的角度</strong>来展开 I&#x2F;O 模型：</p>
+<h3 id="同步阻塞，BIO（Blocking-I-O）"><a href="#同步阻塞，BIO（Blocking-I-O）" class="headerlink" title="同步阻塞，BIO（Blocking I&#x2F;O）"></a>同步阻塞，BIO（Blocking I&#x2F;O）</h3><p>当用户程序的线程调用 read 获取网络数据的时候，首先这个数据得有，也就是网卡得先收到客户端的数据，然后这个数据有了之后需要拷贝到内核中，然后再被拷贝到用户空间内，这整一个过程用户线程都是被阻塞的。</p>
+<p>假设没有客户端发数据过来，那么这个用户线程就会一直阻塞等着，直到有数据。即使有数据，那么两次拷贝的过程也得阻塞等着。</p>
+<p>所以这称为同步阻塞 I&#x2F;O 模型。</p>
+<p>它的优点很明显，简单。调用 read 之后就不管了，直到数据来了且准备好了进行处理即可。</p>
+<p>缺点也很明显，一个线程对应一个连接，一直被霸占着，即使网卡没有数据到来，也同步阻塞等着。</p>
+<p>我们都知道线程是属于比较重资源，这就有点浪费了。</p>
+<p>所以我们不想让它这样傻等着。</p>
+<p>于是就有了同步非阻塞 I&#x2F;O。<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783397053004488705/JYDXiCf6_Snipaste_2024-06-22_17-09-42_mianshiya.jpg"
+                      alt="Snipaste_2024-06-22_17-09-42.jpg" width="807px" 
+                ></p>
+<h3 id="同步非阻塞I-O，NIO（No-Blocking-I-O）"><a href="#同步非阻塞I-O，NIO（No-Blocking-I-O）" class="headerlink" title="同步非阻塞I&#x2F;O，NIO（No Blocking I&#x2F;O）"></a>同步非阻塞I&#x2F;O，NIO（No Blocking I&#x2F;O）</h3><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783397053004488705/5mBO3Ndc_Snipaste_2024-06-22_17-10-25_mianshiya.jpg"
+                      alt="Snipaste_2024-06-22_17-10-25.jpg" width="782px" 
+                >
+
+<p>在没数据的时候，用户程序可以不再阻塞等着，而是直接返回错误，告知暂无准备就绪的数据，用户程序会通过轮询操作，不断发起 read 调用，直到内核中的数据拷贝就绪，才会停止发起 read 调用，不过在数据从内核拷贝到用户空间的时候，这段时间内用户程序是出于阻塞状态的。</p>
+<p>这个模型相比于同步阻塞 I&#x2F;O 而言比较灵活，比如调用 read 如果暂无数据，则线程可以先去干干别的事情，然后再来继续调用 read 看看有没有数据。</p>
+<p>但是如果你的线程就是取数据然后处理数据，不干别的逻辑，那这个模型又有点问题了。</p>
+<p>等于你不断地进行系统调用，如果你的服务器需要处理海量的连接，那么就需要有海量的线程不断调用，上下文切换频繁，CPU 也会忙死，做无用功而忙死。</p>
+<p>那怎么办？</p>
+<p>于是就有了I&#x2F;O 多路复用。</p>
+<h3 id="I-O-多路复用"><a href="#I-O-多路复用" class="headerlink" title="I&#x2F;O 多路复用"></a>I&#x2F;O 多路复用</h3><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783397053004488705/4DAbsAXC_Snipaste_2024-06-22_19-13-28_mianshiya.jpg"
+                      alt="Snipaste_2024-06-22_19-13-28.jpg" width="759px" 
+                >
+
+<p>从图上来看，看似和同步非阻塞 I&#x2F;O 一样，但实际上线程模型不同。</p>
+<p>同步非阻塞 I&#x2F;O 频繁调用一直轮询的话是比较消耗 CPU 资源的。为了解决这个问题，操作系统使用了 IO 多路复用模型，<strong>只用一个线程查看多个连接是否有数据已准备就绪</strong>。</p>
+<p>仅需往 select 注册需要被监听的连接，由 select 来监控它所管理的连接是否有数据已就绪，如果有则可以通知别的线程来 read 读取数据，这个 read 和之前的一样，还是会阻塞用户线程。</p>
+<p>这样一来就可以<strong>用少量的线程去监控多条连接</strong>，减少了线程的数量，降低了内存的消耗且减少了上下文切换的次数。</p>
+<p>所谓的多路指的是多条连接，复用指的是用一个线程就可以监控这么多条连接。</p>
+<h3 id="信号驱动式I-O"><a href="#信号驱动式I-O" class="headerlink" title="信号驱动式I&#x2F;O"></a>信号驱动式I&#x2F;O</h3><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/uiAkElm2_image_mianshiya.png"
+                      alt="image.png" width="648px" 
+                >
+
+
+<p>I&#x2F;O 多路复用的 select 虽然不阻塞了，但是它得时刻去查询看看是否有数据已经准备就绪，那是不是可以让内核告诉我们数据到了而不是我们去轮询呢？</p>
+<p>信号驱动 I&#x2F;O 就能实现这个功能，由内核告知数据已准备就绪，然后用户线程再去 read（还是会阻塞）。</p>
+<p>听起来是不是比 I&#x2F;O 多路复用好呀？那为什么好像很少听到信号驱动 I&#x2F;O？</p>
+<p>因为我们的应用通常用的都是 TCP 协议，而 TCP 协议的 socket 可以产生信号事件有七种。</p>
+<p>也就是说不仅仅只有数据准备就绪才会发信号，其他事件也会发信号，而这个信号又是同一个信号，所以我们的应用程序无从区分到底是什么事件产生的这个信号。</p>
+<p>所以我们的应用基本上用不了信号驱动 I&#x2F;O，但如果你的应用程序用的是 UDP 协议，那是可以的，因为 UDP 没这么多事件。</p>
+<p>所以信号驱动 I&#x2F;O 也不太行。</p>
+<h3 id="异步-I-O，AIO（Asynchronous-I-O）"><a href="#异步-I-O，AIO（Asynchronous-I-O）" class="headerlink" title="异步 I&#x2F;O，AIO（Asynchronous I&#x2F;O）"></a>异步 I&#x2F;O，AIO（Asynchronous I&#x2F;O）</h3><p>信号驱动 I&#x2F;O 虽然对 TCP 不太友好，但是这个思路对的：<strong>往异步发展</strong>，但是它并没有完全异步，因为其后面那段 read 还是会阻塞用户线程，所以它算是半异步。</p>
+<p>因此，我们得想下如何弄成全异步的，也就是把 read 那步阻塞也省了。</p>
+<p>其实思路很清晰：让内核直接把数据拷贝到用户空间之后再告知用户线程，来实现真正的非阻塞I&#x2F;O！</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783397053004488705/4VwJ1yFc_Snipaste_2024-06-22_17-11-01_mianshiya.jpg"
+                      alt="Snipaste_2024-06-22_17-11-01.jpg" width="798px" 
+                >
+
+<p>所以异步 I&#x2F;O 其实就是用户线程调用 aio_read ，然后包括将数据从内核拷贝到用户空间那步，所有操作都由内核完成，当内核操作完毕之后，再调用之前设置的回调，此时用户线程就拿着已经拷贝到用户控件的数据可以继续执行后续操作。</p>
+<p>在整个过程中，用户线程没有任何阻塞点，这才是真正的非阻塞I&#x2F;O。</p>
+<blockquote>
+<p>那为什么常用的还是I&#x2F;O多路复用，而不是异步I&#x2F;O？</p>
+</blockquote>
+<p>因为 Linux 对异步 I&#x2F;O 的支持不足，你可以认为还未完全实现，所以用不了异步 I&#x2F;O。</p>
+<p>这里可能有人会说不对呀，像 Tomcat 都实现了 AIO 的实现类，其实像这些组件或者你使用的一些类库看起来支持了 AIO(异步I&#x2F;O)，<strong>实际上底层实现是用 epoll 模拟实现的</strong>。</p>
+<p>而 Windows 是实现了真正的 AIO，不过我们的服务器一般都是部署在 Linux 上的，所以主流还是 I&#x2F;O 多路复用。</p>
+
+        </div>
+
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/%E5%90%8E%E7%AB%AF/">#后端</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/Netty/">#Netty</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2025/03/11/%E9%9D%A2%E8%AF%95/25%E5%B1%8A%E6%98%A5%E6%8B%9B%E5%90%8E%E7%AB%AF%E7%83%AD%E9%A2%98/589.%E8%AF%A6%E7%BB%86%E6%8F%8F%E8%BF%B0%E4%B8%80%E6%9D%A1SQL%E8%AF%AD%E5%8F%A5%E5%9C%A8MySQL%E4%B8%AD%E7%9A%84%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B%E3%80%82/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">详细描述一条 SQL 语句在 MySQL 中的执行过程。</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2025/03/11/%E9%9D%A2%E8%AF%95/25%E5%B1%8A%E6%98%A5%E6%8B%9B%E5%90%8E%E7%AB%AF%E7%83%AD%E9%A2%98/590.MySQL%E7%9A%84%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F%E5%AE%83%E4%BB%AC%E4%B9%8B%E9%97%B4%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB%EF%BC%9F/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">MySQL 的存储引擎有哪些？它们之间有什么区别？</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+                <div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="gitalk-container"></div>
+    <script data-swup-reload-script
+            src="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js"></script>
+    <script data-swup-reload-script>
+
+        function loadGitalk() {
+            let __gitalk__pathname = decodeURI(location.pathname);
+            const __gitalk__pathnameLength = __gitalk__pathname.length;
+            const __gitalk__pathnameMaxLength = 50;
+            if (__gitalk__pathnameLength > __gitalk__pathnameMaxLength) {
+                __gitalk__pathname = __gitalk__pathname.substring(0, __gitalk__pathnameMaxLength - 3) + '...';
+            }
+
+            try {
+                Gitalk && new Gitalk({
+                    clientID: 'Ov23liThu5oe4YmmlNAw',
+                    clientSecret: 'bdde0e1d1af3b4e01fc6e172c7926c42ee09e8d3',
+                    repo: 'javai-comment',
+                    owner: 'sherwin28',
+                    admin: ['sherwin28'],
+                    id: __gitalk__pathname,
+                    language: 'en',
+                    proxy: 'https://github.com/login/oauth/access_token'
+                }).render('gitalk-container');
+
+            } catch (e) {
+                window.Gitalk = null;
+            }
+        }
+
+        if ('true') {
+            const loadGitalkTimeout = setTimeout(() => {
+                loadGitalk();
+                clearTimeout(loadGitalkTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadGitalk);
+        }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">说说你知道的几种 I/O 模型</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AF%B4%E8%AF%B4%E4%BD%A0%E7%9F%A5%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8D-I-O-%E6%A8%A1%E5%9E%8B"><span class="nav-text">说说你知道的几种 I&#x2F;O 模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9E%E7%AD%94%E9%87%8D%E7%82%B9"><span class="nav-text">回答重点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E7%9F%A5%E8%AF%86"><span class="nav-text">扩展知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8C%E6%AD%A5%E9%98%BB%E5%A1%9E%EF%BC%8CBIO%EF%BC%88Blocking-I-O%EF%BC%89"><span class="nav-text">同步阻塞，BIO（Blocking I&#x2F;O）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8C%E6%AD%A5%E9%9D%9E%E9%98%BB%E5%A1%9EI-O%EF%BC%8CNIO%EF%BC%88No-Blocking-I-O%EF%BC%89"><span class="nav-text">同步非阻塞I&#x2F;O，NIO（No Blocking I&#x2F;O）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#I-O-%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8"><span class="nav-text">I&#x2F;O 多路复用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%A1%E5%8F%B7%E9%A9%B1%E5%8A%A8%E5%BC%8FI-O"><span class="nav-text">信号驱动式I&#x2F;O</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%82%E6%AD%A5-I-O%EF%BC%8CAIO%EF%BC%88Asynchronous-I-O%EF%BC%89"><span class="nav-text">异步 I&#x2F;O，AIO（Asynchronous I&#x2F;O）</span></a></li></ol></li></ol></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+            <div class="customize-info my-1">2024 Java+AI技术分享版权所有</div>
+        
+        
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+
+        
+            <div class="icp-info my-1"><a target="_blank" rel="nofollow" href="
+                
+                    https://beian.miit.gov.cn/
+                
+                ">粤ICP备2024326496号-1</a></div>
+        
+        
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+    
+<script src="/js/libs/anime.min.js"></script>
+
+
+
+
+
+    
+<script src="/js/tools/tocToggle.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/layouts/toc.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/plugins/tabs.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+<script src="/js/libs/moment-with-locales.min.js" data-swup-reload-script=""></script>
+
+
+<script src="/js/layouts/essays.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+</body>
+</html>

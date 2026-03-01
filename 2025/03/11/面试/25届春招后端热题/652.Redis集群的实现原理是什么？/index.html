@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Sherwin.Wei">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2025/03/11/面试/25届春招后端热题/652.redis集群的实现原理是什么？/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="Redis 集群的实现原理是什么？回答重点Redis 集群（Redis cluster）是通过多个 Redis 实例组成的，每个实例存储部分的数据（即每个实例之间的数据是不重复的）。 具体是采用哈希槽（Hash Slot）机制来分配数据，将整个键空间划分为 16384 个槽（slots）。每个 Redis 实例负责一定范围的哈希槽，数据的 key 经过哈希函数计算后对 16384 取余即可定位到对">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis 集群的实现原理是什么？">
+<meta property="og:url" content="http://example.com/2025/03/11/%E9%9D%A2%E8%AF%95/25%E5%B1%8A%E6%98%A5%E6%8B%9B%E5%90%8E%E7%AB%AF%E7%83%AD%E9%A2%98/652.Redis%E9%9B%86%E7%BE%A4%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Redis 集群的实现原理是什么？回答重点Redis 集群（Redis cluster）是通过多个 Redis 实例组成的，每个实例存储部分的数据（即每个实例之间的数据是不重复的）。 具体是采用哈希槽（Hash Slot）机制来分配数据，将整个键空间划分为 16384 个槽（slots）。每个 Redis 实例负责一定范围的哈希槽，数据的 key 经过哈希函数计算后对 16384 取余即可定位到对">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/38YpNUp2_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/WBPKpihe_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/BcRJEuQs_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783397053004488705/haUOUZwG_mianshiya.jpg">
+<meta property="article:published_time" content="2025-03-10T16:01:02.000Z">
+<meta property="article:modified_time" content="2025-03-10T16:01:02.977Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="后端">
+<meta property="article:tag" content="Redis">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/38YpNUp2_image_mianshiya.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/javai-avatar.png" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/javai-avatar.png">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/javai-avatar.png">
+    <!--- Page Info-->
+    
+    <title>
+        
+            Redis 集群的实现原理是什么？ | javai
+        
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    <!--- Inject Part-->
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css">
+
+    
+<link rel="stylesheet" href="/fonts/Geist/geist.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+    
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":false,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"java与ai","subtitle":{"text":["java与ai结合一定会更强更远!","今日事，今天毕!","明天会更好！","一个人可以走的很快，但是一群人却可以走的更远。","今人不见古时月，今月曾经照古人。"],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"style":"default","links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.7.3","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"面试":{"path":"/categories/面试/","icon":"fa-regular paper-plane"},"chat":{"path":"/chat","icon":"fa-regular wechat"},"learn":{"path":"/learn","icon":"fa-regular users"},"国学":{"path":"/guoxue"},"智医":{"path":"/zhiyi"},"五行":{"path":"/wuxing"},"关于我":{"path":"/aboutme","icon":"fa-regular user"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":null},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}}};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container flex flex-col justify-between min-h-dvh">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container px-6 md:px-12">
+    <div class="navbar-content transition-navbar ">
+        <div class="left">
+            
+                <a class="logo-image h-8 w-8 sm:w-10 sm:h-10 mr-3" href="/">
+                    <img src="/images/javai-avatar.png" class="w-full h-full rounded-sm">
+                </a>
+            
+            <a class="logo-title" href="/">
+                
+                javai
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/categories/%E9%9D%A2%E8%AF%95/"
+                                        >
+                                    <i class="fa-regular paper-plane fa-fw"></i>
+                                    面试
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/chat"
+                                        >
+                                    <i class="fa-regular wechat fa-fw"></i>
+                                    CHAT
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/learn"
+                                        >
+                                    <i class="fa-regular users fa-fw"></i>
+                                    LEARN
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/guoxue"
+                                        >
+                                    
+                                    国学
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/zhiyi"
+                                        >
+                                    
+                                    智医
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/wuxing"
+                                        >
+                                    
+                                    五行
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/aboutme"
+                                        >
+                                    <i class="fa-regular user fa-fw"></i>
+                                    关于我
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/categories/%E9%9D%A2%E8%AF%95/"
+                        >
+                            <span>
+                                面试
+                            </span>
+                            
+                                <i class="fa-regular paper-plane fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/chat"
+                        >
+                            <span>
+                                CHAT
+                            </span>
+                            
+                                <i class="fa-regular wechat fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/learn"
+                        >
+                            <span>
+                                LEARN
+                            </span>
+                            
+                                <i class="fa-regular users fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/guoxue"
+                        >
+                            <span>
+                                国学
+                            </span>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/zhiyi"
+                        >
+                            <span>
+                                智医
+                            </span>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/wuxing"
+                        >
+                            <span>
+                                五行
+                            </span>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/aboutme"
+                        >
+                            <span>
+                                关于我
+                            </span>
+                            
+                                <i class="fa-regular user fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+
+            
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">87</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">36</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">531</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                <div class="w-full flex items-center pt-6 justify-start">
+                    <h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">Redis 集群的实现原理是什么？</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/javai-avatar.png">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">Sherwin.Wei</span>
+                        
+                            <span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv8</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2025-03-11 00:01:02</span>
+        <span class="mobile">2025-03-11 00:01:02</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2025-03-11 00:01:02</span>
+            <span class="mobile">2025-03-11 00:01:02</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E9%9D%A2%E8%AF%95/">面试</a>&nbsp;
+                        </li>
+                    
+                    
+                
+                    
+                        <li>
+                            | <a href="/categories/25-%E5%B1%8A%E6%98%A5%E6%8B%9B%E5%90%8E%E7%AB%AF%E7%83%AD%E9%A2%98/">25 届春招后端热题</a>&nbsp;
+                        </li>
+                    
+                    
+                
+                    
+                        <li>
+                            | <a href="/categories/Redis-%E9%9D%A2%E8%AF%95%E9%A2%98/">Redis 面试题</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E5%90%8E%E7%AB%AF/">后端</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/Redis/">Redis</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <h1 id="Redis-集群的实现原理是什么？"><a href="#Redis-集群的实现原理是什么？" class="headerlink" title="Redis 集群的实现原理是什么？"></a>Redis 集群的实现原理是什么？</h1><h2 id="回答重点"><a href="#回答重点" class="headerlink" title="回答重点"></a>回答重点</h2><p>Redis 集群（Redis cluster）是通过多个 Redis 实例组成的，<strong>每个实例存储部分的数据（即每个实例之间的数据是不重复的）</strong>。</p>
+<p>具体是采用哈希槽（Hash Slot）机制来分配数据，将整个键空间划分为 16384 个槽（slots）。每个 Redis 实例负责一定范围的哈希槽，数据的 key 经过哈希函数计算后对 16384 取余即可定位到对应的节点。</p>
+<p>客户端在发送请求时，会通过集群的任意节点进行连接，如果该节点存储了对应的数据则直接返回，反之该节点会根据请求的键值计算哈希槽并路由到正确的节点。</p>
+<p>简单来说，集群就是通过多台机器分担单台机器上的压力。</p>
+<p>（<strong>如果不理解集群原理，可以看下扩展知识中的两个示例</strong>）</p>
+<h2 id="扩展知识"><a href="#扩展知识" class="headerlink" title="扩展知识"></a>扩展知识</h2><h3 id="Redis-集群中节点之间的信息如何同步？"><a href="#Redis-集群中节点之间的信息如何同步？" class="headerlink" title="Redis 集群中节点之间的信息如何同步？"></a>Redis 集群中节点之间的信息如何同步？</h3><p>Redis 集群内每个节点都会保存集群的完整拓扑信息，包括每个节点的 ID、IP 地址、端口、负责的哈希槽范围等。</p>
+<p>节点之间使用 Gossip 协议进行状态交换，以保持集群的一致性和故障检测。每个节点会周期性地发送 PING 和 PONG 消息，交换集群信息，使得集群信息得以同步。</p>
+<p><strong>Gossip 的优点</strong>：</p>
+<ul>
+<li><strong>快速收敛</strong>：Gossip 协议能够快速传播信息，确保集群状态的迅速更新。</li>
+<li><strong>降低网络负担</strong>：由于信息是以随机节点间的对话方式传播，避免了集中式的状态查询，从而降低了网络流量。</li>
+</ul>
+<h3 id="Gossip-协议"><a href="#Gossip-协议" class="headerlink" title="Gossip 协议"></a>Gossip 协议</h3><p><strong>Gossip 主要特点</strong>：</p>
+<ol>
+<li><strong>分布式信息传播</strong>：每个节点定期向其他节点发送其状态信息，确保所有节点对集群的状态有一致的视图。</li>
+<li><strong>低延迟和高效率</strong>：Gossip 协议设计为轻量级的通信方式，能够快速传播信息，减少单点故障带来的风险。</li>
+<li><strong>去中心化</strong>：没有中心节点，所有节点平等地参与信息传播，提高了系统的鲁棒性。</li>
+</ol>
+<p><strong>工作原理</strong>：</p>
+<ol>
+<li><strong>状态报告</strong>：每个节点在特定的时间间隔内，向随机选择的其他节点发送其自身的状态信息，包括节点的主从关系、槽位分布等。</li>
+<li><strong>信息更新</strong>：接收到状态信息的节点会根据所接收到的数据更新自己的状态，并将更新后的状态继续传播给其他节点。</li>
+<li><strong>节点检测</strong>：通过周期性交换状态信息，节点可以检测到其他节点的存活状态。如果某个节点未能在预定时间内响应，则该节点会被标记为故障节点。</li>
+<li><strong>容错处理</strong>：在检测到节点故障后，集群中的其他节点可以采取措施（如重新分配槽位）以保持系统的高可用性。</li>
+</ol>
+<h3 id="Redis-集群分片原理图示"><a href="#Redis-集群分片原理图示" class="headerlink" title="Redis 集群分片原理图示"></a>Redis 集群分片原理图示</h3><p>Redis 集群会将数据分散到 16384 （2 ^ 14）个哈希槽中，集群中的每个节点负责一定范围的哈希槽，在 Redis 集群中，使用 CRC16 哈希算法计算键的哈希槽，以确定该键应存储在哪个节点。</p>
+<p>集群哈希槽分片如下图所示：</p>
+<p align="center"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/38YpNUp2_image_mianshiya.png"
+                      alt="image.png" width="585" 
+                ></p>
+
+<p>每个节点会拥有一部分的槽位，然后对应的键值会根据其本身的 key，映射到一个哈希槽中，其主要流程如下：</p>
+<ul>
+<li>根据键值的 key，按照 CRC 16 算法计算一个 16 bit 的值，然后将 16 bit 的值对 16384 进行取余运算，最后得到一个对应的哈希槽编号。</li>
+<li>根据每个节点分配的哈希槽区间，对应编号的数据落在对应的区间上，就能找到对应的分片实例。</li>
+</ul>
+<p>为了方便大家理解，我这里画一个对应的关系图，以三个节点为例：</p>
+<p align="center"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/WBPKpihe_image_mianshiya.png"
+                      alt="image.png" width="600" 
+                ></p>
+
+<p>这里还有一点需要强调下，redis 客户端可以访问集群中任意一台实例，正常情况下这个实例包含这个数据。</p>
+<p>但如果槽被转移了，客户端还未来得及更新槽的信息，当前实例没有这个数据，则返回 MOVED 响应给客户端，将其重定向到对应的实例（因 Gossip 集群内每个节点都会保存集群的完整拓扑信息）</p>
+<h3 id="Redis-集群中存储-key-示例"><a href="#Redis-集群中存储-key-示例" class="headerlink" title="Redis 集群中存储 key 示例"></a>Redis 集群中存储 key 示例</h3><p>假设我们有一个 Redis 集群，包含三个主节点（Node1、Node2、Node3），它们分别负责以下哈希槽：</p>
+<ul>
+<li>Node1: 哈希槽 0-5460</li>
+<li>Node2: 哈希槽 5461-10922</li>
+<li>Node3: 哈希槽 10923-16383</li>
+</ul>
+<p>现在要存储一个键为 <code>user:1001</code> 的数据。</p>
+<h4 id="计算哈希槽"><a href="#计算哈希槽" class="headerlink" title="计算哈希槽"></a>计算哈希槽</h4><ol>
+<li>使用 CRC16 哈希算法计算 <code>user:1001</code> 的 CRC16 值。</li>
+<li>假设计算结果为 12345。</li>
+<li>然后，计算该值对应的哈希槽：<ul>
+<li>哈希槽 &#x3D; 12345 % 16384 &#x3D; 12345。</li>
+</ul>
+</li>
+</ol>
+<h4 id="确定目标节点"><a href="#确定目标节点" class="headerlink" title="确定目标节点"></a>确定目标节点</h4><ul>
+<li>12345 落在 Node3 的负责范围（10923-16383），因此，<code>user:1001</code> 会被存储在 Node3 中。</li>
+</ul>
+<h3 id="Redis-集群中请求-key-示例（客户端直接连接的并不是对应-key-的节点）"><a href="#Redis-集群中请求-key-示例（客户端直接连接的并不是对应-key-的节点）" class="headerlink" title="Redis 集群中请求 key 示例（客户端直接连接的并不是对应 key 的节点）"></a>Redis 集群中请求 key 示例（客户端直接连接的并不是对应 key 的节点）</h3><p>如果客户端连接的是集群的 Node1，但需要访问存储在 Node3 的键 <code>user:1001</code>，查询过程如下：</p>
+<h4 id="查询过程"><a href="#查询过程" class="headerlink" title="查询过程"></a>查询过程</h4><p>1）<strong>计算哈希槽</strong>：</p>
+<ul>
+<li>客户端使用 CRC16 算法计算 <code>user:1001</code> 的哈希值（假设为 12345）。</li>
+<li>计算哈希槽：12345 % 16384 &#x3D; 12345。</li>
+</ul>
+<p>2）<strong>查询请求</strong>：</p>
+<ul>
+<li>因为客户端连接的是集群中的 node1，所以客户端发送查询命令 <code>GET user:1001</code> 到 Node1。</li>
+</ul>
+<p>3）<strong>Node1 响应</strong>：</p>
+<ul>
+<li>Node1 检测到请求的键 <code>user:1001</code> 属于 Node3，返回一个 <code>MOVED</code> 错误，指示客户端请求的键在另一个节点上。<code>MOVED</code> 错误会中返回目标节点的信息（例如，Node3 的 IP 和端口）</li>
+</ul>
+<p>4）<strong>重新连接</strong>：</p>
+<ul>
+<li>客户端根据返回的目标节点信息，建立与 Node3 的连接。</li>
+</ul>
+<p>5）<strong>再次发送查询请求</strong>：</p>
+<ul>
+<li>客户端向 Node3 发送 <code>GET user:1001</code>。</li>
+</ul>
+<p>6）<strong>获取结果</strong>：</p>
+<ul>
+<li>Node3 查询到 <code>user:1001</code> 的值（假设为 <code>&#123;&quot;name&quot;: &quot;面试鸭&quot;, &quot;age&quot;: 18&#125;</code>），并返回结果。</li>
+</ul>
+<h3 id="为什么-Redis-哈希槽节点的数目是-16384-呢？"><a href="#为什么-Redis-哈希槽节点的数目是-16384-呢？" class="headerlink" title="为什么 Redis 哈希槽节点的数目是 16384 呢？"></a>为什么 Redis 哈希槽节点的数目是 16384 呢？</h3><p>github 上有人向作者提问过：</p>
+<p align="center"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/BcRJEuQs_image_mianshiya.png"
+                      alt="image.png" width="598" 
+                ></p>
+
+<p>简单总结分析一下：</p>
+<p><strong>1）首先是消息大小的考虑</strong>。</p>
+<p>正常的心跳包需要带上节点完整配置数据，心跳还是比较频繁的，所以需要考虑数据包的大小，如果使用 16384 数据包只要 2k，如果用了 65535 则需要 8k。</p>
+<p>实际上槽位信息使用一个长度为 16384 位的数组来表示，节点拥有哪个槽位，就将对应位置的数据信息设置为 1，否则为 0。</p>
+<p>心跳数据包就包含槽位信息如下图所示：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783397053004488705/haUOUZwG_mianshiya.jpg"
+                      alt="下载.jpg" width="627" 
+                >
+
+<p>这里我们看到一个重点，即在消息头中最占空间的是 myslots[CLUSTER_SLOTS&#x2F;8]。 </p>
+<ul>
+<li>当槽位为65536时，这块的大小是: 65536÷8÷1024&#x3D;8kb </li>
+<li>当槽位为16384时，这块的大小是: 16384÷8÷1024&#x3D;2kb</li>
+</ul>
+<p>如果槽位为 65536 ，这个 ping 消息的消息头就太大了，浪费带宽。</p>
+<p>2）<strong>集群规模的考虑</strong>。</p>
+<p>集群不太可能会扩展超过 1000 个节点，16384 够用且使得每个分片下的槽又不会太少。</p>
+
+        </div>
+
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/%E5%90%8E%E7%AB%AF/">#后端</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/Redis/">#Redis</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2025/03/11/%E9%9D%A2%E8%AF%95/25%E5%B1%8A%E6%98%A5%E6%8B%9B%E5%90%8E%E7%AB%AF%E7%83%AD%E9%A2%98/649.Redis%E5%9C%A8%E7%94%9F%E6%88%90RDB%E6%96%87%E4%BB%B6%E6%97%B6%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E8%AF%B7%E6%B1%82%EF%BC%9F/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">Redis 在生成 RDB 文件时如何处理请求？</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2025/03/11/%E9%9D%A2%E8%AF%95/25%E5%B1%8A%E6%98%A5%E6%8B%9B%E5%90%8E%E7%AB%AF%E7%83%AD%E9%A2%98/651.Redis%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">Redis 主从复制的实现原理是什么？</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+                <div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="gitalk-container"></div>
+    <script data-swup-reload-script
+            src="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js"></script>
+    <script data-swup-reload-script>
+
+        function loadGitalk() {
+            let __gitalk__pathname = decodeURI(location.pathname);
+            const __gitalk__pathnameLength = __gitalk__pathname.length;
+            const __gitalk__pathnameMaxLength = 50;
+            if (__gitalk__pathnameLength > __gitalk__pathnameMaxLength) {
+                __gitalk__pathname = __gitalk__pathname.substring(0, __gitalk__pathnameMaxLength - 3) + '...';
+            }
+
+            try {
+                Gitalk && new Gitalk({
+                    clientID: 'Ov23liThu5oe4YmmlNAw',
+                    clientSecret: 'bdde0e1d1af3b4e01fc6e172c7926c42ee09e8d3',
+                    repo: 'javai-comment',
+                    owner: 'sherwin28',
+                    admin: ['sherwin28'],
+                    id: __gitalk__pathname,
+                    language: 'en',
+                    proxy: 'https://github.com/login/oauth/access_token'
+                }).render('gitalk-container');
+
+            } catch (e) {
+                window.Gitalk = null;
+            }
+        }
+
+        if ('true') {
+            const loadGitalkTimeout = setTimeout(() => {
+                loadGitalk();
+                clearTimeout(loadGitalkTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadGitalk);
+        }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">Redis 集群的实现原理是什么？</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis-%E9%9B%86%E7%BE%A4%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-text">Redis 集群的实现原理是什么？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9E%E7%AD%94%E9%87%8D%E7%82%B9"><span class="nav-text">回答重点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E7%9F%A5%E8%AF%86"><span class="nav-text">扩展知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis-%E9%9B%86%E7%BE%A4%E4%B8%AD%E8%8A%82%E7%82%B9%E4%B9%8B%E9%97%B4%E7%9A%84%E4%BF%A1%E6%81%AF%E5%A6%82%E4%BD%95%E5%90%8C%E6%AD%A5%EF%BC%9F"><span class="nav-text">Redis 集群中节点之间的信息如何同步？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Gossip-%E5%8D%8F%E8%AE%AE"><span class="nav-text">Gossip 协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis-%E9%9B%86%E7%BE%A4%E5%88%86%E7%89%87%E5%8E%9F%E7%90%86%E5%9B%BE%E7%A4%BA"><span class="nav-text">Redis 集群分片原理图示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis-%E9%9B%86%E7%BE%A4%E4%B8%AD%E5%AD%98%E5%82%A8-key-%E7%A4%BA%E4%BE%8B"><span class="nav-text">Redis 集群中存储 key 示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis-%E9%9B%86%E7%BE%A4%E4%B8%AD%E8%AF%B7%E6%B1%82-key-%E7%A4%BA%E4%BE%8B%EF%BC%88%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%9B%B4%E6%8E%A5%E8%BF%9E%E6%8E%A5%E7%9A%84%E5%B9%B6%E4%B8%8D%E6%98%AF%E5%AF%B9%E5%BA%94-key-%E7%9A%84%E8%8A%82%E7%82%B9%EF%BC%89"><span class="nav-text">Redis 集群中请求 key 示例（客户端直接连接的并不是对应 key 的节点）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88-Redis-%E5%93%88%E5%B8%8C%E6%A7%BD%E8%8A%82%E7%82%B9%E7%9A%84%E6%95%B0%E7%9B%AE%E6%98%AF-16384-%E5%91%A2%EF%BC%9F"><span class="nav-text">为什么 Redis 哈希槽节点的数目是 16384 呢？</span></a></li></ol></li></ol></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+            <div class="customize-info my-1">2024 Java+AI技术分享版权所有</div>
+        
+        
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+
+        
+            <div class="icp-info my-1"><a target="_blank" rel="nofollow" href="
+                
+                    https://beian.miit.gov.cn/
+                
+                ">粤ICP备2024326496号-1</a></div>
+        
+        
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+    
+<script src="/js/libs/anime.min.js"></script>
+
+
+
+
+
+    
+<script src="/js/tools/tocToggle.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/layouts/toc.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/plugins/tabs.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+<script src="/js/libs/moment-with-locales.min.js" data-swup-reload-script=""></script>
+
+
+<script src="/js/layouts/essays.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+</body>
+</html>

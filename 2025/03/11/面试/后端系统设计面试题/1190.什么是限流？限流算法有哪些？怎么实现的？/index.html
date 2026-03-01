@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Sherwin.Wei">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2025/03/11/面试/后端系统设计面试题/1190.什么是限流？限流算法有哪些？怎么实现的？/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="什么是限流？限流算法有哪些？怎么实现的？限流是什么？首先来解释下什么是限流？ 在日常生活中限流很常见，例如去有些景区玩，每天售卖的门票数是有限的，例如 2000 张，即每天最多只有 2000 个人能进去游玩。 那在我们工程上限流是什么呢？限制的是 「流」，在不同场景下「流」的定义不同，可以是每秒请求数、每秒事务处理数、网络流量等等。 而通常我们说的限流指代的是 限制到达系统的并发请求数，使得系统能">
+<meta property="og:type" content="article">
+<meta property="og:title" content="什么是限流？限流算法有哪些？怎么实现的？">
+<meta property="og:url" content="http://example.com/2025/03/11/%E9%9D%A2%E8%AF%95/%E5%90%8E%E7%AB%AF%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E9%9D%A2%E8%AF%95%E9%A2%98/1190.%E4%BB%80%E4%B9%88%E6%98%AF%E9%99%90%E6%B5%81%EF%BC%9F%E9%99%90%E6%B5%81%E7%AE%97%E6%B3%95%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F%E6%80%8E%E4%B9%88%E5%AE%9E%E7%8E%B0%E7%9A%84%EF%BC%9F/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="什么是限流？限流算法有哪些？怎么实现的？限流是什么？首先来解释下什么是限流？ 在日常生活中限流很常见，例如去有些景区玩，每天售卖的门票数是有限的，例如 2000 张，即每天最多只有 2000 个人能进去游玩。 那在我们工程上限流是什么呢？限制的是 「流」，在不同场景下「流」的定义不同，可以是每秒请求数、每秒事务处理数、网络流量等等。 而通常我们说的限流指代的是 限制到达系统的并发请求数，使得系统能">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/YvxdiYAZ_38916fd5-738e-4aef-bcd7-ce3af22b3a80_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/3tgCVGcB_c7a6c27b-a48e-425f-90a8-e4150a83a385_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/sen3Qjwr_8f27ba51-0cb2-420d-a373-569b8131524e_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/Ia3NosAE_146f5031-9585-4927-b11c-b9e65144e9c5_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/wLb4WlNK_7bd3fd2a-21fc-4f13-8606-176d43054398_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/31WdyicI_aed82931-7d6e-4ac9-b2d0-cbbe57d60cdf_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/lrTevRiH_058fd464-1f25-42a6-a015-94c1094c8f04_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/R0howLAG_620049ad-8a55-464c-a717-6ff31a4bd905_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/uomus52U_c30112aa-ed3d-40c1-a529-71367208560e_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/BHdlF5sY_0d3faa35-e04f-492e-9f70-a9f33450aafe_mianshiya.png">
+<meta property="article:published_time" content="2025-03-10T16:01:03.000Z">
+<meta property="article:modified_time" content="2025-03-10T16:01:03.105Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="系统设计">
+<meta property="article:tag" content="后端">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/YvxdiYAZ_38916fd5-738e-4aef-bcd7-ce3af22b3a80_mianshiya.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/javai-avatar.png" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/javai-avatar.png">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/javai-avatar.png">
+    <!--- Page Info-->
+    
+    <title>
+        
+            什么是限流？限流算法有哪些？怎么实现的？ | javai
+        
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    <!--- Inject Part-->
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css">
+
+    
+<link rel="stylesheet" href="/fonts/Geist/geist.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+    
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":false,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"java与ai","subtitle":{"text":["java与ai结合一定会更强更远!","今日事，今天毕!","明天会更好！","一个人可以走的很快，但是一群人却可以走的更远。","今人不见古时月，今月曾经照古人。"],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"style":"default","links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.7.3","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"面试":{"path":"/categories/面试/","icon":"fa-regular paper-plane"},"chat":{"path":"/chat","icon":"fa-regular wechat"},"learn":{"path":"/learn","icon":"fa-regular users"},"国学":{"path":"/guoxue"},"智医":{"path":"/zhiyi"},"五行":{"path":"/wuxing"},"关于我":{"path":"/aboutme","icon":"fa-regular user"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":null},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}}};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container flex flex-col justify-between min-h-dvh">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container px-6 md:px-12">
+    <div class="navbar-content transition-navbar ">
+        <div class="left">
+            
+                <a class="logo-image h-8 w-8 sm:w-10 sm:h-10 mr-3" href="/">
+                    <img src="/images/javai-avatar.png" class="w-full h-full rounded-sm">
+                </a>
+            
+            <a class="logo-title" href="/">
+                
+                javai
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/categories/%E9%9D%A2%E8%AF%95/"
+                                        >
+                                    <i class="fa-regular paper-plane fa-fw"></i>
+                                    面试
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/chat"
+                                        >
+                                    <i class="fa-regular wechat fa-fw"></i>
+                                    CHAT
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/learn"
+                                        >
+                                    <i class="fa-regular users fa-fw"></i>
+                                    LEARN
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/guoxue"
+                                        >
+                                    
+                                    国学
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/zhiyi"
+                                        >
+                                    
+                                    智医
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/wuxing"
+                                        >
+                                    
+                                    五行
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/aboutme"
+                                        >
+                                    <i class="fa-regular user fa-fw"></i>
+                                    关于我
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/categories/%E9%9D%A2%E8%AF%95/"
+                        >
+                            <span>
+                                面试
+                            </span>
+                            
+                                <i class="fa-regular paper-plane fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/chat"
+                        >
+                            <span>
+                                CHAT
+                            </span>
+                            
+                                <i class="fa-regular wechat fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/learn"
+                        >
+                            <span>
+                                LEARN
+                            </span>
+                            
+                                <i class="fa-regular users fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/guoxue"
+                        >
+                            <span>
+                                国学
+                            </span>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/zhiyi"
+                        >
+                            <span>
+                                智医
+                            </span>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/wuxing"
+                        >
+                            <span>
+                                五行
+                            </span>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/aboutme"
+                        >
+                            <span>
+                                关于我
+                            </span>
+                            
+                                <i class="fa-regular user fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+
+            
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">87</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">36</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">531</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                <div class="w-full flex items-center pt-6 justify-start">
+                    <h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">什么是限流？限流算法有哪些？怎么实现的？</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/javai-avatar.png">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">Sherwin.Wei</span>
+                        
+                            <span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv8</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2025-03-11 00:01:03</span>
+        <span class="mobile">2025-03-11 00:01:03</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2025-03-11 00:01:03</span>
+            <span class="mobile">2025-03-11 00:01:03</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E9%9D%A2%E8%AF%95/">面试</a>&nbsp;
+                        </li>
+                    
+                    
+                
+                    
+                        <li>
+                            | <a href="/categories/%E5%90%8E%E7%AB%AF%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E9%9D%A2%E8%AF%95%E9%A2%98/">后端系统设计面试题</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/">系统设计</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E5%90%8E%E7%AB%AF/">后端</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <h1 id="什么是限流？限流算法有哪些？怎么实现的？"><a href="#什么是限流？限流算法有哪些？怎么实现的？" class="headerlink" title="什么是限流？限流算法有哪些？怎么实现的？"></a>什么是限流？限流算法有哪些？怎么实现的？</h1><h1 id="限流是什么？"><a href="#限流是什么？" class="headerlink" title="限流是什么？"></a>限流是什么？</h1><p>首先来解释下什么是限流？</p>
+<p>在日常生活中限流很常见，例如去有些景区玩，每天售卖的门票数是有限的，例如 2000 张，即每天最多只有 2000 个人能进去游玩。</p>
+<p>那在我们工程上限流是什么呢？限制的是 「流」，在不同场景下「流」的定义不同，可以是每秒请求数、每秒事务处理数、网络流量等等。</p>
+<p>而通常我们说的限流指代的是 <strong>限制到达系统的并发请求数</strong>，使得系统能够正常的处理 <strong>部分</strong> 用户的请求，来保证系统的稳定性。</p>
+<p>限流不可避免的会造成用户的请求变慢或者被拒的情况，从而会影响用户体验。</p>
+<p>因此限流是需要在用户体验和系统稳定性之间做平衡的，即我们常说的 <code>trade off</code>。</p>
+<p>对了，限流也称流控（流量控制）。</p>
+<h1 id="为什么要限流？"><a href="#为什么要限流？" class="headerlink" title="为什么要限流？"></a>为什么要限流？</h1><p>前面，我们提到限流是为了保证系统的稳定性。</p>
+<p>日常的业务上有类似<strong>秒杀活动、双十一大促或者突发新闻</strong>等场景，用户的流量突增，<strong>后端服务的处理能力是有限的</strong>，如果不能处理好突发流量，后端服务很容易就被打垮。</p>
+<p>亦或是爬虫等<strong>不正常流量</strong>，我们对外暴露的服务都要以<strong>最大恶意去防备</strong>调用者。</p>
+<p>我们不清楚调用者会如何调用我们的服务，假设某个调用者开几十个线程一天二十四小时疯狂调用你的服务，如果不做啥处理咱服务也算完了，更胜的还有DDos攻击。</p>
+<p>还有对于很多第三方开放平台来说，不仅仅要防备不正常流量，还要保证资源的公平利用，一些接口都免费给你用了，资源都不可能一直都被你占着吧，别人也得调的。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/YvxdiYAZ_38916fd5-738e-4aef-bcd7-ce3af22b3a80_mianshiya.png"
+                      alt="企业微信截图_38916fd5-738e-4aef-bcd7-ce3af22b3a80.png" width="100%" 
+                >
+
+<p><strong>当然加钱的话好商量</strong>。</p>
+<blockquote>
+<p>小结一下</p>
+</blockquote>
+<p>限流的本质是因为后端处理能力有限，需要截掉超过处理能力之外的请求，亦或是为了均衡客户端对服务端资源的公平调用，防止一些客户端饿死。</p>
+<h1 id="常见的限流算法"><a href="#常见的限流算法" class="headerlink" title="常见的限流算法"></a>常见的限流算法</h1><p>有关限流算法我给出了对应的图解和相关伪代码，有些人喜欢看图，有些人更喜欢看代码。</p>
+<h2 id="计数限流"><a href="#计数限流" class="headerlink" title="计数限流"></a>计数限流</h2><p>最简单的限流算法就是计数限流了。</p>
+<p>例如系统能同时处理 100 个请求，保存一个计数器，处理了一个请求，计数器就加一，一个请求处理完毕之后计数器减一。</p>
+<p>每次请求来的时候看看计数器的值，如果超过阈值就拒绝。</p>
+<p>非常简单粗暴，计数器的值要是存内存中就算单机限流算法。</p>
+<p>如果放在第三方存储里，例如 Redis 中，集群机器访问就算分布式限流算法。</p>
+<p>优点就是：简单粗暴，单机在 Java 中可用 Atomic 等原子类、分布式就 Redis incr。</p>
+<p>缺点就是：假设我们允许的阈值是1万，此时计数器的值为 0， 当 1 万个请求在前 1 秒内一股脑儿的都涌进来，这突发的流量可是顶不住的。</p>
+<p>缓缓地增加流量处理和一下子涌入对于程序来说是不一样的。</p>
+<p align="center"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/3tgCVGcB_c7a6c27b-a48e-425f-90a8-e4150a83a385_mianshiya.png"
+                      alt="企业微信截图_c7a6c27b-a48e-425f-90a8-e4150a83a385.png" width="376" 
+                ></p>
+
+<p>而且一般的限流都是为了限制在指定时间间隔内的访问量，因此还有个算法叫固定窗口。</p>
+<h2 id="固定窗口限流"><a href="#固定窗口限流" class="headerlink" title="固定窗口限流"></a>固定窗口限流</h2><p>它相比于计数限流主要是多了个时间窗口的概念，计数器每过一个时间窗口就重置。<br>规则如下：</p>
+<ul>
+<li>请求次数小于阈值，允许访问并且计数器 +1；</li>
+<li>请求次数大于阈值，拒绝访问；</li>
+<li>这个时间窗口过了之后，计数器清零；</li>
+</ul>
+<p align="center"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/sen3Qjwr_8f27ba51-0cb2-420d-a373-569b8131524e_mianshiya.png"
+                      alt="企业微信截图_8f27ba51-0cb2-420d-a373-569b8131524e.png" width="436" 
+                ></p>
+
+<p>看起来好像很完美，实际上还是有缺陷的。</p>
+<h3 id="固定窗口临界问题"><a href="#固定窗口临界问题" class="headerlink" title="固定窗口临界问题"></a>固定窗口临界问题</h3><p>假设系统每秒允许 100 个请求，假设第一个时间窗口是 0-1s，在第 0.55s 处一下次涌入 100 个请求，过了 1 秒的时间窗口后计数清零，此时在 1.05 s 的时候又一下次涌入100个请求。</p>
+<p>虽然窗口内的计数没超过阈值，但是全局来看在 0.55s-1.05s 这 0.5 秒内涌入了 200 个请求，这其实对于阈值是 100&#x2F;s 的系统来说是无法接受的。</p>
+<p align="center">
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/Ia3NosAE_146f5031-9585-4927-b11c-b9e65144e9c5_mianshiya.png"
+                      alt="企业微信截图_146f5031-9585-4927-b11c-b9e65144e9c5.png" width="298" 
+                ></p>
+
+<p>为了解决这个问题引入了滑动窗口限流。</p>
+<h2 id="滑动窗口限流"><a href="#滑动窗口限流" class="headerlink" title="滑动窗口限流"></a>滑动窗口限流</h2><p>滑动窗口限流解决固定窗口临界值的问题，可以保证在任意时间窗口内都不会超过阈值。</p>
+<p>相对于固定窗口，滑动窗口除了需要引入计数器之外还需要记录时间窗口内每个请求到达的时间点，因此<strong>对内存的占用会比较多</strong>。</p>
+<p>规则如下，假设时间窗口为 1 秒：</p>
+<ul>
+<li>记录每次请求的时间</li>
+<li>统计每次请求的时间 至 往前推1秒这个时间窗口内请求数，并且 1 秒前的数据可以删除。</li>
+<li>统计的请求数小于阈值就记录这个请求的时间，并允许通过，反之拒绝。</li>
+</ul>
+<p align="center"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/wLb4WlNK_7bd3fd2a-21fc-4f13-8606-176d43054398_mianshiya.png"
+                      alt="企业微信截图_7bd3fd2a-21fc-4f13-8606-176d43054398.png" width="308" 
+                ></p>
+
+<p align="center"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/31WdyicI_aed82931-7d6e-4ac9-b2d0-cbbe57d60cdf_mianshiya.png"
+                      alt="企业微信截图_aed82931-7d6e-4ac9-b2d0-cbbe57d60cdf.png" width="561" 
+                ></p>
+
+<p>但是滑动窗口和固定窗口都<strong>无法解决短时间之内集中流量的突击</strong>。</p>
+<p>我们所想的限流场景是：</p>
+<p>每秒限制 100 个请求。希望请求每 10ms 来一个，这样我们的流量处理就很平滑，但是真实场景很难控制请求的频率，因此可能存在 5ms 内就打满了阈值的情况。</p>
+<p>当然对于这种情况还是有变型处理的，例如设置多条限流规则。不仅限制每秒 100 个请求，再设置每  10ms 不超过 2 个。</p>
+<p>再多说一句，这个<strong>滑动窗口可与TCP的滑动窗口不一样</strong>。</p>
+<p>TCP的滑动窗口是接收方告知发送方自己能接多少“货”，然后发送方控制发送的速率。</p>
+<p>接下来再说说漏桶，它可以解决时间窗口类的痛点，使得流量更加平滑。</p>
+<h2 id="漏桶算法"><a href="#漏桶算法" class="headerlink" title="漏桶算法"></a>漏桶算法</h2><p>如下图所示，水滴持续滴入漏桶中，底部定速流出。</p>
+<p>如果水滴滴入的速率大于流出的速率，当存水超过桶的大小的时候就会溢出。</p>
+<p>规则如下：</p>
+<ul>
+<li>请求来了放入桶中</li>
+<li>桶内请求量满了拒绝请求</li>
+<li>服务定速从桶内拿请求处理</li>
+</ul>
+<p align="center"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/lrTevRiH_058fd464-1f25-42a6-a015-94c1094c8f04_mianshiya.png"
+                      alt="企业微信截图_058fd464-1f25-42a6-a015-94c1094c8f04.png" width="354" 
+                ></p>
+
+<p align="center"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/R0howLAG_620049ad-8a55-464c-a717-6ff31a4bd905_mianshiya.png"
+                      alt="企业微信截图_620049ad-8a55-464c-a717-6ff31a4bd905.png" width="561" 
+                ></p>
+
+<p>可以看到水滴对应的就是请求。</p>
+<p>它的特点就是<strong>宽进严出</strong>，无论请求多少，请求的速率有多大，都按照固定的速率流出，对应的就是服务按照固定的速率处理请求。</p>
+<p>看到这想到啥，是不是和消息队列思想有点像，削峰填谷。</p>
+<p>一般而言漏桶也是由队列来实现的，处理不过来的请求就排队，队列满了就开始拒绝请求。</p>
+<p>看到这又想到啥，<strong>线程池</strong>不就是这样实现的嘛？</p>
+<p>经过漏洞这么一过滤，请求就能平滑的流出，看起来很像很挺完美的？实际上它的优点也即缺点。</p>
+<p>面对突发请求，服务的处理速度和平时是一样的，这其实不是我们想要的。</p>
+<p>在面对突发流量我们希望在系统平稳的同时，提升用户体验即能更快的处理请求，而不是和正常流量一样，循规蹈矩的处理（看看，之前滑动窗口说流量不够平滑，现在太平滑了又不行，难搞啊）。</p>
+<p>而令牌桶在应对突击流量的时候，可以更加的“激进”。</p>
+<h2 id="令牌桶算法"><a href="#令牌桶算法" class="headerlink" title="令牌桶算法"></a>令牌桶算法</h2><p>令牌桶其实和漏桶的原理类似，只不过漏桶是<strong>定速地流出</strong>，而令牌桶是<strong>定速地往桶里塞入令牌</strong>，然后请求只有拿到了令牌才能通过，之后再被服务器处理。</p>
+<p>当然令牌桶的大小也是有限制的，假设桶里的令牌满了之后，定速生成的令牌会丢弃。</p>
+<p>规则：</p>
+<ul>
+<li>定速的往桶内放入令牌</li>
+<li>令牌数量超过桶的限制，丢弃</li>
+<li>请求来了先向桶内索要令牌，索要成功则通过被处理，反之拒绝</li>
+</ul>
+<p align="center"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/uomus52U_c30112aa-ed3d-40c1-a529-71367208560e_mianshiya.png"
+                      alt="企业微信截图_c30112aa-ed3d-40c1-a529-71367208560e.png" width="441" 
+                ></p>
+
+<p>看到这又想到什么？<strong>Semaphore 信号量啊</strong>，信号量可控制某个资源被同时访问的个数，其实和咱们拿令牌思想一样，一个是拿信号量，一个是拿令牌。</p>
+<p>只不过信号量用完了返还，而咱们令牌用了不归还，因为令牌会定时再填充。</p>
+<p>再来看看令牌桶的伪代码实现，可以看出和漏桶的区别就在于一个是加法，一个是减法。</p>
+<p align="center">
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/BHdlF5sY_0d3faa35-e04f-492e-9f70-a9f33450aafe_mianshiya.png"
+                      alt="企业微信截图_0d3faa35-e04f-492e-9f70-a9f33450aafe.png" width="561" 
+                ></p>
+
+<p>可以看出令牌桶在应对突发流量的时候，桶内假如有 100 个令牌，那么这 100 个令牌可以马上被取走，而不像漏桶那样匀速的消费。所以在<strong>应对突发流量的时候令牌桶表现的更佳</strong>。</p>
+<h3 id="小结令牌桶算法的优点"><a href="#小结令牌桶算法的优点" class="headerlink" title="小结令牌桶算法的优点"></a>小结令牌桶算法的优点</h3><p>1）<strong>平滑的流量控制</strong>：令牌桶算法能够平滑处理请求流量，避免了突发流量对系统造成的冲击。</p>
+<p>2）<strong>突发流量处理</strong>：由于桶的容量可以缓冲突发流量，系统可以在短时间内处理更多的请求，而不会立即拒绝。</p>
+<h3 id="令牌桶算法使用时的注意点："><a href="#令牌桶算法使用时的注意点：" class="headerlink" title="令牌桶算法使用时的注意点："></a>令牌桶算法使用时的注意点：</h3><p>1）<strong>桶容量的配置</strong>：</p>
+<ul>
+<li>如果桶的容量设置过小，可能会导致系统频繁地拒绝请求，从而影响用户体验。</li>
+<li>如果桶的容量设置过大，可能会导致系统在短时间内处理过多的请求，从而增加系统负担。</li>
+</ul>
+<p>2）<strong>令牌生成速率</strong>：</p>
+<ul>
+<li>令牌生成速率需要根据实际需求进行调整。如果速率设置过低，可能无法满足用户的请求；如果速率设置过高，可能会导致系统负担过重。</li>
+</ul>
+<h1 id="限流算法小结"><a href="#限流算法小结" class="headerlink" title="限流算法小结"></a>限流算法小结</h1><p>上面所述的算法其实只是这些算法最粗略的实现和最本质的思想，<strong>在工程上其实还是有很多变型的</strong>。</p>
+<p>从上面看来好像漏桶和令牌桶比时间窗口算法好多了，那时间窗口算法有什么用？</p>
+<p>并不是的，虽然漏桶和令牌桶对比时间窗口对流量的<strong>整形效果更佳</strong>，流量更加得平滑，但是也有各自的缺点（上面已经提到了一部分）。</p>
+<p>拿令牌桶来说，假设你没预热，那是不是上线时候桶里没令牌？没令牌请求过来不就直接拒了么？</p>
+<p>这就误杀了，明明系统没啥负载现在。</p>
+<p>再比如说请求的访问其实是随机的，假设令牌桶每20ms放入一个令牌，桶内初始没令牌，这请求就刚好在第一个20ms内有两个请求，再过20ms里面没请求，其实从40ms来看只有2个请求，应该都放行的，而有一个请求就直接被拒了。</p>
+<p>这就有可能造成很多请求的误杀，但是如果看监控曲线的话，好像流量很平滑，峰值也控制的很好。</p>
+<p>再拿漏桶来说，漏桶中请求是暂时存在桶内的，<strong>这其实不符合互联网业务低延迟的要求</strong>。</p>
+<p>所以漏桶和令牌桶其实比较适合<strong>阻塞式限流</strong>场景，即没令牌我就等着，这样就不会误杀了，而漏桶本就是等着，比较适合后台任务类的限流。</p>
+<p>而基于时间窗口的限流比较适合<strong>对时间敏感</strong>的场景，请求过不了您就快点儿告诉我，等的花儿都谢了。</p>
+<h1 id="单机限流和分布式限流"><a href="#单机限流和分布式限流" class="headerlink" title="单机限流和分布式限流"></a>单机限流和分布式限流</h1><p>本质上单机限流和分布式限流的区别其实就在于 “阈值” 存放的位置。</p>
+<p>单机限流就上面所说的算法直接在单台服务器上实现就好了，而往往我们的服务是集群部署的。</p>
+<p>因此需要多台机器协同提供限流功能。</p>
+<p>像上述的计数器或者时间窗口的算法，可以将计数器存放至 Redis 等分布式 K-V 存储中。</p>
+<p>例如滑动窗口的每个请求的时间记录可以利用 Redis 的 <code>zset</code> 存储，利用<code>ZREMRANGEBYSCORE </code> 删除时间窗口之外的数据，再用 <code>ZCARD</code>计数。</p>
+<p>像令牌桶也可以将令牌数量放到 Redis 中。</p>
+<p>不过这样的方式等于每一个请求我们都需要去<code>Redis</code>判断一下能不能通过，在性能上有一定的损耗。</p>
+<p>所以有个优化点就是 「<strong>批量获取</strong>」，每次取令牌不是一个一取，而是取一批，不够了再去取一批，这样可以减少对  Redis 的请求。</p>
+<p>不过要注意一点，<strong>批量获取会导致一定范围内的限流误差</strong>。比如你取了 10 个此时不用，等下一秒再用，那同一时刻集群机器总处理量可能会超过阈值。</p>
+<p>其实「批量」这个优化点太常见了，不论是 MySQL 的批量刷盘，还是 Kafka 消息的批量发送还是分布式 ID 的高性能发号，都包含了「批量」的思想。</p>
+<p>当然，分布式限流还有一种思想是平分，假设之前单机限流 500，现在集群部署了 5 台，那就让每台继续限流 500 呗，即在总的入口做总的限流限制，然后每台机子再自己实现限流。</p>
+<h1 id="限流的难点"><a href="#限流的难点" class="headerlink" title="限流的难点"></a>限流的难点</h1><p>可以看到，每个限流都有个阈值，这个阈值如何定是个难点。</p>
+<p>定大了服务器可能顶不住，定小了就“误杀”了，没有资源利用最大化，对用户体验不好。</p>
+<p>我能想到的就是限流上线之后先预估个大概的阈值，然后不执行真正的限流操作，而是采取日志记录方式，对日志进行分析查看限流的效果，然后调整阈值，推算出集群总的处理能力，和每台机子的处理能力(方便扩缩容)。</p>
+<p>然后将线上的流量进行重放，测试真正的限流效果，最终阈值确定，然后上线。</p>
+<p>我之前还看过一篇耗子叔的文章，讲述了在自动化伸缩的情况下，我们要动态地调整限流的阈值很难。</p>
+<p>于是基于TCP拥塞控制的思想，根据请求响应在一个时间段的响应时间P90或者P99值来确定此时服务器的健康状况，来进行动态限流。在他的 Ease Gateway 产品中实现了这套算法，有兴趣的同学可以自行搜索。</p>
+<p>其实真实的业务场景很复杂，<strong>需要限流的条件和资源很多</strong>，每个资源限流要求还不一样。</p>
+<h1 id="限流组件"><a href="#限流组件" class="headerlink" title="限流组件"></a>限流组件</h1><p>一般而言，我们不需要自己实现限流算法来达到限流的目的，不管是接入层限流还是细粒度的接口限流，都有现成的轮子使用，其实现也是用了上述我们所说的限流算法。</p>
+<p>比如<code>Google Guava</code> 提供的限流工具类 <code>RateLimiter</code>，是基于令牌桶实现的，并且扩展了算法，支持预热功能。</p>
+<p>阿里开源的限流框架<code> Sentinel</code> 中的匀速排队限流策略，就采用了漏桶算法。</p>
+<p>Nginx 中的限流模块 <code>limit_req_zone</code>，采用了漏桶算法，还有 OpenResty 中的 <code>resty.limit.req</code>库等等。</p>
+<p>具体的使用还是很简单的，有兴趣的同学可以自行搜索，对内部实现感兴趣的同学可以下个源码看看，学习下生产级别的限流是如何实现的。</p>
+
+        </div>
+
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/">#系统设计</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/%E5%90%8E%E7%AB%AF/">#后端</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2025/03/11/%E9%9D%A2%E8%AF%95/SpringCloud%E9%9D%A2%E8%AF%95%E9%A2%98/789.Seata%E6%94%AF%E6%8C%81%E5%93%AA%E4%BA%9B%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%EF%BC%9F/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">Seata 支持哪些模式的分布式事务？</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2025/03/11/%E9%9D%A2%E8%AF%95/25%E5%B1%8A%E6%98%A5%E6%8B%9BGo%E7%83%AD%E9%A2%98/1732.Go%E8%AF%AD%E8%A8%80%E4%B8%AD%E5%A6%82%E4%BD%95%E8%AE%BF%E9%97%AE%E7%A7%81%E6%9C%89%E6%88%90%E5%91%98%EF%BC%9F/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">Go 语言中如何访问私有成员？</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+                <div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="gitalk-container"></div>
+    <script data-swup-reload-script
+            src="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js"></script>
+    <script data-swup-reload-script>
+
+        function loadGitalk() {
+            let __gitalk__pathname = decodeURI(location.pathname);
+            const __gitalk__pathnameLength = __gitalk__pathname.length;
+            const __gitalk__pathnameMaxLength = 50;
+            if (__gitalk__pathnameLength > __gitalk__pathnameMaxLength) {
+                __gitalk__pathname = __gitalk__pathname.substring(0, __gitalk__pathnameMaxLength - 3) + '...';
+            }
+
+            try {
+                Gitalk && new Gitalk({
+                    clientID: 'Ov23liThu5oe4YmmlNAw',
+                    clientSecret: 'bdde0e1d1af3b4e01fc6e172c7926c42ee09e8d3',
+                    repo: 'javai-comment',
+                    owner: 'sherwin28',
+                    admin: ['sherwin28'],
+                    id: __gitalk__pathname,
+                    language: 'en',
+                    proxy: 'https://github.com/login/oauth/access_token'
+                }).render('gitalk-container');
+
+            } catch (e) {
+                window.Gitalk = null;
+            }
+        }
+
+        if ('true') {
+            const loadGitalkTimeout = setTimeout(() => {
+                loadGitalk();
+                clearTimeout(loadGitalkTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadGitalk);
+        }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">什么是限流？限流算法有哪些？怎么实现的？</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E9%99%90%E6%B5%81%EF%BC%9F%E9%99%90%E6%B5%81%E7%AE%97%E6%B3%95%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F%E6%80%8E%E4%B9%88%E5%AE%9E%E7%8E%B0%E7%9A%84%EF%BC%9F"><span class="nav-text">什么是限流？限流算法有哪些？怎么实现的？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%99%90%E6%B5%81%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-text">限流是什么？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E9%99%90%E6%B5%81%EF%BC%9F"><span class="nav-text">为什么要限流？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E9%99%90%E6%B5%81%E7%AE%97%E6%B3%95"><span class="nav-text">常见的限流算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E6%95%B0%E9%99%90%E6%B5%81"><span class="nav-text">计数限流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BA%E5%AE%9A%E7%AA%97%E5%8F%A3%E9%99%90%E6%B5%81"><span class="nav-text">固定窗口限流</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BA%E5%AE%9A%E7%AA%97%E5%8F%A3%E4%B8%B4%E7%95%8C%E9%97%AE%E9%A2%98"><span class="nav-text">固定窗口临界问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E9%99%90%E6%B5%81"><span class="nav-text">滑动窗口限流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%BC%8F%E6%A1%B6%E7%AE%97%E6%B3%95"><span class="nav-text">漏桶算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A4%E7%89%8C%E6%A1%B6%E7%AE%97%E6%B3%95"><span class="nav-text">令牌桶算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93%E4%BB%A4%E7%89%8C%E6%A1%B6%E7%AE%97%E6%B3%95%E7%9A%84%E4%BC%98%E7%82%B9"><span class="nav-text">小结令牌桶算法的优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A4%E7%89%8C%E6%A1%B6%E7%AE%97%E6%B3%95%E4%BD%BF%E7%94%A8%E6%97%B6%E7%9A%84%E6%B3%A8%E6%84%8F%E7%82%B9%EF%BC%9A"><span class="nav-text">令牌桶算法使用时的注意点：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%99%90%E6%B5%81%E7%AE%97%E6%B3%95%E5%B0%8F%E7%BB%93"><span class="nav-text">限流算法小结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%95%E6%9C%BA%E9%99%90%E6%B5%81%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E9%99%90%E6%B5%81"><span class="nav-text">单机限流和分布式限流</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%99%90%E6%B5%81%E7%9A%84%E9%9A%BE%E7%82%B9"><span class="nav-text">限流的难点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%99%90%E6%B5%81%E7%BB%84%E4%BB%B6"><span class="nav-text">限流组件</span></a></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+            <div class="customize-info my-1">2024 Java+AI技术分享版权所有</div>
+        
+        
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+
+        
+            <div class="icp-info my-1"><a target="_blank" rel="nofollow" href="
+                
+                    https://beian.miit.gov.cn/
+                
+                ">粤ICP备2024326496号-1</a></div>
+        
+        
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+    
+<script src="/js/libs/anime.min.js"></script>
+
+
+
+
+
+    
+<script src="/js/tools/tocToggle.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/layouts/toc.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/plugins/tabs.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+<script src="/js/libs/moment-with-locales.min.js" data-swup-reload-script=""></script>
+
+
+<script src="/js/layouts/essays.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+</body>
+</html>

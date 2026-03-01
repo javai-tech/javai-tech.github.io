@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Sherwin.Wei">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2025/03/11/面试/后端场景面试题/9813.微服务中远程调用的超时时间应该设置为多少合适？/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="微服务中远程调用的超时时间应该设置为多少合适？回答重点一般远程调用的默认超时时间为 2-5s。但在实际工作中，还是要看具体的业务场景，因为不同的业务场景对超时时间的要求不同。  一些查询、验证等较为简单的操作，超时时间可以适当缩短。 一些需要长时间处理的业务，比如大数据处理、复杂的查询，可能需要配置较长的超时时间，避免超时过早导致的失败。  除此之外，超时时间应该基于服务的响应能力进行设置，也就是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微服务中远程调用的超时时间应该设置为多少合适？">
+<meta property="og:url" content="http://example.com/2025/03/11/%E9%9D%A2%E8%AF%95/%E5%90%8E%E7%AB%AF%E5%9C%BA%E6%99%AF%E9%9D%A2%E8%AF%95%E9%A2%98/9813.%E5%BE%AE%E6%9C%8D%E5%8A%A1%E4%B8%AD%E8%BF%9C%E7%A8%8B%E8%B0%83%E7%94%A8%E7%9A%84%E8%B6%85%E6%97%B6%E6%97%B6%E9%97%B4%E5%BA%94%E8%AF%A5%E8%AE%BE%E7%BD%AE%E4%B8%BA%E5%A4%9A%E5%B0%91%E5%90%88%E9%80%82%EF%BC%9F/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="微服务中远程调用的超时时间应该设置为多少合适？回答重点一般远程调用的默认超时时间为 2-5s。但在实际工作中，还是要看具体的业务场景，因为不同的业务场景对超时时间的要求不同。  一些查询、验证等较为简单的操作，超时时间可以适当缩短。 一些需要长时间处理的业务，比如大数据处理、复杂的查询，可能需要配置较长的超时时间，避免超时过早导致的失败。  除此之外，超时时间应该基于服务的响应能力进行设置，也就是">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/SJ52uMRI_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/OyiVt5a3_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/EssSp6dK_image_mianshiya.png">
+<meta property="article:published_time" content="2025-03-10T16:01:03.000Z">
+<meta property="article:modified_time" content="2025-03-10T16:01:03.104Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="场景题">
+<meta property="article:tag" content="后端">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/SJ52uMRI_image_mianshiya.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/javai-avatar.png" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/javai-avatar.png">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/javai-avatar.png">
+    <!--- Page Info-->
+    
+    <title>
+        
+            微服务中远程调用的超时时间应该设置为多少合适？ | javai
+        
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    <!--- Inject Part-->
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css">
+
+    
+<link rel="stylesheet" href="/fonts/Geist/geist.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+    
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":false,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"java与ai","subtitle":{"text":["java与ai结合一定会更强更远!","今日事，今天毕!","明天会更好！","一个人可以走的很快，但是一群人却可以走的更远。","今人不见古时月，今月曾经照古人。"],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"style":"default","links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.7.3","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"面试":{"path":"/categories/面试/","icon":"fa-regular paper-plane"},"chat":{"path":"/chat","icon":"fa-regular wechat"},"learn":{"path":"/learn","icon":"fa-regular users"},"国学":{"path":"/guoxue"},"智医":{"path":"/zhiyi"},"五行":{"path":"/wuxing"},"关于我":{"path":"/aboutme","icon":"fa-regular user"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":null},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}}};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container flex flex-col justify-between min-h-dvh">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container px-6 md:px-12">
+    <div class="navbar-content transition-navbar ">
+        <div class="left">
+            
+                <a class="logo-image h-8 w-8 sm:w-10 sm:h-10 mr-3" href="/">
+                    <img src="/images/javai-avatar.png" class="w-full h-full rounded-sm">
+                </a>
+            
+            <a class="logo-title" href="/">
+                
+                javai
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/categories/%E9%9D%A2%E8%AF%95/"
+                                        >
+                                    <i class="fa-regular paper-plane fa-fw"></i>
+                                    面试
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/chat"
+                                        >
+                                    <i class="fa-regular wechat fa-fw"></i>
+                                    CHAT
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/learn"
+                                        >
+                                    <i class="fa-regular users fa-fw"></i>
+                                    LEARN
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/guoxue"
+                                        >
+                                    
+                                    国学
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/zhiyi"
+                                        >
+                                    
+                                    智医
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/wuxing"
+                                        >
+                                    
+                                    五行
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/aboutme"
+                                        >
+                                    <i class="fa-regular user fa-fw"></i>
+                                    关于我
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/categories/%E9%9D%A2%E8%AF%95/"
+                        >
+                            <span>
+                                面试
+                            </span>
+                            
+                                <i class="fa-regular paper-plane fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/chat"
+                        >
+                            <span>
+                                CHAT
+                            </span>
+                            
+                                <i class="fa-regular wechat fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/learn"
+                        >
+                            <span>
+                                LEARN
+                            </span>
+                            
+                                <i class="fa-regular users fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/guoxue"
+                        >
+                            <span>
+                                国学
+                            </span>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/zhiyi"
+                        >
+                            <span>
+                                智医
+                            </span>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/wuxing"
+                        >
+                            <span>
+                                五行
+                            </span>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/aboutme"
+                        >
+                            <span>
+                                关于我
+                            </span>
+                            
+                                <i class="fa-regular user fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+
+            
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">87</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">36</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">531</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                <div class="w-full flex items-center pt-6 justify-start">
+                    <h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">微服务中远程调用的超时时间应该设置为多少合适？</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/javai-avatar.png">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">Sherwin.Wei</span>
+                        
+                            <span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv8</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2025-03-11 00:01:03</span>
+        <span class="mobile">2025-03-11 00:01:03</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2025-03-11 00:01:03</span>
+            <span class="mobile">2025-03-11 00:01:03</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E9%9D%A2%E8%AF%95/">面试</a>&nbsp;
+                        </li>
+                    
+                    
+                
+                    
+                        <li>
+                            | <a href="/categories/%E5%90%8E%E7%AB%AF%E5%9C%BA%E6%99%AF%E9%9D%A2%E8%AF%95%E9%A2%98/">后端场景面试题</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E5%9C%BA%E6%99%AF%E9%A2%98/">场景题</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E5%90%8E%E7%AB%AF/">后端</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <h1 id="微服务中远程调用的超时时间应该设置为多少合适？"><a href="#微服务中远程调用的超时时间应该设置为多少合适？" class="headerlink" title="微服务中远程调用的超时时间应该设置为多少合适？"></a>微服务中远程调用的超时时间应该设置为多少合适？</h1><h2 id="回答重点"><a href="#回答重点" class="headerlink" title="回答重点"></a>回答重点</h2><p>一般远程调用的默认超时时间为 <strong>2-5s</strong>。但在实际工作中，还是要看具体的业务场景，因为不同的业务场景对超时时间的要求不同。</p>
+<ul>
+<li>一些查询、验证等较为简单的操作，超时时间可以适当缩短。</li>
+<li>一些需要长时间处理的业务，比如大数据处理、复杂的查询，可能需要配置较长的超时时间，避免超时过早导致的失败。</li>
+</ul>
+<p>除此之外，超时时间应该基于服务的响应能力进行设置，也就是考虑服务端（服务提供者）的处理时间，如果服务端<strong>有历史响应时间数据或监控信息</strong>，可以参考这些数据进行合理设置，例如<strong>参考 TP99 的耗时来设置超时时间</strong>。</p>
+<p>整体的配置根据<strong>当前的上下游服务情况</strong>敲定一个合理的超时时间。</p>
+<p>一般来说，<strong>建议服务端（服务提供者）提供配置超时时间和重试次数等参数</strong>，因为作为服务提供方，它比消费方更清楚当前服务、方法的性能。而<strong>消费者直接采纳生产者提供的配置即可</strong>。</p>
+<h2 id="扩展知识"><a href="#扩展知识" class="headerlink" title="扩展知识"></a>扩展知识</h2><h3 id="远程调用超时时间"><a href="#远程调用超时时间" class="headerlink" title="远程调用超时时间"></a>远程调用超时时间</h3><p>在微服务场景，远程调用超时时间，一般指的是生产者（provider）和消费者（consumer）配置的方法调用超时时间。</p>
+<p><strong>超时时间无法设置过短</strong>。如果时间过短，正常业务流程还未走完，消费者检测到接口超时，直接中断调用，影响正常业务的执行。</p>
+<p><strong>超时时间无法设置过长</strong>。如果时间过长，此时请求量较大，那么就会出现大量长期无响应的请求占用线程池等情况，导致资源被占用无法释放，严重会导致服务崩溃。</p>
+<p>因此超时时间的设置需要比正常业务耗时长，但是又不能长太多，建议根据压测情况。<strong>参考 TP99 的耗时来设置超时时间。</strong></p>
+<blockquote>
+<p>TP99 指的是满足 99% 次数的网络请求所需要的最低耗时。比如调用一个方法，1 小时内调用了 10w 次，监控显示 TP99 是 300ms，这个意思就是：这个请求强度下，百分之 99% 的调用，都可以在 300ms 内返回结果。此时超时时间可以设置为 1s，给一定的冗余又不会太多，此时设置 10s 就是过长的配置。</p>
+</blockquote>
+<h3 id="RPC-框架的多粒度超时时间"><a href="#RPC-框架的多粒度超时时间" class="headerlink" title="RPC 框架的多粒度超时时间"></a>RPC 框架的多粒度超时时间</h3><p>例如 dubbo 支持多粒度配置 rpc 调用的超时时间。</p>
+<p>参考官网的例子，我们来看下多种粒度：</p>
+<p>1）配置全局默认超时时间为 5s（不配置的情况下，<strong>所有服务的默认超时时间是 1s</strong>）</p>
+<div class="highlight-container" data-rel="Yml"><figure class="iseeu highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">dubbo:</span></span><br><span class="line">  <span class="attr">provider:</span></span><br><span class="line">    <span class="attr">timeout:</span> <span class="number">5000</span></span><br></pre></td></tr></table></figure></div>
+
+<p>2）在消费端，指定 DemoService 服务调用的超时时间为 5s</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@DubboReference(timeout=5000)</span></span><br><span class="line"><span class="keyword">private</span> DemoService demoService;</span><br></pre></td></tr></table></figure></div>
+
+<p>3）在提供端，指定 DemoService 服务调用的超时时间为 5s（可作为所有消费端的默认值，如果消费端有指定则优先级更高）</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@DubboService(timeout=5000)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DemoServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">DemoService</span>&#123;&#125;</span><br></pre></td></tr></table></figure></div>
+<p>4）在消费端，指定 DemoService sayHello 方法调用的超时时间为 5s</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@DubboReference(methods = &#123;@Method(name = &quot;sayHello&quot;, timeout = 5000)&#125;)</span><br><span class="line">private DemoService demoService;</span><br></pre></td></tr></table></figure></div>
+
+<p>5）在提供端，指定 DemoService sayHello 方法调用的超时时间为 5s（可作为所有消费端的默认值，如果消费端有指定则优先级更高）</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@DubboService(methods = &#123;@Method(name = &quot;sayHello&quot;, timeout = 5000)&#125;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DemoServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">DemoService</span>&#123;&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>以上配置形式的优先级从高到低依次为：方法级别配置 &gt; 服务级别配置 &gt; 全局配置 &gt; 默认值。</strong></p>
+<h3 id="Dubbo-Deadline-机制"><a href="#Dubbo-Deadline-机制" class="headerlink" title="Dubbo Deadline 机制"></a>Dubbo Deadline 机制</h3><p>Deadline 其实就是一个在长链路调用中，发现调用超时触发的一个提前终止操作。我们来看下 dubbo 官网的例子：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/SJ52uMRI_image_mianshiya.png"
+                      alt="image.png" width="641" 
+                >
+
+<p>我们来分析一下以上调用链路以及可能出现的超时情况：</p>
+<ul>
+<li>A 调用 B 设置了超时时间 5s，因此 B -&gt; C -&gt; D 总计耗时不应该超过 5s，否则 A 就会收到超时异常</li>
+<li>在任何情形下，只要 A 等待 5s 没有收到响应，整个调用链路就可以被终止了（如果此时 C 正在运行，则 C -&gt; D 就没有发起的意义了）</li>
+<li>理论上 B -&gt; C、C -&gt; D 都有自己独立的超时时间设置，超时计时也是独立计算的，它们不知道 A 作为调用发起方是否超时</li>
+</ul>
+<p>在 Dubbo 框架中，A -&gt; B 的调用就像一个开关，一旦启动，在任何情形下整个 A -&gt; B -&gt; C -&gt; D 调用链路都会被完整执行下去，即便调用方 A 已经超时，后续的调用动作仍会继续。</p>
+<p>这在一些场景下是没有意义的，尤其是链路较长的情况下会带来不必要的资源消耗，deadline 就是设计用来解决这个问题，通过在调用链路中传递 deadline（deadline初始值等于超时时间，随着时间流逝而减少）可以确保调用链路只在有效期内执行，deadline 消耗殆尽之后，调用链路中其他尚未执行的任务将被取消。</p>
+<p>因此 deadline 机制就是将 B -&gt; C -&gt; D 当作一个整体看待，这一系列动作必须在 5s 之内完成。随着时间流逝 deadline 会从 5s 逐步扣减，后续每一次调用实际可用的超时时间即是当前 deadline 值，比如 C 收到请求时已经过去了 3s，则 C -&gt; D 的超时时间只剩下 2s。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/OyiVt5a3_image_mianshiya.png"
+                      alt="image.png" width="626" 
+                >
+
+<p>deadline 机制默认是关闭的，如果要启用 deadline 机制，需要配置以下参数：</p>
+<div class="highlight-container" data-rel="Yml"><figure class="iseeu highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">dubbo:</span></span><br><span class="line">  <span class="attr">provider:</span></span><br><span class="line">    <span class="attr">timeout:</span> <span class="number">5000</span></span><br><span class="line">    <span class="attr">parameters.enable-timeout-countdown:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure></div>
+<p>也可以指定某个服务调用开启 deadline 机制：</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@DubboReference(timeout=5000, parameters=&#123;&quot;enable-timeout-countdown&quot;, &quot;true&quot;&#125;)</span></span><br><span class="line"><span class="keyword">private</span> DemoService demoService;</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="动态调整服务超时时间"><a href="#动态调整服务超时时间" class="headerlink" title="动态调整服务超时时间"></a>动态调整服务超时时间</h3><p>动态调整服务超时时间主要应用在突发状况下，无需重启应用临时调整服务的超时时间，解决上下游依赖不稳定而导致的调用失败的问题。</p>
+<p>部分 rpc 框架支持动态调整服务超时时间，例如 dubbo 可以通过 Dubbo Admin 动态修改超时时间。</p>
+<p><strong>操作步骤</strong>：</p>
+<ol>
+<li>打开 Dubbo Admin 控制台</li>
+<li>在左侧导航栏选择【服务治理】&gt;【动态配置】</li>
+<li>点击 “创建”，输入服务 org.apache.dubbo.samples.UserService 和新的超时时间如 2000 即可。</li>
+</ol>
+<p align="center"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/EssSp6dK_image_mianshiya.png"
+                      alt="image.png" width="633" 
+                ></p>
+
+
+<h4 id="底层原理"><a href="#底层原理" class="headerlink" title="底层原理"></a>底层原理</h4><ul>
+<li>动态配置监听：Dubbo在启动时注册了配置中心的监听器，以监控相关配置项的变化。当timeout配置发生变更时，Dubbo会收到通知。</li>
+<li>反射更新：收到更新通知后，Dubbo会使用反射机制更新相关的超时配置。通过动态代理的方式，新的超时时间会被应用到相应的服务调用中。</li>
+<li>超时控制：在每次调用服务时，Dubbo会根据当前的超时时间来判断请求是否需要被中断。如果请求未在设定的超时时间内完成，Dubbo会主动抛出超时异常，确保系统的稳定性。</li>
+</ul>
+
+        </div>
+
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/%E5%9C%BA%E6%99%AF%E9%A2%98/">#场景题</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/%E5%90%8E%E7%AB%AF/">#后端</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2025/03/11/%E9%9D%A2%E8%AF%95/%E5%90%8E%E7%AB%AF%E5%9C%BA%E6%99%AF%E9%9D%A2%E8%AF%95%E9%A2%98/9812.%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%E7%94%A8%E6%88%B7%E9%87%8D%E5%A4%8D%E4%B8%8B%E5%8D%95%EF%BC%88%E5%A4%9A%E6%AC%A1%E4%B8%8B%E5%8D%95%E6%9C%AA%E6%94%AF%E4%BB%98%EF%BC%8C%E5%8D%A0%E7%94%A8%E5%BA%93%E5%AD%98%EF%BC%89/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">如何避免用户重复下单（多次下单未支付，占用库存）</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2025/03/11/%E9%9D%A2%E8%AF%95/%E5%90%8E%E7%AB%AF%E5%9C%BA%E6%99%AF%E9%9D%A2%E8%AF%95%E9%A2%98/996.%E7%BA%BF%E4%B8%8A%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E6%95%85%E9%9A%9C%EF%BC%8C%E5%85%9C%E5%BA%95%E6%94%B9%E9%80%A0%E6%96%B9%E6%A1%88/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">线上消息队列故障，兜底改造方案</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+                <div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="gitalk-container"></div>
+    <script data-swup-reload-script
+            src="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js"></script>
+    <script data-swup-reload-script>
+
+        function loadGitalk() {
+            let __gitalk__pathname = decodeURI(location.pathname);
+            const __gitalk__pathnameLength = __gitalk__pathname.length;
+            const __gitalk__pathnameMaxLength = 50;
+            if (__gitalk__pathnameLength > __gitalk__pathnameMaxLength) {
+                __gitalk__pathname = __gitalk__pathname.substring(0, __gitalk__pathnameMaxLength - 3) + '...';
+            }
+
+            try {
+                Gitalk && new Gitalk({
+                    clientID: 'Ov23liThu5oe4YmmlNAw',
+                    clientSecret: 'bdde0e1d1af3b4e01fc6e172c7926c42ee09e8d3',
+                    repo: 'javai-comment',
+                    owner: 'sherwin28',
+                    admin: ['sherwin28'],
+                    id: __gitalk__pathname,
+                    language: 'en',
+                    proxy: 'https://github.com/login/oauth/access_token'
+                }).render('gitalk-container');
+
+            } catch (e) {
+                window.Gitalk = null;
+            }
+        }
+
+        if ('true') {
+            const loadGitalkTimeout = setTimeout(() => {
+                loadGitalk();
+                clearTimeout(loadGitalkTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadGitalk);
+        }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">微服务中远程调用的超时时间应该设置为多少合适？</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BE%AE%E6%9C%8D%E5%8A%A1%E4%B8%AD%E8%BF%9C%E7%A8%8B%E8%B0%83%E7%94%A8%E7%9A%84%E8%B6%85%E6%97%B6%E6%97%B6%E9%97%B4%E5%BA%94%E8%AF%A5%E8%AE%BE%E7%BD%AE%E4%B8%BA%E5%A4%9A%E5%B0%91%E5%90%88%E9%80%82%EF%BC%9F"><span class="nav-text">微服务中远程调用的超时时间应该设置为多少合适？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9E%E7%AD%94%E9%87%8D%E7%82%B9"><span class="nav-text">回答重点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E7%9F%A5%E8%AF%86"><span class="nav-text">扩展知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9C%E7%A8%8B%E8%B0%83%E7%94%A8%E8%B6%85%E6%97%B6%E6%97%B6%E9%97%B4"><span class="nav-text">远程调用超时时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RPC-%E6%A1%86%E6%9E%B6%E7%9A%84%E5%A4%9A%E7%B2%92%E5%BA%A6%E8%B6%85%E6%97%B6%E6%97%B6%E9%97%B4"><span class="nav-text">RPC 框架的多粒度超时时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dubbo-Deadline-%E6%9C%BA%E5%88%B6"><span class="nav-text">Dubbo Deadline 机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E8%B0%83%E6%95%B4%E6%9C%8D%E5%8A%A1%E8%B6%85%E6%97%B6%E6%97%B6%E9%97%B4"><span class="nav-text">动态调整服务超时时间</span></a></li></ol></li></ol></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+            <div class="customize-info my-1">2024 Java+AI技术分享版权所有</div>
+        
+        
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+
+        
+            <div class="icp-info my-1"><a target="_blank" rel="nofollow" href="
+                
+                    https://beian.miit.gov.cn/
+                
+                ">粤ICP备2024326496号-1</a></div>
+        
+        
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+    
+<script src="/js/libs/anime.min.js"></script>
+
+
+
+
+
+    
+<script src="/js/tools/tocToggle.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/layouts/toc.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/plugins/tabs.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+<script src="/js/libs/moment-with-locales.min.js" data-swup-reload-script=""></script>
+
+
+<script src="/js/layouts/essays.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+</body>
+</html>

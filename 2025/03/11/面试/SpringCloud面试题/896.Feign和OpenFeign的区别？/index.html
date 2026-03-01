@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Sherwin.Wei">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2025/03/11/面试/springcloud面试题/896.feign和openfeign的区别？/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="Feign 和 OpenFeign 的区别？回答重点Feign 和 OpenFeign 都是用于简化服务之间的 HTTP 调用的工具，让我们可以更加方便地实现服务间的通信。 Feign 最初是由 Netflix 开发的一个声明式 REST 客户端框架，它的目标是让微服务之间的调用像调用本地方法一样容易。 如果我们想调用其它服务的接口，可以创建一个接口，然后通过注解声明所需要调用服务的方法和路径，F">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Feign 和 OpenFeign 的区别？">
+<meta property="og:url" content="http://example.com/2025/03/11/%E9%9D%A2%E8%AF%95/SpringCloud%E9%9D%A2%E8%AF%95%E9%A2%98/896.Feign%E5%92%8COpenFeign%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Feign 和 OpenFeign 的区别？回答重点Feign 和 OpenFeign 都是用于简化服务之间的 HTTP 调用的工具，让我们可以更加方便地实现服务间的通信。 Feign 最初是由 Netflix 开发的一个声明式 REST 客户端框架，它的目标是让微服务之间的调用像调用本地方法一样容易。 如果我们想调用其它服务的接口，可以创建一个接口，然后通过注解声明所需要调用服务的方法和路径，F">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/DKX09U6n_5901723468205_.pic_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/TBToks37_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/eGj3FTzT_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/Jww95LyG_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/uFCFY3Cl_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/XGkGDTUj_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/ZOvnvZ8m_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/KTY5cAif_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/BkPbLNhR_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/mmRUHmkI_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/KslKWq2o_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/LZxiro59_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/kxO4f0qt_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/08BSajI1_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/MMX5dql8_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/Eews6TWn_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/knciw1e4_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/RV8KTTp7_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/RxWKhQQk_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/gViJ5Miu_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/WQRrPE3y_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/rKMyPF5I_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/cISC7uVB_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/tdcXkxpz_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/UlhfcefX_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/3pUDqsas_5921723468667_.pic_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/NT0Wp0Ly_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/0lqSpjbT_5931723468744_.pic_mianshiya.png">
+<meta property="article:published_time" content="2025-03-10T16:01:03.000Z">
+<meta property="article:modified_time" content="2025-03-10T16:01:03.093Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="后端">
+<meta property="article:tag" content="Spring Cloud">
+<meta property="article:tag" content="服务调用">
+<meta property="article:tag" content="微服务">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/DKX09U6n_5901723468205_.pic_mianshiya.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/javai-avatar.png" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/javai-avatar.png">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/javai-avatar.png">
+    <!--- Page Info-->
+    
+    <title>
+        
+            Feign 和 OpenFeign 的区别？ | javai
+        
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    <!--- Inject Part-->
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css">
+
+    
+<link rel="stylesheet" href="/fonts/Geist/geist.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+    
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":false,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"java与ai","subtitle":{"text":["java与ai结合一定会更强更远!","今日事，今天毕!","明天会更好！","一个人可以走的很快，但是一群人却可以走的更远。","今人不见古时月，今月曾经照古人。"],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"style":"default","links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.7.3","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"面试":{"path":"/categories/面试/","icon":"fa-regular paper-plane"},"chat":{"path":"/chat","icon":"fa-regular wechat"},"learn":{"path":"/learn","icon":"fa-regular users"},"国学":{"path":"/guoxue"},"智医":{"path":"/zhiyi"},"五行":{"path":"/wuxing"},"关于我":{"path":"/aboutme","icon":"fa-regular user"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":null},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}}};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container flex flex-col justify-between min-h-dvh">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container px-6 md:px-12">
+    <div class="navbar-content transition-navbar ">
+        <div class="left">
+            
+                <a class="logo-image h-8 w-8 sm:w-10 sm:h-10 mr-3" href="/">
+                    <img src="/images/javai-avatar.png" class="w-full h-full rounded-sm">
+                </a>
+            
+            <a class="logo-title" href="/">
+                
+                javai
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/categories/%E9%9D%A2%E8%AF%95/"
+                                        >
+                                    <i class="fa-regular paper-plane fa-fw"></i>
+                                    面试
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/chat"
+                                        >
+                                    <i class="fa-regular wechat fa-fw"></i>
+                                    CHAT
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/learn"
+                                        >
+                                    <i class="fa-regular users fa-fw"></i>
+                                    LEARN
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/guoxue"
+                                        >
+                                    
+                                    国学
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/zhiyi"
+                                        >
+                                    
+                                    智医
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/wuxing"
+                                        >
+                                    
+                                    五行
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/aboutme"
+                                        >
+                                    <i class="fa-regular user fa-fw"></i>
+                                    关于我
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/categories/%E9%9D%A2%E8%AF%95/"
+                        >
+                            <span>
+                                面试
+                            </span>
+                            
+                                <i class="fa-regular paper-plane fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/chat"
+                        >
+                            <span>
+                                CHAT
+                            </span>
+                            
+                                <i class="fa-regular wechat fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/learn"
+                        >
+                            <span>
+                                LEARN
+                            </span>
+                            
+                                <i class="fa-regular users fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/guoxue"
+                        >
+                            <span>
+                                国学
+                            </span>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/zhiyi"
+                        >
+                            <span>
+                                智医
+                            </span>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/wuxing"
+                        >
+                            <span>
+                                五行
+                            </span>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/aboutme"
+                        >
+                            <span>
+                                关于我
+                            </span>
+                            
+                                <i class="fa-regular user fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+
+            
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">87</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">36</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">531</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                <div class="w-full flex items-center pt-6 justify-start">
+                    <h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">Feign 和 OpenFeign 的区别？</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/javai-avatar.png">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">Sherwin.Wei</span>
+                        
+                            <span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv8</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2025-03-11 00:01:03</span>
+        <span class="mobile">2025-03-11 00:01:03</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2025-03-11 00:01:03</span>
+            <span class="mobile">2025-03-11 00:01:03</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E9%9D%A2%E8%AF%95/">面试</a>&nbsp;
+                        </li>
+                    
+                    
+                
+                    
+                        <li>
+                            | <a href="/categories/SpringCloud-%E9%9D%A2%E8%AF%95%E9%A2%98/">SpringCloud 面试题</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E5%90%8E%E7%AB%AF/">后端</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/Spring-Cloud/">Spring Cloud</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E6%9C%8D%E5%8A%A1%E8%B0%83%E7%94%A8/">服务调用</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/">微服务</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <h1 id="Feign-和-OpenFeign-的区别？"><a href="#Feign-和-OpenFeign-的区别？" class="headerlink" title="Feign 和 OpenFeign 的区别？"></a>Feign 和 OpenFeign 的区别？</h1><h2 id="回答重点"><a href="#回答重点" class="headerlink" title="回答重点"></a>回答重点</h2><p>Feign 和 OpenFeign 都是用于简化服务之间的 HTTP 调用的工具，让我们可以更加方便地实现服务间的通信。</p>
+<p>Feign 最初是由 Netflix 开发的一个声明式 REST 客户端框架，它的目标是让微服务之间的调用像调用本地方法一样容易。</p>
+<p>如果我们想调用其它服务的接口，可以创建一个接口，然后通过注解声明所需要调用服务的方法和路径，Feign 可以自动发送 Http 请求和接收响应，转换为方法返回值</p>
+<p>而 OpenFeign 是 Spring Cloud 在 Feign 的基础上进一步封装的，它整合了 Spring Cloud 的特性，使得我们可以更加简单地使用 Feign，包括如下几个方面：</p>
+<ul>
+<li>自动配置：OpenFeign利用Spring Boot的自动配置机制，通过@FeignClient和@EnableFeignClients注解就可以创建一个Feign客户端，极大简化了Feign客户端的创建和配置过程。</li>
+<li>负载均衡：与Spring Cloud等服务发现组件集成，可以轻松实现客户端负载均衡。</li>
+<li>Hystrix集成：只需要简单的配置就可以快速集成Hystrix，提高系统的容错性。</li>
+</ul>
+<h2 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h2><h3 id="原始Feign是什么样的？"><a href="#原始Feign是什么样的？" class="headerlink" title="原始Feign是什么样的？"></a>原始Feign是什么样的？</h3><p>一个简单的Demo</p>
+<p>方便演示，我使用了SpringCloud的依赖</p>
+<div class="highlight-container" data-rel="Xml"><figure class="iseeu highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-openfeign<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.2.5.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>前面说了Feign本身有自己的使用方式，所以可以脱离SpringCloud体系</p>
+<p>所以Feign也有类似Spring MVC相关的注解，可以用来指定Http请求的调用路径</p>
+<p>如下所示为加了Feign原生的注解的接口</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">OrderApiClient</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestLine(&quot;GET /order/&#123;orderId&#125;&quot;)</span></span><br><span class="line">    Order <span class="title function_">queryOrder</span><span class="params">(<span class="meta">@Param(&quot;orderId&quot;)</span> Long orderId)</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>有了接口之后，还得为OrderApiClient创建一个对象，需要手动通过<code>Feign.builder()</code>来创建</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">FeignDemo</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">OrderApiClient</span> <span class="variable">orderApiClient</span> <span class="operator">=</span> Feign.builder()</span><br><span class="line">                .target(OrderApiClient.class, <span class="string">&quot;http://localhost:8088&quot;</span>);</span><br><span class="line">        orderApiClient.queryOrder(<span class="number">9527L</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>这就成功创建了OrderApiClient对象，之后就可以通过OrderApiClient对象调用远程服务了</p>
+<h3 id="Feign的本质：动态代理-七大核心组件"><a href="#Feign的本质：动态代理-七大核心组件" class="headerlink" title="Feign的本质：动态代理 + 七大核心组件"></a>Feign的本质：动态代理 + 七大核心组件</h3><p>相信稍微了解Feign的小伙伴都知道，Feign底层其实是基于JDK动态代理来的</p>
+<p>所以<code>Feign.builder()</code>最终构造的是一个代理对象</p>
+<p>Feign在构建动态代理的时候，会去解析方法上的注解和参数</p>
+<p>获取Http请求需要用到基本参数以及和这些参数和方法参数的对应关系</p>
+<p>当调用动态代理方法的时候，Feign就会将上述解析出来的Http请求基本参数和方法入参组装成一个Http请求</p>
+<p>然后发送Http请求，获取响应，再根据响应的内容的类型将响应体的内容转换成对应的类型</p>
+<p>这就是Feign的大致原理</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/DKX09U6n_5901723468205_.pic_mianshiya.png"
+                      alt="5901723468205_.pic.png" width="291px" 
+                >
+在整个Feign动态代理生成和调用过程中，需要依靠Feign的一些核心组件来协调完成
+
+<p>如下图所示是Feign的一些核心组件</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/TBToks37_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<p>这些核心组件可以通过<code>Feign.builder()</code>进行替换</p>
+<p>由于组件很多，这里我挑几个重要的跟大家讲一讲</p>
+<h4 id="1、Contract"><a href="#1、Contract" class="headerlink" title="1、Contract"></a>1、Contract</h4><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/eGj3FTzT_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<p>前面在说Feign在构建动态代理的时候，会去解析方法上的注解和参数，获取Http请求需要用到基本参数</p>
+<p>而这个Contract接口的作用就是用来干解析这件事的</p>
+<p>Contract的默认实现是解析Feign自己原生注解的</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/Jww95LyG_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<p>SpringCloud在整合Feign的时候，为了让Feign能够识别Spring MVC的注解，所以就自己实现了Contract接口</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/uFCFY3Cl_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<h4 id="2、Encoder"><a href="#2、Encoder" class="headerlink" title="2、Encoder"></a>2、Encoder</h4><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/XGkGDTUj_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<p>通过名字也可以看出来，这个其实用来编码的</p>
+<p>具体的作用就是将请求体对应的方法参数序列化成字节数组</p>
+<p>Feign默认的Encoder实现只支持请求体对应的方法参数类型为String和字节数组</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/ZOvnvZ8m_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<p>如果是其它类型就无法使用了</p>
+<p>这就导致默认情况下，这个Encoder的实现很难用</p>
+<p>于是乎，Spring就实现了Encoder接口</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/KTY5cAif_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<p>可以将任意请求体对应的方法参数类型对象序列化成字节数组</p>
+<h4 id="3、Decoder"><a href="#3、Decoder" class="headerlink" title="3、Decoder"></a>3、Decoder</h4><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/BkPbLNhR_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<p>Decoder的作用恰恰是跟Encoder相反</p>
+<p>Encoder是将请求体对应的方法参数序列化成字节数组</p>
+<p>而Decoder其实就是将响应体由字节流反序列化成方法返回值类型的对象</p>
+<p>Decoder默认情况下跟Encoder的默认情况是一样的，只支持反序列化成字节数组或者是String</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/mmRUHmkI_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<p>所以，SpringCloud也同样实现了Decoder，扩展它的功能</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/KslKWq2o_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<h4 id="4、Client"><a href="#4、Client" class="headerlink" title="4、Client"></a>4、Client</h4><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/LZxiro59_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<p>从接口方法的参数和返回值其实可以看出，这其实就是动态代理对象最终用来执行Http请求的组件</p>
+<p>默认实现就是通过JDK提供的HttpURLConnection来的</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/kxO4f0qt_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<p>除了这个实现，最最重要的当然是属于它基于<strong>负载均衡</strong>的实现</p>
+<p>如下是OpenFeign用来整合Ribbon实现复杂均衡的核心实现</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/08BSajI1_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<h4 id="5、InvocationHandlerFactory"><a href="#5、InvocationHandlerFactory" class="headerlink" title="5、InvocationHandlerFactory"></a>5、InvocationHandlerFactory</h4><p>InvocationHandler我相信大家应该都不陌生</p>
+<p>对于JDK动态代理来说，InvocationHandler的invoke方法实现就是动态代理走的核心逻辑</p>
+<p>而InvocationHandlerFactory顾名思义其实就是创建InvocationHandler的工厂</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/MMX5dql8_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<p>所以，这里就可以猜到，通过InvocationHandlerFactory创建的InvocationHandler应该就是Feign动态代理执行的核心逻辑</p>
+<p>InvocationHandlerFactory默认实现是下面这个</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/Eews6TWn_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<p>SpringCloud环境下默认也是使用它的这个默认实现</p>
+<p>所以，我们直接去看看InvocationHandler的实现类FeignInvocationHandler</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/knciw1e4_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<p>从实现可以看出，除了Object类的一些方法，最终会调用方法对应的MethodHandler的invoke方法</p>
+<p>虽然说默认情况下SpringCloud使用是默认实现，最终使用FeignInvocationHandler</p>
+<p>但是当其它框架整合SpringCloud生态的时候，为了适配OpenFeign，有时会自己实现InvocationHandler</p>
+<p>比如常见的限流熔断框架Hystrix和Sentinel都实现了自己的InvocationHandler</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/RV8KTTp7_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/RxWKhQQk_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<p>这样就可以对MethodHandler执行前后，也就是Http接口调用前后进行限流降级等操作。</p>
+<h4 id="6、RequestInterceptor"><a href="#6、RequestInterceptor" class="headerlink" title="6、RequestInterceptor"></a>6、RequestInterceptor</h4><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/gViJ5Miu_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<p>RequestInterceptor它其实是一个在发送请求前的一个拦截接口</p>
+<p>通过这个接口，在发送Http请求之前再对Http请求的内容进行修改</p>
+<p>比如我们可以设置一些接口需要的公共参数，如鉴权token之类的</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TokenRequestInterceptor</span> <span class="keyword">implements</span> <span class="title class_">RequestInterceptor</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">apply</span><span class="params">(RequestTemplate template)</span> &#123;</span><br><span class="line">        template.header(<span class="string">&quot;token&quot;</span>, <span class="string">&quot;token值&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="7、Retryer"><a href="#7、Retryer" class="headerlink" title="7、Retryer"></a>7、Retryer</h4><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/WQRrPE3y_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<p>这是一个重试的组件，默认实现如下</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/rKMyPF5I_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<p>默认情况下，最大重试5次</p>
+<p>在SpringCloud下，并没有使用上面那个实现，而使用的是下面这个实现</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/cISC7uVB_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<p>所以，SpringCloud下默认是不会进行重试</p>
+<blockquote>
+<p>所以从上面的介绍可以看出，SpringCloud在整个Feign的时候就是重写了很多Feign的组件，让Feign支持SpringCloud相关的生态</p>
+</blockquote>
+<h3 id="Feign核心运行原理分析"><a href="#Feign核心运行原理分析" class="headerlink" title="Feign核心运行原理分析"></a>Feign核心运行原理分析</h3><p>上一节说了Feign核心组件，这一节我们来讲一讲Feign核心运行原理，主要分为两部分内容：</p>
+<ul>
+<li>动态代理生成原理</li>
+<li>一次Feign的Http调用执行过程</li>
+</ul>
+<h4 id="1、动态代理生成原理"><a href="#1、动态代理生成原理" class="headerlink" title="1、动态代理生成原理"></a>1、动态代理生成原理</h4><p>这里我先把上面的Feign原始使用方式的Demo代码再拿过来</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">FeignDemo</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">OrderApiClient</span> <span class="variable">orderApiClient</span> <span class="operator">=</span> Feign.builder()</span><br><span class="line">                .target(OrderApiClient.class, <span class="string">&quot;http://localhost:8088&quot;</span>);</span><br><span class="line">        orderApiClient.queryOrder(<span class="number">9527L</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>通过Demo可以看出，最后是通过<code>Feign.builder().target(xx)</code>获取到动态代理的</p>
+<p>而上述代码执行逻辑如下所示：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/tdcXkxpz_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+最终会调用ReflectiveFeign的newInstance方法来创建动态代理对象
+
+<p>而ReflectiveFeign内部设置了前面提到的一些核心组件</p>
+<p>接下我们来看看newInstance方法</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/UlhfcefX_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<p>这个方法主要就干两件事：</p>
+<p>第一件事首先解析接口，构建每个方法对应的MethodHandler</p>
+<p>MethodHandler在前面讲InvocationHandlerFactory特地提醒过</p>
+<p>动态代理（FeignInvocationHandler）最终会调用MethodHandler来处理Feign的一次Http调用</p>
+<blockquote>
+<p>在解析接口的时候，就会用到前面提到的Contract来解析方法参数和注解，生成MethodMetadata，这里我代码我就不贴了</p>
+</blockquote>
+<p>第二件事通过InvocationHandlerFactory创建InvocationHandler</p>
+<p>然后再构建出接口的动态代理对象</p>
+<p>所以动态代理生成逻辑很简单，总共也没几行代码，画个图来总结一下</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/3pUDqsas_5921723468667_.pic_mianshiya.png"
+                      alt="5921723468667_.pic.png" width="541px" 
+                >
+
+<h4 id="2、一次Feign的Http调用执行过程"><a href="#2、一次Feign的Http调用执行过程" class="headerlink" title="2、一次Feign的Http调用执行过程"></a>2、一次Feign的Http调用执行过程</h4><p>前面说了，调用接口动态代理的方式时，通过InvocationHandler（FeignInvocationHandler），最终交给MethodHandler的invoke方法来执行</p>
+<p>MethodHandler是一个接口，最终会走到它的实现类SynchronousMethodHandler的invoke方法实现</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/NT0Wp0Ly_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<p>SynchronousMethodHandler中的属性就是我们前面提到的一些组件</p>
+<p>由于整个代码调用执行链路比较长，这里我就不截代码了，有兴趣的可以自己翻翻</p>
+<p>不过这里我画了一张图，可以通过这张图来大致分析整个Feign一次Http调用的过程</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1820640727313592322/0lqSpjbT_5931723468744_.pic_mianshiya.png"
+                      alt="5931723468744_.pic.png" width="521px" 
+                >
+
+<ul>
+<li>首先就是前面说的，进入FeignInvocationHandler，找到方法对应的SynchronousMethodHandler，调用invoke方法实现</li>
+<li>之后根据MethodMetadata和方法的入参，构造出一个RequestTemplate，RequestTemplate封装了Http请求的参数，在这个过程中，如果有请求体，那么会通过Encoder序列化</li>
+<li>然后调用RequestInterceptor，通过RequestInterceptor对RequestTemplate进行拦截扩展，可以对请求数据再进行修改</li>
+<li>再然后将RequestTemplate转换成Request，Request其实跟RequestTemplate差不多，也是封装了Http请求的参数</li>
+<li>接下来通过Client去根据Request中封装的Http请求参数，发送Http请求，得到响应Response</li>
+<li>最后根据Decoder，将响应体反序列化成方法返回值类型对象，返回</li>
+</ul>
+<p>这就是Feign一次Http调用的执行过程</p>
+
+        </div>
+
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/%E5%90%8E%E7%AB%AF/">#后端</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/Spring-Cloud/">#Spring Cloud</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/%E6%9C%8D%E5%8A%A1%E8%B0%83%E7%94%A8/">#服务调用</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/">#微服务</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2025/03/11/%E9%9D%A2%E8%AF%95/SpringCloud%E9%9D%A2%E8%AF%95%E9%A2%98/894.HTTP%E4%B8%8ERPC%E4%B9%8B%E9%97%B4%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">HTTP 与 RPC 之间的区别？</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2025/03/11/%E9%9D%A2%E8%AF%95/SpringCloud%E9%9D%A2%E8%AF%95%E9%A2%98/898.Feign%E6%98%AF%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E7%9A%84%EF%BC%9F/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">Feign 是如何实现负载均衡的？</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+                <div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="gitalk-container"></div>
+    <script data-swup-reload-script
+            src="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js"></script>
+    <script data-swup-reload-script>
+
+        function loadGitalk() {
+            let __gitalk__pathname = decodeURI(location.pathname);
+            const __gitalk__pathnameLength = __gitalk__pathname.length;
+            const __gitalk__pathnameMaxLength = 50;
+            if (__gitalk__pathnameLength > __gitalk__pathnameMaxLength) {
+                __gitalk__pathname = __gitalk__pathname.substring(0, __gitalk__pathnameMaxLength - 3) + '...';
+            }
+
+            try {
+                Gitalk && new Gitalk({
+                    clientID: 'Ov23liThu5oe4YmmlNAw',
+                    clientSecret: 'bdde0e1d1af3b4e01fc6e172c7926c42ee09e8d3',
+                    repo: 'javai-comment',
+                    owner: 'sherwin28',
+                    admin: ['sherwin28'],
+                    id: __gitalk__pathname,
+                    language: 'en',
+                    proxy: 'https://github.com/login/oauth/access_token'
+                }).render('gitalk-container');
+
+            } catch (e) {
+                window.Gitalk = null;
+            }
+        }
+
+        if ('true') {
+            const loadGitalkTimeout = setTimeout(() => {
+                loadGitalk();
+                clearTimeout(loadGitalkTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadGitalk);
+        }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">Feign 和 OpenFeign 的区别？</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Feign-%E5%92%8C-OpenFeign-%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="nav-text">Feign 和 OpenFeign 的区别？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9E%E7%AD%94%E9%87%8D%E7%82%B9"><span class="nav-text">回答重点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95"><span class="nav-text">扩展</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E5%A7%8BFeign%E6%98%AF%E4%BB%80%E4%B9%88%E6%A0%B7%E7%9A%84%EF%BC%9F"><span class="nav-text">原始Feign是什么样的？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Feign%E7%9A%84%E6%9C%AC%E8%B4%A8%EF%BC%9A%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86-%E4%B8%83%E5%A4%A7%E6%A0%B8%E5%BF%83%E7%BB%84%E4%BB%B6"><span class="nav-text">Feign的本质：动态代理 + 七大核心组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Feign%E6%A0%B8%E5%BF%83%E8%BF%90%E8%A1%8C%E5%8E%9F%E7%90%86%E5%88%86%E6%9E%90"><span class="nav-text">Feign核心运行原理分析</span></a></li></ol></li></ol></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+            <div class="customize-info my-1">2024 Java+AI技术分享版权所有</div>
+        
+        
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+
+        
+            <div class="icp-info my-1"><a target="_blank" rel="nofollow" href="
+                
+                    https://beian.miit.gov.cn/
+                
+                ">粤ICP备2024326496号-1</a></div>
+        
+        
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+    
+<script src="/js/libs/anime.min.js"></script>
+
+
+
+
+
+    
+<script src="/js/tools/tocToggle.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/layouts/toc.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/plugins/tabs.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+<script src="/js/libs/moment-with-locales.min.js" data-swup-reload-script=""></script>
+
+
+<script src="/js/layouts/essays.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+</body>
+</html>

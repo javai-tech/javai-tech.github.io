@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Sherwin.Wei">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2025/03/11/面试/后端场景面试题/4683.怎么分析jvm当前的内存占用情况？oom后怎么分析？/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="怎么分析 JVM 当前的内存占用情况？OOM 后怎么分析？回答重点利用 jstat  监控和分析 JVM 内部的垃圾回收、内存等运行状态。可以用它来查看堆内存、非堆内存等的实时状态。 可以使用 jmap 查看， JVM 堆的详细信息（包括堆的配置、内存使用情况、GC 活动等）。 在发生 OOM 时，可以根据 jmap  得到堆转储文件（建议增加JVM启动参数，-XX:+HeapDumpOnOutO">
+<meta property="og:type" content="article">
+<meta property="og:title" content="怎么分析 JVM 当前的内存占用情况？OOM 后怎么分析？">
+<meta property="og:url" content="http://example.com/2025/03/11/%E9%9D%A2%E8%AF%95/%E5%90%8E%E7%AB%AF%E5%9C%BA%E6%99%AF%E9%9D%A2%E8%AF%95%E9%A2%98/4683.%E6%80%8E%E4%B9%88%E5%88%86%E6%9E%90JVM%E5%BD%93%E5%89%8D%E7%9A%84%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8%E6%83%85%E5%86%B5%EF%BC%9FOOM%E5%90%8E%E6%80%8E%E4%B9%88%E5%88%86%E6%9E%90%EF%BC%9F/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="怎么分析 JVM 当前的内存占用情况？OOM 后怎么分析？回答重点利用 jstat  监控和分析 JVM 内部的垃圾回收、内存等运行状态。可以用它来查看堆内存、非堆内存等的实时状态。 可以使用 jmap 查看， JVM 堆的详细信息（包括堆的配置、内存使用情况、GC 活动等）。 在发生 OOM 时，可以根据 jmap  得到堆转储文件（建议增加JVM启动参数，-XX:+HeapDumpOnOutO">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/mqzH1liH_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/IwuuJ4ny_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/t1sJlNzt_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/rORtoMrh_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/7r52E7jU_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/dHSyZahC_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/s6l9razu_image_mianshiya.png">
+<meta property="article:published_time" content="2025-03-10T16:01:03.000Z">
+<meta property="article:modified_time" content="2025-03-10T16:01:03.099Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="JVM">
+<meta property="article:tag" content="场景题">
+<meta property="article:tag" content="后端">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/mqzH1liH_image_mianshiya.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/javai-avatar.png" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/javai-avatar.png">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/javai-avatar.png">
+    <!--- Page Info-->
+    
+    <title>
+        
+            怎么分析 JVM 当前的内存占用情况？OOM 后怎么分析？ | javai
+        
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    <!--- Inject Part-->
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css">
+
+    
+<link rel="stylesheet" href="/fonts/Geist/geist.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+    
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":false,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"java与ai","subtitle":{"text":["java与ai结合一定会更强更远!","今日事，今天毕!","明天会更好！","一个人可以走的很快，但是一群人却可以走的更远。","今人不见古时月，今月曾经照古人。"],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"style":"default","links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.7.3","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"面试":{"path":"/categories/面试/","icon":"fa-regular paper-plane"},"chat":{"path":"/chat","icon":"fa-regular wechat"},"learn":{"path":"/learn","icon":"fa-regular users"},"国学":{"path":"/guoxue"},"智医":{"path":"/zhiyi"},"五行":{"path":"/wuxing"},"关于我":{"path":"/aboutme","icon":"fa-regular user"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":null},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}}};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container flex flex-col justify-between min-h-dvh">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container px-6 md:px-12">
+    <div class="navbar-content transition-navbar ">
+        <div class="left">
+            
+                <a class="logo-image h-8 w-8 sm:w-10 sm:h-10 mr-3" href="/">
+                    <img src="/images/javai-avatar.png" class="w-full h-full rounded-sm">
+                </a>
+            
+            <a class="logo-title" href="/">
+                
+                javai
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/categories/%E9%9D%A2%E8%AF%95/"
+                                        >
+                                    <i class="fa-regular paper-plane fa-fw"></i>
+                                    面试
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/chat"
+                                        >
+                                    <i class="fa-regular wechat fa-fw"></i>
+                                    CHAT
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/learn"
+                                        >
+                                    <i class="fa-regular users fa-fw"></i>
+                                    LEARN
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/guoxue"
+                                        >
+                                    
+                                    国学
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/zhiyi"
+                                        >
+                                    
+                                    智医
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/wuxing"
+                                        >
+                                    
+                                    五行
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/aboutme"
+                                        >
+                                    <i class="fa-regular user fa-fw"></i>
+                                    关于我
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/categories/%E9%9D%A2%E8%AF%95/"
+                        >
+                            <span>
+                                面试
+                            </span>
+                            
+                                <i class="fa-regular paper-plane fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/chat"
+                        >
+                            <span>
+                                CHAT
+                            </span>
+                            
+                                <i class="fa-regular wechat fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/learn"
+                        >
+                            <span>
+                                LEARN
+                            </span>
+                            
+                                <i class="fa-regular users fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/guoxue"
+                        >
+                            <span>
+                                国学
+                            </span>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/zhiyi"
+                        >
+                            <span>
+                                智医
+                            </span>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/wuxing"
+                        >
+                            <span>
+                                五行
+                            </span>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/aboutme"
+                        >
+                            <span>
+                                关于我
+                            </span>
+                            
+                                <i class="fa-regular user fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+
+            
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">87</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">36</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">531</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                <div class="w-full flex items-center pt-6 justify-start">
+                    <h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">怎么分析 JVM 当前的内存占用情况？OOM 后怎么分析？</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/javai-avatar.png">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">Sherwin.Wei</span>
+                        
+                            <span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv8</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2025-03-11 00:01:03</span>
+        <span class="mobile">2025-03-11 00:01:03</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2025-03-11 00:01:03</span>
+            <span class="mobile">2025-03-11 00:01:03</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E9%9D%A2%E8%AF%95/">面试</a>&nbsp;
+                        </li>
+                    
+                    
+                
+                    
+                        <li>
+                            | <a href="/categories/%E5%90%8E%E7%AB%AF%E5%9C%BA%E6%99%AF%E9%9D%A2%E8%AF%95%E9%A2%98/">后端场景面试题</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/JVM/">JVM</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E5%9C%BA%E6%99%AF%E9%A2%98/">场景题</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E5%90%8E%E7%AB%AF/">后端</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <h1 id="怎么分析-JVM-当前的内存占用情况？OOM-后怎么分析？"><a href="#怎么分析-JVM-当前的内存占用情况？OOM-后怎么分析？" class="headerlink" title="怎么分析 JVM 当前的内存占用情况？OOM 后怎么分析？"></a>怎么分析 JVM 当前的内存占用情况？OOM 后怎么分析？</h1><h2 id="回答重点"><a href="#回答重点" class="headerlink" title="回答重点"></a>回答重点</h2><p>利用 <code>jstat </code> 监控和分析 JVM 内部的垃圾回收、内存等运行状态。可以用它来查看堆内存、非堆内存等的实时状态。</p>
+<p>可以使用 <code>jmap</code> 查看， JVM 堆的详细信息（包括堆的配置、内存使用情况、GC 活动等）。</p>
+<p>在发生 OOM 时，可以根据 <code>jmap</code>  得到堆转储文件（建议增加JVM启动参数，<code>-XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/tmp/heapdump.hprof</code>，在发生 OOM 后自动生成转储文件），再导入到 MAT、VisualVM、GCeasy等工具中分析文件，找出哪些对象占用了大量的内存，再定位到具体的代码解决问题。</p>
+<h2 id="JVM-当前的内存占用情况查看"><a href="#JVM-当前的内存占用情况查看" class="headerlink" title="JVM 当前的内存占用情况查看"></a>JVM 当前的内存占用情况查看</h2><h3 id="jstat"><a href="#jstat" class="headerlink" title="jstat"></a>jstat</h3><p>它是 JDK 自带的工具，用于监控 JVM 各种运行时信息。</p>
+<div class="highlight-container" data-rel="Sh"><figure class="iseeu highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jstat -gc &lt;pid&gt; 1000 10</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li>-gc 选项：显示垃圾收集信息（也可以用 gcutil ，gcutil以百分比形式显示内存的使用情况，gc 显示的是内存占用的字节数，以 KB 的形式输出堆内存的使用情况）</li>
+<li>pid：Java 进程的 PID。</li>
+<li>1000：每 1000 毫秒采样一次。</li>
+<li>10：采样 10 次。</li>
+</ul>
+<p>示例输出：</p>
+<div class="highlight-container" data-rel="Sh"><figure class="iseeu highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> S0C    S1C    S0U    S1U      EC       EU        OC         OU       MC       MU       CCSC    CCSU     YGC     YGCT     FGC    FGCT     GCT</span><br><span class="line">1536.0 1536.0  0.0    0.0    30720.0   1024.0  708608.0    2048.0   44800.0  43712.6   4864.0  4096.0      4    0.072   1      0.015    0.087</span><br><span class="line">1536.0 1536.0  0.0    0.0    30720.0   2048.0  708608.0    2048.0   44800.0  43712.6   4864.0  4096.0      4    0.072   1      0.015    0.087</span><br><span class="line">1536.0 1536.0  0.0    0.0    30720.0   3072.0  708608.0    2048.0   44800.0  43712.6   4864.0  4096.0      4    0.072   1      0.015    0.087</span><br></pre></td></tr></table></figure></div>
+
+<p>字段含义：</p>
+<ul>
+<li>S0C (Survivor Space 0 Capacity): 第一个 Survivor 区域的容量（字节数）。</li>
+<li>S1C (Survivor Space 1 Capacity): 第二个 Survivor 区域的容量（字节数）。</li>
+<li>S0U (Survivor Space 0 Utilization): 第一个 Survivor 区域的使用量（字节数）。</li>
+<li>S1U (Survivor Space 1 Utilization): 第二个 Survivor 区域的使用量（字节数）。</li>
+<li>EC (Eden Space Capacity): Eden 区域的容量（字节数）。</li>
+<li>EU (Eden Space Utilization): Eden 区域的使用量（字节数）。</li>
+<li>OC (Old Generation Capacity): 老年代的容量（字节数）。</li>
+<li>OU (Old Generation Utilization): 老年代的使用量（字节数）。</li>
+<li>MC (Metaspace Capacity): 方法区（Metaspace）的容量（字节数）。</li>
+<li>MU (Metaspace Utilization): 方法区的使用量（字节数）。</li>
+<li>CCSC (Compressed Class Space Capacity): 压缩类空间的容量（字节数）。</li>
+<li>CCSU (Compressed Class Space Utilization): 压缩类空间的使用量（字节数）。</li>
+<li>YGC (Young Generation GC Count): 年轻代垃圾回收的次数。</li>
+<li>YGCT (Young Generation GC Time): 年轻代垃圾回收的总时间（秒）。</li>
+<li>FGC (Full GC Count): full gc 的次数。</li>
+<li>FGCT (Full GC Time): full gc 的总时间（秒）。</li>
+<li>GCT (Garbage Collection Time): 总的垃圾回收时间（秒）。</li>
+</ul>
+<blockquote>
+<p>注意：如果 FGC 变化频率很高，则说明系统性能和吞吐量将下降，或者可能出现内存溢出。</p>
+</blockquote>
+<h3 id="jmap"><a href="#jmap" class="headerlink" title="jmap"></a>jmap</h3><p>用于生成堆转储文件，查看对象分配情况。</p>
+<div class="highlight-container" data-rel="Sh"><figure class="iseeu highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jmap -heap &lt;pid&gt;</span><br></pre></td></tr></table></figure></div>
+
+<p>示例输出：</p>
+<div class="highlight-container" data-rel="Sh"><figure class="iseeu highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">Attaching to process ID 1234, please <span class="built_in">wait</span>...</span><br><span class="line">Debugger attached successfully.</span><br><span class="line">Server compiler detected.</span><br><span class="line">JVM version is 25.131-b11</span><br><span class="line"></span><br><span class="line">using parallel threads <span class="keyword">in</span> the new generation.</span><br><span class="line">using thread-local object allocation.</span><br><span class="line">Concurrent Mark-Sweep GC</span><br><span class="line"></span><br><span class="line">Heap Configuration:</span><br><span class="line">   MinHeapFreeRatio         = 40</span><br><span class="line">   MaxHeapFreeRatio         = 70</span><br><span class="line">   MaxHeapSize              = 1048576000 (1000.0MB)</span><br><span class="line">   NewSize                  = 1310720 (1.25MB)</span><br><span class="line">   MaxNewSize               = 17592186044415 MB</span><br><span class="line">   OldSize                  = 8388608 (8.0MB)</span><br><span class="line">   NewRatio                 = 2</span><br><span class="line">   SurvivorRatio            = 8</span><br><span class="line">   MetaspaceSize            = 21807104 (20.796875MB)</span><br><span class="line">   CompressedClassSpaceSize = 1073741824 (1024.0MB)</span><br><span class="line">   MaxMetaspaceSize         = 17592186044415 MB</span><br><span class="line">   G1HeapRegionSize         = 0 (0.0MB)</span><br><span class="line"></span><br><span class="line">Heap Usage:</span><br><span class="line">New Generation (Eden + 1 Survivor Space):</span><br><span class="line">   capacity = 46989312 (44.8125MB)</span><br><span class="line">   used     = 14364528 (13.697036743164062MB)</span><br><span class="line">   free     = 32624784 (31.115463256835938MB)</span><br><span class="line">   30.57471507400737% used</span><br><span class="line">Eden Space:</span><br><span class="line">   capacity = 41943040 (40.0MB)</span><br><span class="line">   used     = 12058624 (11.5MB)</span><br><span class="line">   free     = 29884416 (28.5MB)</span><br><span class="line">   28.769444942474365% used</span><br><span class="line">From Space:</span><br><span class="line">   capacity = 5036288 (4.8046875MB)</span><br><span class="line">   used     = 2305904 (2.1997528076171875MB)</span><br><span class="line">   free     = 2730384 (2.6049346923828125MB)</span><br><span class="line">   45.8012652387619% used</span><br><span class="line">To Space:</span><br><span class="line">   capacity = 5036288 (4.8046875MB)</span><br><span class="line">   used     = 0 (0.0MB)</span><br><span class="line">   free     = 5036288 (4.8046875MB)</span><br><span class="line">   0.0% used</span><br><span class="line">concurrent mark-sweep generation:</span><br><span class="line">   capacity = 100663296 (96.0MB)</span><br><span class="line">   used     = 1433600 (1.3671875MB)</span><br><span class="line">   free     = 99229696 (94.6328125MB)</span><br><span class="line">   1.4241612307230632% used</span><br><span class="line"></span><br><span class="line">10764 interned Strings occupying 826944 bytes.</span><br></pre></td></tr></table></figure></div>
+
+<p>字段含义：</p>
+<ul>
+<li>MinHeapFreeRatio: 堆内存最小自由比例。</li>
+<li>MaxHeapFreeRatio: 堆内存最大自由比例。</li>
+<li>MaxHeapSize: 堆内存的最大容量（字节数）。</li>
+<li>NewSize: 新生代的初始容量（字节数）。</li>
+<li>MaxNewSize: 新生代的最大容量（字节数）。</li>
+<li>OldSize: 老年代的初始容量（字节数）。</li>
+<li>NewRatio: 新生代与老年代的比例。</li>
+<li>SurvivorRatio: 新生代中 Survivor 空间的比例。</li>
+<li>MetaspaceSize: 方法区（Metaspace）的初始容量（字节数）。</li>
+<li>CompressedClassSpaceSize: 压缩类空间的容量（字节数）。</li>
+<li>MaxMetaspaceSize: 方法区（Metaspace）的最大容量（字节数）。</li>
+<li>G1HeapRegionSize: G1 垃圾收集器的堆区域大小（字节数）。</li>
+</ul>
+<p>Heap Usage 部分的字段解释：</p>
+<ul>
+<li>capacity: 内存区域的总容量（字节数）。</li>
+<li>used: 当前使用的内存量（字节数）。</li>
+<li>free: 当前空闲的内存量（字节数）。</li>
+<li>% used: 使用百分比。</li>
+</ul>
+<blockquote>
+<p>注意：此命令会导致虚拟机暂停工作1～3秒</p>
+</blockquote>
+<h3 id="arthas"><a href="#arthas" class="headerlink" title="arthas"></a>arthas</h3><p>输入 dashboard 命令，按回车&#x2F;enter，会展示当前进程的信息，按<code>ctrl+c</code>可以中断执行。</p>
+<div class="highlight-container" data-rel="Sh"><figure class="iseeu highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">$ dashboard</span><br><span class="line">ID     NAME                   GROUP          PRIORI STATE  %CPU    TIME   INTERRU DAEMON</span><br><span class="line">17     pool-2-thread-1        system         5      WAITIN 67      0:0    <span class="literal">false</span>   <span class="literal">false</span></span><br><span class="line">27     Timer-for-arthas-dashb system         10     RUNNAB 32      0:0    <span class="literal">false</span>   <span class="literal">true</span></span><br><span class="line">11     AsyncAppender-Worker-a system         9      WAITIN 0       0:0    <span class="literal">false</span>   <span class="literal">true</span></span><br><span class="line">9      Attach Listener        system         9      RUNNAB 0       0:0    <span class="literal">false</span>   <span class="literal">true</span></span><br><span class="line">3      Finalizer              system         8      WAITIN 0       0:0    <span class="literal">false</span>   <span class="literal">true</span></span><br><span class="line">2      Reference Handler      system         10     WAITIN 0       0:0    <span class="literal">false</span>   <span class="literal">true</span></span><br><span class="line">4      Signal Dispatcher      system         9      RUNNAB 0       0:0    <span class="literal">false</span>   <span class="literal">true</span></span><br><span class="line">26     as-command-execute-dae system         10     TIMED_ 0       0:0    <span class="literal">false</span>   <span class="literal">true</span></span><br><span class="line">13     job-timeout            system         9      TIMED_ 0       0:0    <span class="literal">false</span>   <span class="literal">true</span></span><br><span class="line">1      main                   main           5      TIMED_ 0       0:0    <span class="literal">false</span>   <span class="literal">false</span></span><br><span class="line">14     nioEventLoopGroup-2-1  system         10     RUNNAB 0       0:0    <span class="literal">false</span>   <span class="literal">false</span></span><br><span class="line">18     nioEventLoopGroup-2-2  system         10     RUNNAB 0       0:0    <span class="literal">false</span>   <span class="literal">false</span></span><br><span class="line">23     nioEventLoopGroup-2-3  system         10     RUNNAB 0       0:0    <span class="literal">false</span>   <span class="literal">false</span></span><br><span class="line">15     nioEventLoopGroup-3-1  system         10     RUNNAB 0       0:0    <span class="literal">false</span>   <span class="literal">false</span></span><br><span class="line">Memory             used   total max    usage GC</span><br><span class="line">heap               32M    155M  1820M  1.77% gc.ps_scavenge.count  4</span><br><span class="line">ps_eden_space      14M    65M   672M   2.21% gc.ps_scavenge.time(m 166</span><br><span class="line">ps_survivor_space  4M     5M    5M           s)</span><br><span class="line">ps_old_gen         12M    85M   1365M  0.91% gc.ps_marksweep.count 0</span><br><span class="line">nonheap            20M    23M   -1           gc.ps_marksweep.time( 0</span><br><span class="line">code_cache         3M     5M    240M   1.32% ms)</span><br><span class="line">Runtime</span><br><span class="line">os.name                Mac OS X</span><br><span class="line">os.version             10.13.4</span><br><span class="line">java.version           1.8.0_162</span><br><span class="line">java.home              /Library/Java/JavaVir</span><br><span class="line">                       tualMachines/jdk1.8.0</span><br><span class="line">                       _162.jdk/Contents/Hom</span><br><span class="line">                       e/jre</span><br></pre></td></tr></table></figure></div>
+
+<p>字段含义：</p>
+<p>heap: 堆内存的使用情况。</p>
+<ul>
+<li>used 32M: 当前堆内存使用 32MB。</li>
+<li>total 155M: 堆内存总量为 155MB。</li>
+<li>max 1820M: 堆内存最大量为 1820MB。</li>
+<li>usage 1.77%: 堆内存使用百分比为 1.77%。</li>
+</ul>
+<p>ps_eden_space: 年轻代 Eden 区域的使用情况。</p>
+<ul>
+<li>used 14M: 当前 Eden 区域使用 14MB。</li>
+<li>total 65M: Eden 区域总量为 65MB。</li>
+<li>max 672M: Eden 区域最大量为 672MB。</li>
+<li>usage 2.21%: Eden 区域使用百分比为 2.21%。</li>
+</ul>
+<p>ps_survivor_space: 年轻代 Survivor 区域的使用情况。</p>
+<ul>
+<li>used 4M: 当前 Survivor 区域使用 4MB。</li>
+<li>total 5M: Survivor 区域总量为 5MB。</li>
+<li>max 5M: Survivor 区域最大量为 5MB。</li>
+</ul>
+<p>ps_old_gen: 老年代的使用情况。</p>
+<ul>
+<li>used 12M: 当前老年代使用 12MB。</li>
+<li>total 85M: 老年代总量为 85MB。</li>
+<li>max 1365M: 老年代最大量为 1365MB。</li>
+<li>usage 0.91%: 老年代使用百分比为 0.91%。</li>
+</ul>
+<p>nonheap: 非堆内存的使用情况。</p>
+<ul>
+<li>used 20M: 当前非堆内存使用 20MB。</li>
+<li>total 23M: 非堆内存总量为 23MB。</li>
+</ul>
+<p>code_cache: 代码缓存区的使用情况。</p>
+<ul>
+<li>used 3M: 当前代码缓存区使用 3MB。</li>
+<li>total 5M: 代码缓存区总量为 5MB。</li>
+<li>max 240M: 代码缓存区最大量为 240MB。</li>
+<li>usage 1.32%: 代码缓存区使用百分比为 1.32%。</li>
+</ul>
+<h2 id="OOM-分析"><a href="#OOM-分析" class="headerlink" title="OOM 分析"></a>OOM 分析</h2><h3 id="第一步使用-jmap-工具生成堆转储文件"><a href="#第一步使用-jmap-工具生成堆转储文件" class="headerlink" title="第一步使用 jmap 工具生成堆转储文件"></a>第一步使用 jmap 工具生成堆转储文件</h3><div class="highlight-container" data-rel="Sh"><figure class="iseeu highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jmap -dump:format=b,file=heap_dump.hprof &lt;pid&gt;</span><br></pre></td></tr></table></figure></div>
+
+<p>大部分系统内存占用2GB ~ 8GB，此命令会导致虚拟机暂停工作 1～3 秒左右。</p>
+<p>可以在 JVM 内存溢出后，主动 dump 生成文件，在启动时增加以下参数即可。</p>
+<div class="highlight-container" data-rel="Sh"><figure class="iseeu highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/tmp/heapdump.hprof</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="第二步使用工具分析堆转储文件"><a href="#第二步使用工具分析堆转储文件" class="headerlink" title="第二步使用工具分析堆转储文件"></a>第二步使用工具分析堆转储文件</h3><p>使用 Eclipse MAT (Memory Analyzer Tool) 或 VisualVM 等工具打开 heap_dump.hprof 文件，分析内存泄漏和对象分配情况。</p>
+<h4 id="MAT"><a href="#MAT" class="headerlink" title="MAT"></a>MAT</h4><p>下图为 MAT 工具，它提供了 Leak Suspects 报告，输出有可能发生内存泄漏的对象：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/mqzH1liH_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<p>从上图的左下角可以得知，memoryref.A 这个对象可能产生了内存泄漏！</p>
+<p>再简单过一下 MAT 分析内存的其他思路：</p>
+<p>可以看直方图，得到占用最多的内存的对象类型是什么：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/IwuuJ4ny_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<p>然后通过右键单击某一行并选择 列出对象（List objects）&gt; 包含传入引用来查看引用它们的内容：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/t1sJlNzt_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<p>可以追溯找出最终的引用对象是什么：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/rORtoMrh_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<p>最终再结合业务代码就能定位到最终的问题，然后修复后经验证即可上线。</p>
+<h4 id="GCeasy"><a href="#GCeasy" class="headerlink" title="GCeasy"></a>GCeasy</h4><p><a class="link"   target="_blank" rel="noopener" href="https://gceasy.io/" >GCeasy <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>，它是一个分析 GC 日志文件的在线网站，能根据上传的 GC 日志，以图表形式分析 GC 情况：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/7r52E7jU_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+
+<p>直接在主页上传堆转储文件即可，可以得到 GC 的分析结果，以下就是部分截图：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/dHSyZahC_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/s6l9razu_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+        </div>
+
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/JVM/">#JVM</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/%E5%9C%BA%E6%99%AF%E9%A2%98/">#场景题</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/%E5%90%8E%E7%AB%AF/">#后端</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2025/03/11/%E9%9D%A2%E8%AF%95/%E5%90%8E%E7%AB%AF%E5%9C%BA%E6%99%AF%E9%9D%A2%E8%AF%95%E9%A2%98/10835.%E9%92%88%E5%AF%B9%E6%94%AF%E4%BB%98%E5%AE%9D%E6%9C%80%E8%BF%91%E5%87%BA%E7%8E%B0%E7%9A%84%E5%85%AB%E6%8A%98%E4%BC%98%E6%83%A0%E4%BA%8B%E6%95%85%EF%BC%8C%E8%AF%B4%E8%AF%B4%E5%A6%82%E4%BD%95%E6%89%8D%E8%83%BD%E9%81%BF%E5%85%8D%E7%B1%BB%E4%BC%BC%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%8F%91%E7%94%9F%EF%BC%9F/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">针对支付宝最近出现的八折优惠事故，说说如何才能避免类似事件的发生？</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2025/03/11/%E9%9D%A2%E8%AF%95/%E5%90%8E%E7%AB%AF%E5%9C%BA%E6%99%AF%E9%9D%A2%E8%AF%95%E9%A2%98/5207.%E5%A6%82%E6%9E%9C%E5%8F%91%E7%8E%B0Redis%E5%86%85%E5%AD%98%E6%BA%A2%E5%87%BA%E4%BA%86%EF%BC%9F%E4%BD%A0%E4%BC%9A%E6%80%8E%E4%B9%88%E5%81%9A%EF%BC%9F%E8%AF%B7%E7%BB%99%E5%87%BA%E6%8E%92%E6%9F%A5%E6%80%9D%E8%B7%AF%E5%92%8C%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">如果发现 Redis 内存溢出了？你会怎么做？请给出排查思路和解决方案</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+                <div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="gitalk-container"></div>
+    <script data-swup-reload-script
+            src="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js"></script>
+    <script data-swup-reload-script>
+
+        function loadGitalk() {
+            let __gitalk__pathname = decodeURI(location.pathname);
+            const __gitalk__pathnameLength = __gitalk__pathname.length;
+            const __gitalk__pathnameMaxLength = 50;
+            if (__gitalk__pathnameLength > __gitalk__pathnameMaxLength) {
+                __gitalk__pathname = __gitalk__pathname.substring(0, __gitalk__pathnameMaxLength - 3) + '...';
+            }
+
+            try {
+                Gitalk && new Gitalk({
+                    clientID: 'Ov23liThu5oe4YmmlNAw',
+                    clientSecret: 'bdde0e1d1af3b4e01fc6e172c7926c42ee09e8d3',
+                    repo: 'javai-comment',
+                    owner: 'sherwin28',
+                    admin: ['sherwin28'],
+                    id: __gitalk__pathname,
+                    language: 'en',
+                    proxy: 'https://github.com/login/oauth/access_token'
+                }).render('gitalk-container');
+
+            } catch (e) {
+                window.Gitalk = null;
+            }
+        }
+
+        if ('true') {
+            const loadGitalkTimeout = setTimeout(() => {
+                loadGitalk();
+                clearTimeout(loadGitalkTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadGitalk);
+        }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">怎么分析 JVM 当前的内存占用情况？OOM 后怎么分析？</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%8E%E4%B9%88%E5%88%86%E6%9E%90-JVM-%E5%BD%93%E5%89%8D%E7%9A%84%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8%E6%83%85%E5%86%B5%EF%BC%9FOOM-%E5%90%8E%E6%80%8E%E4%B9%88%E5%88%86%E6%9E%90%EF%BC%9F"><span class="nav-text">怎么分析 JVM 当前的内存占用情况？OOM 后怎么分析？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9E%E7%AD%94%E9%87%8D%E7%82%B9"><span class="nav-text">回答重点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JVM-%E5%BD%93%E5%89%8D%E7%9A%84%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8%E6%83%85%E5%86%B5%E6%9F%A5%E7%9C%8B"><span class="nav-text">JVM 当前的内存占用情况查看</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#jstat"><span class="nav-text">jstat</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jmap"><span class="nav-text">jmap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#arthas"><span class="nav-text">arthas</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OOM-%E5%88%86%E6%9E%90"><span class="nav-text">OOM 分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%E4%BD%BF%E7%94%A8-jmap-%E5%B7%A5%E5%85%B7%E7%94%9F%E6%88%90%E5%A0%86%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6"><span class="nav-text">第一步使用 jmap 工具生成堆转储文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%E4%BD%BF%E7%94%A8%E5%B7%A5%E5%85%B7%E5%88%86%E6%9E%90%E5%A0%86%E8%BD%AC%E5%82%A8%E6%96%87%E4%BB%B6"><span class="nav-text">第二步使用工具分析堆转储文件</span></a></li></ol></li></ol></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+            <div class="customize-info my-1">2024 Java+AI技术分享版权所有</div>
+        
+        
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+
+        
+            <div class="icp-info my-1"><a target="_blank" rel="nofollow" href="
+                
+                    https://beian.miit.gov.cn/
+                
+                ">粤ICP备2024326496号-1</a></div>
+        
+        
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+    
+<script src="/js/libs/anime.min.js"></script>
+
+
+
+
+
+    
+<script src="/js/tools/tocToggle.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/layouts/toc.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/plugins/tabs.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+<script src="/js/libs/moment-with-locales.min.js" data-swup-reload-script=""></script>
+
+
+<script src="/js/layouts/essays.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+</body>
+</html>

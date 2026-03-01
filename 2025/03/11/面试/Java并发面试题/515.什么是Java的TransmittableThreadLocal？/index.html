@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Sherwin.Wei">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2025/03/11/面试/java并发面试题/515.什么是java的transmittablethreadlocal？/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="什么是 Java 的 TransmittableThreadLocal？这玩意是阿里开源的一个组件，原生的 ThreadLocal 不支持在线程池中传递本地变量，所以弄了个这个来实现下这个需求  接下来我们来详细探讨一下 缘由任何一个组件的出现必有其缘由，知其缘由背景才能更深刻地理解它。 我们知道 ThreadLocal 的出现就是为了本地化线程资源，防止不必要的多线程之间的竞争。 在有些场景，当">
+<meta property="og:type" content="article">
+<meta property="og:title" content="什么是 Java 的 TransmittableThreadLocal？">
+<meta property="og:url" content="http://example.com/2025/03/11/%E9%9D%A2%E8%AF%95/Java%E5%B9%B6%E5%8F%91%E9%9D%A2%E8%AF%95%E9%A2%98/515.%E4%BB%80%E4%B9%88%E6%98%AFJava%E7%9A%84TransmittableThreadLocal%EF%BC%9F/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="什么是 Java 的 TransmittableThreadLocal？这玩意是阿里开源的一个组件，原生的 ThreadLocal 不支持在线程池中传递本地变量，所以弄了个这个来实现下这个需求  接下来我们来详细探讨一下 缘由任何一个组件的出现必有其缘由，知其缘由背景才能更深刻地理解它。 我们知道 ThreadLocal 的出现就是为了本地化线程资源，防止不必要的多线程之间的竞争。 在有些场景，当">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://pic.code-nav.cn/mianshiya/question_picture/1783397053004488705/68747470733a2f2f63646e2e6a7364656c6976722e6e65742f67682f79657373696d6964612f63646e5f696d6167652f696d672f696d6167652d32303232303132333136353834313538332e706e67_mianshiya.png">
+<meta property="og:image" content="https://pic.code-nav.cn/mianshiya/question_picture/1783397053004488705/Snipaste_2024-05-02_20-18-46_mianshiya.jpg">
+<meta property="og:image" content="https://pic.code-nav.cn/mianshiya/question_picture/1783397053004488705/68747470733a2f2f63646e2e6a7364656c6976722e6e65742f67682f79657373696d6964612f63646e5f696d6167652f696d672f696d6167652d32303232303132333136353834313538332e706e67_mianshiya.png">
+<meta property="og:image" content="https://pic.code-nav.cn/mianshiya/question_picture/1783397053004488705/Snipaste_2024-05-02_20-20-17_mianshiya.jpg">
+<meta property="og:image" content="https://pic.code-nav.cn/mianshiya/question_picture/1783397053004488705/Snipaste_2024-05-02_20-23-26_mianshiya.jpg">
+<meta property="og:image" content="https://pic.code-nav.cn/mianshiya/question_picture/1783397053004488705/Snipaste_2024-05-02_20-23-52_mianshiya.jpg">
+<meta property="og:image" content="https://pic.code-nav.cn/mianshiya/question_picture/1783397053004488705/Snipaste_2024-05-02_20-24-08_mianshiya.jpg">
+<meta property="og:image" content="https://pic.code-nav.cn/mianshiya/question_picture/1783397053004488705/Snipaste_2024-05-02_20-24-38_mianshiya.jpg">
+<meta property="og:image" content="https://pic.code-nav.cn/mianshiya/question_picture/1783397053004488705/Snipaste_2024-05-02_20-25-04_mianshiya.jpg">
+<meta property="og:image" content="https://pic.code-nav.cn/mianshiya/question_picture/1783397053004488705/Snipaste_2024-05-02_20-25-35_mianshiya.jpg">
+<meta property="og:image" content="https://pic.code-nav.cn/mianshiya/question_picture/1783397053004488705/Snipaste_2024-05-02_20-26-03_mianshiya.jpg">
+<meta property="og:image" content="https://pic.code-nav.cn/mianshiya/question_picture/1783397053004488705/Snipaste_2024-05-02_20-26-51_mianshiya.jpg">
+<meta property="og:image" content="https://pic.code-nav.cn/mianshiya/question_picture/1783397053004488705/Snipaste_2024-05-02_20-27-41_mianshiya.jpg">
+<meta property="og:image" content="https://pic.code-nav.cn/mianshiya/question_picture/1783397053004488705/Snipaste_2024-05-02_20-28-02_mianshiya.jpg">
+<meta property="og:image" content="https://pic.code-nav.cn/mianshiya/question_picture/1783397053004488705/Snipaste_2024-05-02_20-28-28_mianshiya.jpg">
+<meta property="og:image" content="https://pic.code-nav.cn/mianshiya/question_picture/1783397053004488705/Snipaste_2024-05-02_20-29-34_mianshiya.jpg">
+<meta property="article:published_time" content="2025-03-10T16:01:03.000Z">
+<meta property="article:modified_time" content="2025-03-10T16:01:03.045Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="Java并发">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic.code-nav.cn/mianshiya/question_picture/1783397053004488705/68747470733a2f2f63646e2e6a7364656c6976722e6e65742f67682f79657373696d6964612f63646e5f696d6167652f696d672f696d6167652d32303232303132333136353834313538332e706e67_mianshiya.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/javai-avatar.png" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/javai-avatar.png">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/javai-avatar.png">
+    <!--- Page Info-->
+    
+    <title>
+        
+            什么是 Java 的 TransmittableThreadLocal？ | javai
+        
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    <!--- Inject Part-->
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css">
+
+    
+<link rel="stylesheet" href="/fonts/Geist/geist.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+    
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":false,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"java与ai","subtitle":{"text":["java与ai结合一定会更强更远!","今日事，今天毕!","明天会更好！","一个人可以走的很快，但是一群人却可以走的更远。","今人不见古时月，今月曾经照古人。"],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"style":"default","links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.7.3","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"面试":{"path":"/categories/面试/","icon":"fa-regular paper-plane"},"chat":{"path":"/chat","icon":"fa-regular wechat"},"learn":{"path":"/learn","icon":"fa-regular users"},"国学":{"path":"/guoxue"},"智医":{"path":"/zhiyi"},"五行":{"path":"/wuxing"},"关于我":{"path":"/aboutme","icon":"fa-regular user"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":null},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}}};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container flex flex-col justify-between min-h-dvh">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container px-6 md:px-12">
+    <div class="navbar-content transition-navbar ">
+        <div class="left">
+            
+                <a class="logo-image h-8 w-8 sm:w-10 sm:h-10 mr-3" href="/">
+                    <img src="/images/javai-avatar.png" class="w-full h-full rounded-sm">
+                </a>
+            
+            <a class="logo-title" href="/">
+                
+                javai
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/categories/%E9%9D%A2%E8%AF%95/"
+                                        >
+                                    <i class="fa-regular paper-plane fa-fw"></i>
+                                    面试
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/chat"
+                                        >
+                                    <i class="fa-regular wechat fa-fw"></i>
+                                    CHAT
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/learn"
+                                        >
+                                    <i class="fa-regular users fa-fw"></i>
+                                    LEARN
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/guoxue"
+                                        >
+                                    
+                                    国学
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/zhiyi"
+                                        >
+                                    
+                                    智医
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/wuxing"
+                                        >
+                                    
+                                    五行
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/aboutme"
+                                        >
+                                    <i class="fa-regular user fa-fw"></i>
+                                    关于我
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/categories/%E9%9D%A2%E8%AF%95/"
+                        >
+                            <span>
+                                面试
+                            </span>
+                            
+                                <i class="fa-regular paper-plane fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/chat"
+                        >
+                            <span>
+                                CHAT
+                            </span>
+                            
+                                <i class="fa-regular wechat fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/learn"
+                        >
+                            <span>
+                                LEARN
+                            </span>
+                            
+                                <i class="fa-regular users fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/guoxue"
+                        >
+                            <span>
+                                国学
+                            </span>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/zhiyi"
+                        >
+                            <span>
+                                智医
+                            </span>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/wuxing"
+                        >
+                            <span>
+                                五行
+                            </span>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/aboutme"
+                        >
+                            <span>
+                                关于我
+                            </span>
+                            
+                                <i class="fa-regular user fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+
+            
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">87</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">36</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">531</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                <div class="w-full flex items-center pt-6 justify-start">
+                    <h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">什么是 Java 的 TransmittableThreadLocal？</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/javai-avatar.png">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">Sherwin.Wei</span>
+                        
+                            <span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv8</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2025-03-11 00:01:03</span>
+        <span class="mobile">2025-03-11 00:01:03</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2025-03-11 00:01:03</span>
+            <span class="mobile">2025-03-11 00:01:03</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E9%9D%A2%E8%AF%95/">面试</a>&nbsp;
+                        </li>
+                    
+                    
+                
+                    
+                        <li>
+                            | <a href="/categories/Java-%E5%B9%B6%E5%8F%91%E9%9D%A2%E8%AF%95%E9%A2%98/">Java 并发面试题</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/Java/">Java</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/Java%E5%B9%B6%E5%8F%91/">Java并发</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <h1 id="什么是-Java-的-TransmittableThreadLocal？"><a href="#什么是-Java-的-TransmittableThreadLocal？" class="headerlink" title="什么是 Java 的 TransmittableThreadLocal？"></a>什么是 Java 的 TransmittableThreadLocal？</h1><p>这玩意是阿里开源的一个组件，原生的 ThreadLocal 不支持在线程池中传递本地变量，所以弄了个这个来实现下这个需求</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic.code-nav.cn/mianshiya/question_picture/1783397053004488705/68747470733a2f2f63646e2e6a7364656c6976722e6e65742f67682f79657373696d6964612f63646e5f696d6167652f696d672f696d6167652d32303232303132333136353834313538332e706e67_mianshiya.png"
+                      alt="68747470733a2f2f63646e2e6a7364656c6976722e6e65742f67682f79657373696d6964612f63646e5f696d6167652f696d672f696d6167652d32303232303132333136353834313538332e706e67.png"
+                ></p>
+<p>接下来我们来详细探讨一下</p>
+<h3 id="缘由"><a href="#缘由" class="headerlink" title="缘由"></a>缘由</h3><p>任何一个组件的出现必有其缘由，知其缘由背景才能更深刻地理解它。</p>
+<p>我们知道 ThreadLocal 的出现就是为了本地化线程资源，防止不必要的多线程之间的竞争。</p>
+<p>在有些场景，当父线程 new 一个子线程的时候，希望把它的 ThreadLocal 继承给子线程。</p>
+<p>这时候 InheritableThreadLocal 就来了，它就是为了父子线程传递本地化资源而提出的。</p>
+<p>具体的实现是在子线程对象被 new 的时候，即 Thread.init 的时，如果查看到父线程内部有 InheritableThreadLocal 的数据。</p>
+<p>那就在子 Thread 初始化的时，把父线程的 InheritableThreadLocal  拷贝给子线程。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic.code-nav.cn/mianshiya/question_picture/1783397053004488705/Snipaste_2024-05-02_20-18-46_mianshiya.jpg"
+                      alt="Snipaste_2024-05-02_20-18-46.jpg"
+                ></p>
+<p>就这样简单地把父线程的 ThreadLocal 数据传递给子线程了。</p>
+<p>但是，这个场景只能发生在 new Thread 的时候！也就是手动创建线程之时！那就有个问题了，在平时我们使用的时候基本用的都是线程池。</p>
+<p>那就麻了啊，线程池里面的线程都预创建好了，调用的时候就没法直接用 InheritableThreadLocal  了。</p>
+<p>所以就产生了一个需求，如何往线程池内的线程传递 ThreadLocal？，JDK 的类库没这个功能，所以怎么搞？</p>
+<p>只能我们自己造轮子了。</p>
+<h3 id="如何设计？"><a href="#如何设计？" class="headerlink" title="如何设计？"></a>如何设计？</h3><p>需求已经明确了，但是怎么实现呢？</p>
+<p>平时我们用线程池的话，比如你要提交任务，则使用代码如下：</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Runnable</span> <span class="variable">task</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Runnable</span>....;</span><br><span class="line">executorService.submit(task);</span><br></pre></td></tr></table></figure></div>
+<p>小贴士：以下的 ThreadLocal 泛指线程本地数据，不是指 ThreadLocal 这个类</p>
+<p>这时候，我们想着把当前线程的 ThreadLocal 传递给线程池内部将要执行这个 task 的线程。</p>
+<p>但此时我们哪知道线程池里面的哪个线程会来执行这个任务？</p>
+<p>所以，我们得先把当前线程的 ThreadLocal 保存到这个 task 中。</p>
+<p>然后当线程池里的某个线程，比如线程 A 获取这个任务要执行的时候，看看 task 里面是否有存储着的 ThreadLocal 。</p>
+<p>如果存着那就把这个 ThreadLocal 放到线程 A 的本地变量里，这样就完成了传递。</p>
+<p>然后还有一步，也挺关键的，就是恢复线程池内部执行线程的上下文，也就是该任务执行完毕之后，把任务带来的本地数据给删了，把线程以前的本地数据复原。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic.code-nav.cn/mianshiya/question_picture/1783397053004488705/68747470733a2f2f63646e2e6a7364656c6976722e6e65742f67682f79657373696d6964612f63646e5f696d6167652f696d672f696d6167652d32303232303132333136353834313538332e706e67_mianshiya.png"
+                      alt="68747470733a2f2f63646e2e6a7364656c6976722e6e65742f67682f79657373696d6964612f63646e5f696d6167652f696d672f696d6167652d32303232303132333136353834313538332e706e67.png"
+                ></p>
+<p>设计思路应该已经很明确了吧？来看看具体需要如何实现吧！</p>
+<h3 id="如何实现？"><a href="#如何实现？" class="headerlink" title="如何实现？"></a>如何实现？</h3><p>把上面的设计简单地、直白地翻译成代码如下：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic.code-nav.cn/mianshiya/question_picture/1783397053004488705/Snipaste_2024-05-02_20-20-17_mianshiya.jpg"
+                      alt="Snipaste_2024-05-02_20-20-17.jpg"
+                ></p>
+<p>如果你读过我之前分析 ThreadLocal 的文章，应该可以很容易的理解上面的操作。</p>
+<p>这样虽然可以实现，但是可操作性太差，耦合性太高。</p>
+<p>所以我们得想想怎么优化一下，其实有个设计模式就很合适，那就是装饰器模式。</p>
+<p>我们可以自己搞一个 Runnable 类，比如 YesRunnable，然后在 new YesRunnable 的时候，在构造器里面把当前线程的 threadlocal 赋值进去。</p>
+<p>然后 run 方法那里也修饰一下，我们直接看看伪代码：</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="title function_">YesRunnable</span><span class="params">(Runnable runable)</span> &#123;</span><br><span class="line">  <span class="built_in">this</span>.threadlocalCopy = copyFatherThreadlocal();</span><br><span class="line">  <span class="built_in">this</span>.runable = runable;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">  <span class="comment">//塞入父threadlocal，并返回当前线程原先threadlocal</span></span><br><span class="line">  <span class="type">Object</span> <span class="variable">backup</span> <span class="operator">=</span> setThreadlocal(threadlocalCopy)；</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">   runable.run()；<span class="comment">//执行被装饰的任务逻辑</span></span><br><span class="line">  &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">   restore(backup) ; <span class="comment">//复原当前线程的上下文</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<p>使用方式如下：</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Runnable</span> <span class="variable">task</span> <span class="operator">=</span> () -&gt; &#123;...&#125;;</span><br><span class="line"><span class="type">YesRunnable</span> <span class="variable">yesRunnable</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">YesRunnable</span>(task);</span><br><span class="line">executorService.submit(yesRunnable);</span><br></pre></td></tr></table></figure></div>
+<p>你看，这不就实现我们上面的设计了嘛！</p>
+<p>不过还有一个点没有揭秘，就是如何实现 copyFatherThreadlocal。</p>
+<p>我们如何得知父线程现在到底有哪些 Threadlocal？并且哪些是需要上下文传递的？</p>
+<p>所以我们还需要创建一个类来继承 Threadlocal。</p>
+<p>比如叫 YesThreadlocal，用它声明的变量就表明需要父子传递的！</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">YesThreadlocal</span>&lt;T&gt;  <span class="keyword">extends</span> <span class="title class_">ThreadLocal</span>&lt;T&gt;</span><br></pre></td></tr></table></figure></div>
+<p>然后我们需要搞个地方来存储当前父线程上下文用到的所有 YesThreadlocal，这样在 copyFatherThreadlocal的时候我们才好遍历复制对吧？</p>
+<p>我们可以搞个 holder 来保存这些 YesThreadlocal ，不过 holder 变量也得线程隔离。</p>
+<p>毕竟每个线程所要使用的 YesThreadlocal 都不一样，所以需要用 ThreadLocal 来修饰 holder 。</p>
+<p>然后 YesThreadlocal 可能会有很多，我们可以用 set 来保存。</p>
+<p>但是为了防止我们搞的这个 holder 造成内存泄漏的风险，我们需要弱引用它，不过没有 WeakHashSet，那我们就用 WeakHashMap 来替代存储。</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> ThreadLocal&lt;WeakHashMap&lt;YesThreadLocal&lt;Object&gt;, ?&gt;&gt; holder = <span class="keyword">new</span> .....</span><br></pre></td></tr></table></figure></div>
+<p>这样我们就打造了一个变量，它是线程独有的，且又能拿来存储当前线程用到的所有 YesThreadLocal ，便于后面的复制，且又不会造成内存泄漏(弱引用)。</p>
+<p>是不是感觉有点暂时理不清？没事，我们继续来看看具体怎么用上这个 hold ，可能会清晰些。</p>
+<p>首先我们将需要传递给线程池的本地变量从 ThreadLocal 替换成 YesThreadLocal。</p>
+<p>然后重写 set 方法，实现如下：</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title function_">set</span><span class="params">(T value)</span> &#123;</span><br><span class="line">   <span class="built_in">super</span>.set(value); <span class="comment">//调用 ThreadLocal 的 set</span></span><br><span class="line">        addThisToHolder();  <span class="comment">// 把当前的 YesThreadLocal 对象塞入 hold 中。</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">addThisToHolder</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (!holder.get().containsKey(<span class="built_in">this</span>)) &#123;</span><br><span class="line">        holder.get().put((YesThreadLocal &lt;Object&gt;) <span class="built_in">this</span>, <span class="literal">null</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<p>你看这样就把所有用到的 YesThreadLocal 塞到 holder 中了，然后再来看看 copyFatherThreadlocal 应该如何实现。</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">private static HashMap&lt;YesThreadLocal &lt;Object&gt;, Object&gt; copyFatherThreadlocal () &#123;</span><br><span class="line">    HashMap&lt;YesThreadLocal &lt;Object&gt;, Object&gt; fatherMap = new HashMap&lt;YesThreadLocal &lt;Object&gt;, Object&gt;();</span><br><span class="line">    for (YesThreadLocal &lt;Object&gt; threadLocal : YesThreadLocal.holder.get().keySet()) &#123;</span><br><span class="line">        fatherMap .put(threadLocal, threadLocal.copyValue());</span><br><span class="line">    &#125;</span><br><span class="line">    return fatherMap ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<p>逻辑很简单，就是一个 map 遍历拷贝。</p>
+<p>我现在用一段话来小结一下，把上面的全部操作联合起来理解，应该会清晰很多。</p>
+<p>实现思路小结<br>1.新建一个 YesThreadLocal 类继承自 ThreadLocal ，用于标识这个修饰的变量需要父子线程拷贝<br>2.新建一个 YesRunnable 类继承自 Runnable，采用装饰器模式，这样就不用修改原有的 Runnable。在构造阶段复制父线程的 YesThreadLocal 变量赋值给 YesRunnable 的一个成员变量 threadlocalCopy 保存。<br>3.并修饰 YesRunnable#run 方法，在真正逻辑执行前将 threadlocalCopy 赋值给当前执行线程的上下文，且保存当前线程之前的上下文，在执行完毕之后，再复原此线程的上下文。<br>4.由于需要在构造的时候复制所有父线程用到的 YesThreadLocal ，因此需要有个 holder 变量来保存所有用到的 YesThreadLocal ，这样在构造的时候才好遍历赋值。<br>5.并且 holder 变量也需要线程隔离，所以用 ThreadLocal 修饰，并且为了防止 holder 强引用导致内存泄漏，所以用 WeakHashMap 存储。<br>6.往 holder 添加 YesThreadLocal 的时机就在 YesThreadLocal#set 之时</p>
+<h3 id="TransmittableThreadLocal-的实现"><a href="#TransmittableThreadLocal-的实现" class="headerlink" title="TransmittableThreadLocal 的实现"></a>TransmittableThreadLocal 的实现</h3><blockquote>
+<p>这篇只讲 TTL 核心思想（关键路径），由于篇幅原因其它的不作展开，之后再写一篇详细的。</p>
+</blockquote>
+<p>我上面的实现其实就是 TTL 的复制版，如果你理解了上面的实现，那么接下来对 TTL 介绍理解起来应该很简单，相当于复习了。</p>
+<p>我们先简单看一下 TTL 的使用方式。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic.code-nav.cn/mianshiya/question_picture/1783397053004488705/Snipaste_2024-05-02_20-23-26_mianshiya.jpg"
+                      alt="Snipaste_2024-05-02_20-23-26.jpg"
+                ></p>
+<p>使用起来很简单对吧？</p>
+<p>TTL 对标上面的 YesThreadLocal ，差别在于它继承的是 InheritableThreadLocal，因为这样直接 new TTL 也会拥有父子线程本地变量的传递能力。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic.code-nav.cn/mianshiya/question_picture/1783397053004488705/Snipaste_2024-05-02_20-23-52_mianshiya.jpg"
+                      alt="Snipaste_2024-05-02_20-23-52.jpg"
+                ></p>
+<p>我们再来看看 TTL 的 get 和 set 这两个核心操作：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic.code-nav.cn/mianshiya/question_picture/1783397053004488705/Snipaste_2024-05-02_20-24-08_mianshiya.jpg"
+                      alt="Snipaste_2024-05-02_20-24-08.jpg"
+                ></p>
+<p>可以看到 get 和 set 其实就是复用父类 ThreadLocal 的方法，关键就在于 addThisToHolder，就是我上面分析的将当前使用的 TTL 对象加到 holder 里面。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic.code-nav.cn/mianshiya/question_picture/1783397053004488705/Snipaste_2024-05-02_20-24-38_mianshiya.jpg"
+                      alt="Snipaste_2024-05-02_20-24-38.jpg"
+                ></p>
+<p>所以，在父线程赋值即执行 set 操作之后，父线程里的 holder 就存储了当前的 TTL 对象了，即上面演示代码的 ttl.set() 操作。</p>
+<p>然后重点就移到了TtlRunnable.get 上了，根据上面的理解我们知道这里是要进行一个装饰的操作，这个 get 代码也比较简单，核心就是 new 一个 TtlRunnable 包装了原始的 task。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic.code-nav.cn/mianshiya/question_picture/1783397053004488705/Snipaste_2024-05-02_20-25-04_mianshiya.jpg"
+                      alt="Snipaste_2024-05-02_20-25-04.jpg"
+                ></p>
+<p>那我们来看一下它的构造方法：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic.code-nav.cn/mianshiya/question_picture/1783397053004488705/Snipaste_2024-05-02_20-25-35_mianshiya.jpg"
+                      alt="Snipaste_2024-05-02_20-25-35.jpg"
+                ></p>
+<p>这个 capturedRef 其实就是父线程本地变量的拷贝，然后 capture() 其实就等同于copyFatherThreadlocal()</p>
+<p>再来看一下 TtlRunnable 装饰的 run 方法：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic.code-nav.cn/mianshiya/question_picture/1783397053004488705/Snipaste_2024-05-02_20-26-03_mianshiya.jpg"
+                      alt="Snipaste_2024-05-02_20-26-03.jpg"
+                ></p>
+<p>逻辑很清晰的四步骤：</p>
+<ol>
+<li>拿到父类本地变量拷贝</li>
+<li>赋值给当前线程（线程池内的某线程），并保存之前的本地变量</li>
+<li>执行逻辑</li>
+<li>复原当前线程之前的本地变量</li>
+</ol>
+<p>我们再来分析一下 capture() 方法，即如何拷贝的。</p>
+<p>在 TTL 中是专门定义了一个静态工具类 Transmitter 来实现上面的 capture、 replay、restore 操作。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic.code-nav.cn/mianshiya/question_picture/1783397053004488705/Snipaste_2024-05-02_20-26-51_mianshiya.jpg"
+                      alt="Snipaste_2024-05-02_20-26-51.jpg"
+                ></p>
+<p>可以看到 capture 的逻辑其实就是返回一个快照，而这个快照就是遍历 holder 获取所有存储在 holder 里面的 TTL ，返回一个新的 map，还是很简单的吧！</p>
+<blockquote>
+<p>这里还有个 captureThreadLocalValues ，这个是为兼容那些无法将 ThreadLocal 类变更至 TTL ，但是又想复制传递 ThreadLocal 的值而使用的，可以先忽略。</p>
+</blockquote>
+<p>我们再来看看 replay，即如何将父类的本地变量赋值给当前线程的。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic.code-nav.cn/mianshiya/question_picture/1783397053004488705/Snipaste_2024-05-02_20-27-41_mianshiya.jpg"
+                      alt="Snipaste_2024-05-02_20-27-41.jpg"
+                ></p>
+<p>逻辑还是很清晰的，先备份，再拷贝覆盖，最后会返回备份，拷贝覆盖的代码 setTtlValuesTo 很简单:</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic.code-nav.cn/mianshiya/question_picture/1783397053004488705/Snipaste_2024-05-02_20-28-02_mianshiya.jpg"
+                      alt="Snipaste_2024-05-02_20-28-02.jpg"
+                ></p>
+<p>就是 for 循环进行了一波 set ，从这里也可以得知为什么上面需要移除父线程没有的 TTL，因为这里只是进行了 set。如果不 remove 当前线程的本地变量，那就不是完全继承自父线程的本地变量了，可能掺杂着之前的本地变量，也就是不干净了，防止这种干扰，所以还是 remove 了为妙。</p>
+<p>最后我们看下 restore 操作：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic.code-nav.cn/mianshiya/question_picture/1783397053004488705/Snipaste_2024-05-02_20-28-28_mianshiya.jpg"
+                      alt="Snipaste_2024-05-02_20-28-28.jpg"
+                ></p>
+<p>至此想必对 TTL 的原理应该都很清晰了吧！</p>
+<h3 id="一些用法"><a href="#一些用法" class="headerlink" title="一些用法"></a>一些用法</h3><p>上面我们展示的只是其中一个用法也就是利用 TtlRunnable.get 来包装 Runnable。</p>
+<p>TTL 还提供了线程池的修饰方法，即 TtlExecutors，比如可以这样使用：</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ExecutorService executorService = TtlExecutors.getTtlExecutorService(Executors.newFixedThreadPool(1));</span><br></pre></td></tr></table></figure></div>
+<p>其实原理也很简单，装饰了一下线程池提交任务的方法，里面实现了 TtlRunnable.get 的包装</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pic.code-nav.cn/mianshiya/question_picture/1783397053004488705/Snipaste_2024-05-02_20-29-34_mianshiya.jpg"
+                      alt="Snipaste_2024-05-02_20-29-34.jpg"
+                ><br>还有一种使用方式更加透明，即利用 Java Agent 来修饰 JDK 的线程池实现类，这种方式在使用上基本就是无感知了。</p>
+<p>在 Java 的启动参数加上：-javaagent:path&#x2F;to&#x2F;transmittable-thread-local-2.x.y.jar 即可，然后就正常的使用就行，原生的线程池实现类已经悄悄的被改了！</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">TransmittableThreadLocal&lt;String&gt; ttl= new TransmittableThreadLocal&lt;&gt;();</span><br><span class="line">ExecutorService executorService = Executors.newFixedThreadPool(1);</span><br><span class="line">Runnable task = new RunnableTask();</span><br><span class="line">executorService.submit(task);</span><br></pre></td></tr></table></figure></div>
+<h3 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h3><p>好了，有关 TTL 的原理和用法解释的都差不多了。</p>
+<p>总结下来的核心操作就是 CRR（Capture&#x2F;Replay&#x2F;Restore），拷贝快照、重放快照、复原上下文。</p>
+<p>可能有些人会疑惑为什么需要复原，线程池的线程每次执行的时候，如果用了 TTL 那执行的线程都会被覆盖上下文，没必要复原对吧？</p>
+<p>其实也有人向作者提了这个疑问，回答是：</p>
+<p>线程池满了且线程池拒绝策略使用的是『CallerRunsPolicy』，这样执行的线程就变成当前线程了，那肯定是要复原的，不然上下文就没了。<br>使用ForkJoinPool（包含并行执行Stream与CompletableFuture，底层使用ForkJoinPool）的场景，展开的ForkJoinTask会在调用线程中直接执行。<br>其实关于 TTL 还有很多细节可以说，不过篇幅有限，细节要说的话得再开一章。不过今天这篇也算把 TTL 的核心思想讲完了。</p>
+<p>假设现在有个面试官问你，我要向线程池里面传递 ThreadLocal 怎么实现呀？想必你肯定可以回答出来了~</p>
+
+        </div>
+
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/Java/">#Java</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/Java%E5%B9%B6%E5%8F%91/">#Java并发</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2025/03/11/%E9%9D%A2%E8%AF%95/Java%E5%B9%B6%E5%8F%91%E9%9D%A2%E8%AF%95%E9%A2%98/511.Java%E4%B8%AD%E7%9A%84InheritableThreadLocal%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">Java 中的 InheritableThreadLocal 是什么？</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2025/03/11/%E9%9D%A2%E8%AF%95/Java%E5%B9%B6%E5%8F%91%E9%9D%A2%E8%AF%95%E9%A2%98/516.Java%E4%B8%ADThread.sleep(0)%E7%9A%84%E4%BD%9C%E7%94%A8%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">Java 中 Thread.sleep(0) 的作用是什么？</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+                <div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="gitalk-container"></div>
+    <script data-swup-reload-script
+            src="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js"></script>
+    <script data-swup-reload-script>
+
+        function loadGitalk() {
+            let __gitalk__pathname = decodeURI(location.pathname);
+            const __gitalk__pathnameLength = __gitalk__pathname.length;
+            const __gitalk__pathnameMaxLength = 50;
+            if (__gitalk__pathnameLength > __gitalk__pathnameMaxLength) {
+                __gitalk__pathname = __gitalk__pathname.substring(0, __gitalk__pathnameMaxLength - 3) + '...';
+            }
+
+            try {
+                Gitalk && new Gitalk({
+                    clientID: 'Ov23liThu5oe4YmmlNAw',
+                    clientSecret: 'bdde0e1d1af3b4e01fc6e172c7926c42ee09e8d3',
+                    repo: 'javai-comment',
+                    owner: 'sherwin28',
+                    admin: ['sherwin28'],
+                    id: __gitalk__pathname,
+                    language: 'en',
+                    proxy: 'https://github.com/login/oauth/access_token'
+                }).render('gitalk-container');
+
+            } catch (e) {
+                window.Gitalk = null;
+            }
+        }
+
+        if ('true') {
+            const loadGitalkTimeout = setTimeout(() => {
+                loadGitalk();
+                clearTimeout(loadGitalkTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadGitalk);
+        }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">什么是 Java 的 TransmittableThreadLocal？</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-Java-%E7%9A%84-TransmittableThreadLocal%EF%BC%9F"><span class="nav-text">什么是 Java 的 TransmittableThreadLocal？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%98%E7%94%B1"><span class="nav-text">缘由</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E8%AE%BE%E8%AE%A1%EF%BC%9F"><span class="nav-text">如何设计？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%EF%BC%9F"><span class="nav-text">如何实现？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TransmittableThreadLocal-%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="nav-text">TransmittableThreadLocal 的实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E7%94%A8%E6%B3%95"><span class="nav-text">一些用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%80%E5%90%8E"><span class="nav-text">最后</span></a></li></ol></li></ol></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+            <div class="customize-info my-1">2024 Java+AI技术分享版权所有</div>
+        
+        
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+
+        
+            <div class="icp-info my-1"><a target="_blank" rel="nofollow" href="
+                
+                    https://beian.miit.gov.cn/
+                
+                ">粤ICP备2024326496号-1</a></div>
+        
+        
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+    
+<script src="/js/libs/anime.min.js"></script>
+
+
+
+
+
+    
+<script src="/js/tools/tocToggle.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/layouts/toc.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/plugins/tabs.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+<script src="/js/libs/moment-with-locales.min.js" data-swup-reload-script=""></script>
+
+
+<script src="/js/layouts/essays.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+</body>
+</html>

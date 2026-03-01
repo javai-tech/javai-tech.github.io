@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Sherwin.Wei">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2025/03/11/面试/25届春招后端热题/609.mysql中有哪些锁类型？/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="MySQL 中有哪些锁类型？回答重点在 MySQL 中，主要有以下几种锁类型： 1）行级锁（Row Lock）（重点）：  仅对特定的行加锁，允许其他事务并发访问不同的行，适用于高并发场景。  2）表级锁（Table Lock）（重点）：  对整个表加锁，其他事务无法对该表进行任何读写操作，适用于需要保证完整性的小型表。  3）意向锁（Intention Lock）：  一种表锁，用于表示某个事务">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL 中有哪些锁类型？">
+<meta property="og:url" content="http://example.com/2025/03/11/%E9%9D%A2%E8%AF%95/25%E5%B1%8A%E6%98%A5%E6%8B%9B%E5%90%8E%E7%AB%AF%E7%83%AD%E9%A2%98/609.MySQL%E4%B8%AD%E6%9C%89%E5%93%AA%E4%BA%9B%E9%94%81%E7%B1%BB%E5%9E%8B%EF%BC%9F/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="MySQL 中有哪些锁类型？回答重点在 MySQL 中，主要有以下几种锁类型： 1）行级锁（Row Lock）（重点）：  仅对特定的行加锁，允许其他事务并发访问不同的行，适用于高并发场景。  2）表级锁（Table Lock）（重点）：  对整个表加锁，其他事务无法对该表进行任何读写操作，适用于需要保证完整性的小型表。  3）意向锁（Intention Lock）：  一种表锁，用于表示某个事务">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/TJoGOsWO_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/W99AP5cD_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/VwKY3SBK_image_mianshiya.png">
+<meta property="article:published_time" content="2025-03-10T16:01:02.000Z">
+<meta property="article:modified_time" content="2025-03-10T16:01:02.968Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="后端">
+<meta property="article:tag" content="MySQL">
+<meta property="article:tag" content="数据库">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/TJoGOsWO_image_mianshiya.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/javai-avatar.png" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/javai-avatar.png">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/javai-avatar.png">
+    <!--- Page Info-->
+    
+    <title>
+        
+            MySQL 中有哪些锁类型？ | javai
+        
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    <!--- Inject Part-->
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css">
+
+    
+<link rel="stylesheet" href="/fonts/Geist/geist.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+    
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":false,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"java与ai","subtitle":{"text":["java与ai结合一定会更强更远!","今日事，今天毕!","明天会更好！","一个人可以走的很快，但是一群人却可以走的更远。","今人不见古时月，今月曾经照古人。"],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"style":"default","links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.7.3","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"面试":{"path":"/categories/面试/","icon":"fa-regular paper-plane"},"chat":{"path":"/chat","icon":"fa-regular wechat"},"learn":{"path":"/learn","icon":"fa-regular users"},"国学":{"path":"/guoxue"},"智医":{"path":"/zhiyi"},"五行":{"path":"/wuxing"},"关于我":{"path":"/aboutme","icon":"fa-regular user"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":null},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}}};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container flex flex-col justify-between min-h-dvh">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container px-6 md:px-12">
+    <div class="navbar-content transition-navbar ">
+        <div class="left">
+            
+                <a class="logo-image h-8 w-8 sm:w-10 sm:h-10 mr-3" href="/">
+                    <img src="/images/javai-avatar.png" class="w-full h-full rounded-sm">
+                </a>
+            
+            <a class="logo-title" href="/">
+                
+                javai
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/categories/%E9%9D%A2%E8%AF%95/"
+                                        >
+                                    <i class="fa-regular paper-plane fa-fw"></i>
+                                    面试
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/chat"
+                                        >
+                                    <i class="fa-regular wechat fa-fw"></i>
+                                    CHAT
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/learn"
+                                        >
+                                    <i class="fa-regular users fa-fw"></i>
+                                    LEARN
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/guoxue"
+                                        >
+                                    
+                                    国学
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/zhiyi"
+                                        >
+                                    
+                                    智医
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/wuxing"
+                                        >
+                                    
+                                    五行
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/aboutme"
+                                        >
+                                    <i class="fa-regular user fa-fw"></i>
+                                    关于我
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/categories/%E9%9D%A2%E8%AF%95/"
+                        >
+                            <span>
+                                面试
+                            </span>
+                            
+                                <i class="fa-regular paper-plane fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/chat"
+                        >
+                            <span>
+                                CHAT
+                            </span>
+                            
+                                <i class="fa-regular wechat fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/learn"
+                        >
+                            <span>
+                                LEARN
+                            </span>
+                            
+                                <i class="fa-regular users fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/guoxue"
+                        >
+                            <span>
+                                国学
+                            </span>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/zhiyi"
+                        >
+                            <span>
+                                智医
+                            </span>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/wuxing"
+                        >
+                            <span>
+                                五行
+                            </span>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/aboutme"
+                        >
+                            <span>
+                                关于我
+                            </span>
+                            
+                                <i class="fa-regular user fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+
+            
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">87</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">36</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">531</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                <div class="w-full flex items-center pt-6 justify-start">
+                    <h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">MySQL 中有哪些锁类型？</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/javai-avatar.png">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">Sherwin.Wei</span>
+                        
+                            <span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv8</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2025-03-11 00:01:02</span>
+        <span class="mobile">2025-03-11 00:01:02</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2025-03-11 00:01:02</span>
+            <span class="mobile">2025-03-11 00:01:02</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E9%9D%A2%E8%AF%95/">面试</a>&nbsp;
+                        </li>
+                    
+                    
+                
+                    
+                        <li>
+                            | <a href="/categories/25-%E5%B1%8A%E6%98%A5%E6%8B%9B%E5%90%8E%E7%AB%AF%E7%83%AD%E9%A2%98/">25 届春招后端热题</a>&nbsp;
+                        </li>
+                    
+                    
+                
+                    
+                        <li>
+                            | <a href="/categories/MySQL-%E9%9D%A2%E8%AF%95%E9%A2%98/">MySQL 面试题</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E5%90%8E%E7%AB%AF/">后端</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/MySQL/">MySQL</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <h1 id="MySQL-中有哪些锁类型？"><a href="#MySQL-中有哪些锁类型？" class="headerlink" title="MySQL 中有哪些锁类型？"></a>MySQL 中有哪些锁类型？</h1><h2 id="回答重点"><a href="#回答重点" class="headerlink" title="回答重点"></a>回答重点</h2><p>在 MySQL 中，主要有以下几种锁类型：</p>
+<p>1）<strong>行级锁（Row Lock）（重点）</strong>：</p>
+<ul>
+<li>仅对特定的行加锁，允许其他事务并发访问不同的行，适用于高并发场景。</li>
+</ul>
+<p>2）<strong>表级锁（Table Lock）（重点）</strong>：</p>
+<ul>
+<li>对整个表加锁，其他事务无法对该表进行任何读写操作，适用于需要保证完整性的小型表。</li>
+</ul>
+<p>3）<strong>意向锁（Intention Lock）</strong>：</p>
+<ul>
+<li>一种表锁，用于表示某个事务对某行数据加锁的意图，分为意向共享锁（IS）和意向排它锁（IX），主要用于行级锁与表级锁的结合。</li>
+</ul>
+<p>4）<strong>共享锁（Shared Lock）（重点）</strong>：</p>
+<ul>
+<li>允许多个事务并发读取同一资源，但不允许修改。只有在释放共享锁后，其他事务才能获得排它锁。</li>
+</ul>
+<p>5）<strong>排它锁（Exclusive Lock）（重点）</strong>：</p>
+<ul>
+<li>只允许一个事务对资源进行读写，其他事务在获得排它锁之前无法访问该资源。</li>
+</ul>
+<p>6）<strong>元数据锁（Metadata Lock, MDL）</strong>：</p>
+<ul>
+<li>用于保护数据库对象（如表和索引）的元数据，防止在进行 DDL 操作时其他事务对这些对象进行修改。</li>
+</ul>
+<p>7）<strong>间隙锁（Gap Lock）（重点）</strong>：</p>
+<ul>
+<li>针对索引中两个记录之间的间隙加锁，防止其他事务在这个间隙中插入新记录，以避免幻读。间隙锁不锁定具体行，而是锁定行与行之间的空间。</li>
+</ul>
+<p>8）<strong>临键锁（Next-Key Lock）（重点）</strong>：</p>
+<ul>
+<li>是行级锁和间隙锁的结合，锁定具体行和其前面的间隙，确保在一个范围内不会出现幻读。常用于支持可重复读的隔离级别。</li>
+</ul>
+<p>9）<strong>插入意向锁（Insert Intention Lock）</strong>：</p>
+<ul>
+<li>一种等待间隙的锁，用于指示事务打算在某个间隙中插入记录，允许其他事务进行共享锁，但在插入时会阻止其他的排它锁。</li>
+</ul>
+<p>10）<strong>自增锁（Auto Increment Lock）</strong>：</p>
+<ul>
+<li>在插入自增列时，加锁以保证自增值的唯一性，防止并发插入导致的冲突。通常在插入操作时被使用，以确保生成的自增 ID 是唯一的。</li>
+</ul>
+<h2 id="扩展知识"><a href="#扩展知识" class="headerlink" title="扩展知识"></a>扩展知识</h2><p>这个扩展知识比较长，也是从演进的角度来讲解 MySQL 中比较关键的几个锁，这样记忆和理解会更深刻，减少出现看过没多久就忘了的情况。</p>
+<h3 id="共享锁和排他锁"><a href="#共享锁和排他锁" class="headerlink" title="共享锁和排他锁"></a>共享锁和排他锁</h3><p>在 MySQL 中锁可以分为两大类，分别是 shared (S) locks 和 exclusive (X) locks。</p>
+<ul>
+<li>S锁，称为共享锁，事务在读取记录的时候获取 S 锁，它允许多个事务同时获取 S 锁，互相之间不会冲突。</li>
+<li>X锁，称为独占锁（排他锁），事务在修改记录的时候获取 X 锁，且只允许一个事务获取 X 锁，其它事务需要阻塞等待。</li>
+</ul>
+<p>S 锁之间不冲突，X 锁则为独占锁，所以 X 之间会冲突， X 和 S 也会冲突。</p>
+<table>
+<thead>
+<tr>
+<th>冲突</th>
+<th>S</th>
+<th>X</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>S</td>
+<td>不冲突</td>
+<td>冲突</td>
+</tr>
+<tr>
+<td>X</td>
+<td>冲突</td>
+<td>冲突</td>
+</tr>
+</tbody></table>
+<p><code>SELECT ... LOCK IN SHARE MODE;</code> 这种读取需要对记录上 S 锁。</p>
+<p><code>SELECT ... FOR UPDATE;</code> 需要对记录上 X 锁。</p>
+<p>MyISAM 引擎仅支持表锁，而 Innodb 即支持表锁也支持行锁。</p>
+<ul>
+<li><code>LOCK TABLES yes READ</code> 是对 yes 这个表上 S 锁。</li>
+<li><code>LOCK TABLES yes WRITE</code> 是对 yes 这个表上 X 锁。</li>
+</ul>
+<p>不过一般情况下，我们不会使用表锁，因为平日的 UPDATE 、SELECT 要用也是用行锁了，不可能用粒度粗的表锁，不然性能太低。</p>
+<p>唯一能想到用上表锁的就是 DDL 语句了，比如 ALTER TABLE 的时候，应该锁定整个表，防止查询和修改。除此之外 MySQL 还提供了一个叫 MDL 的锁，即 <code>Metadata Locks</code>（元数据锁）。</p>
+<h3 id="元数据锁"><a href="#元数据锁" class="headerlink" title="元数据锁"></a>元数据锁</h3><p>元数据锁也分为读锁和写锁：</p>
+<p>1）读锁 (MDL_SHARED)：</p>
+<p>当一个事务需要读取表的元数据时（如执行 SELECT 操作），会获取读锁。<br>多个事务可以同时持有读锁，不会互相阻塞。</p>
+<p>2）写锁 (MDL_EXCLUSIVE)：</p>
+<p>当一个事务需要修改表的元数据时（如执行 ALTER TABLE 操作），会获取写锁。<br>写锁会阻塞其他任何读锁和写锁，确保独占访问。</p>
+<p>元数据锁的主要作用如下：</p>
+<p>1）防止并发的 DDL 操作和 DML 操作冲突：</p>
+<ul>
+<li>当一个事务对表进行结构性更改（如 ALTER TABLE），元数据锁（写锁）会阻止其他事务对该表进行操作，直到结构更改完成。</li>
+<li>当一个事务对表进行数据操作（如 SELECT、INSERT、UPDATE、DELETE），元数据锁（读锁）会阻止其他事务对该表进行结构性更改。</li>
+</ul>
+<p>2）保护元数据一致性：</p>
+<ul>
+<li>确保在执行 DDL 操作（如 CREATE TABLE、DROP TABLE、ALTER TABLE）时，元数据不会被其他事务同时修改。</li>
+</ul>
+<p>假设业务上真用到了表锁，那么表锁和行锁之间肯定会冲突，当 InnoDB 加表锁的时候，如何判断表里面是否已经有行锁？难道得一条记录一条记录遍历过去找吗？</p>
+<p>显然这样的效率太低了！</p>
+<h3 id="意向锁"><a href="#意向锁" class="headerlink" title="意向锁"></a>意向锁</h3><p>所以有了个叫意向锁（Intention Locks）的东西。</p>
+<ul>
+<li>IS（Intention Shared Lock），共享意向锁</li>
+<li>IX（Intention Exclusive Lock），独占意向锁。</li>
+</ul>
+<p>这两个锁是表级别的锁，当需要对表中的某条记录上 S 锁的时候，先在表上加个 IS 锁，表明此时表内有 S 锁。当需要对表中的某条记录上 X 锁的时候，先在表上加个 IX 锁，表明此时表内有 X 锁。</p>
+<p>这样操作之后，如果要加表锁，就不需要遍历所有记录去找了，直接看看表上面有没有 IS 和 IX 锁。</p>
+<p>比如，此时要上表级别的 S 锁，如果表上没有 IX ，说明表中没有记录有独占锁，其实就可以直接上表级 S 锁。</p>
+<p>如果此时要上表级别的 X 锁，如果表上没有 IX 和 IS ，说明表中的所有记录都没加锁，其实就可以直接上表级 X 锁。</p>
+<p><strong>因此 IS 和 IX 的作用就是在上表级锁的时候，可以快速判断是否可以上锁，而不需要遍历表中的所有记录</strong>。</p>
+<p>所以  IS 和 IX 互相之间是不会冲突的，因为它们的作用只是打个标记，来丰富一下上面的表格：</p>
+<table>
+<thead>
+<tr>
+<th>冲突</th>
+<th>S</th>
+<th>X</th>
+<th>IS</th>
+<th>IX</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>S</td>
+<td>不冲突</td>
+<td>冲突</td>
+<td>不冲突</td>
+<td>冲突</td>
+</tr>
+<tr>
+<td>X</td>
+<td>冲突</td>
+<td>冲突</td>
+<td>冲突</td>
+<td>冲突</td>
+</tr>
+<tr>
+<td>IS</td>
+<td>不冲突</td>
+<td>冲突</td>
+<td>不冲突</td>
+<td>不冲突</td>
+</tr>
+<tr>
+<td>IX</td>
+<td>冲突</td>
+<td>冲突</td>
+<td>不冲突</td>
+<td>不冲突</td>
+</tr>
+</tbody></table>
+<p>至此，已经理解了共享锁、独占锁、表锁相关的知识，接下来再来看看 MySQL 中的行锁有哪几种。</p>
+<p>主要有三种：</p>
+<ul>
+<li>记录锁（Record Locks）</li>
+<li>间隙锁（Gap Locks）</li>
+<li>临键锁（Next-Key Locks）</li>
+</ul>
+<h3 id="记录锁"><a href="#记录锁" class="headerlink" title="记录锁"></a>记录锁</h3><p>记录锁顾名思义就是锁住当前的记录，它是作用到索引上的。我们都知道 innodb 是肯定有索引的，即使没有主键也会创建隐藏的聚簇索引，所以<strong>记录锁总是锁定索引记录</strong>。</p>
+<p>比如，此时一个事务 A 执行 <code>SELECT * FROM yes WHERE name = &#39;xx&#39; FOR UPDATE;</code> 那么 name &#x3D; xx 这条记录就被锁定了，其他事务无法插入、删除、修改 name &#x3D; xx 的记录。</p>
+<p>此时事务 A 还未提交，另一个事务 B 要执行 <code>insert into yes (name) values (&#39;xx&#39;)</code>，此时会被阻塞，这个很好理解。</p>
+<p>但是，如果另一个事务 C 执行了 <code>insert into yes (name) values (&#39;aa&#39;)</code>，这个语句会被阻塞吗？</p>
+<p><strong>看情况</strong>。</p>
+<p><strong>如果 name 没有索引</strong>。前面提到记录锁是加到索引上的，但是 name 没索引啊，那只能去找聚簇索引，但聚簇索引上面能通过 name 快速找到数据吗？它只能通过全表扫描一个一个看过去，所以咋办？都锁了呗！</p>
+<p>因此，<strong>如果 name 没有索引，那么事务 C 会被阻塞，如果有索引，则不会被阻塞</strong>！</p>
+<p>所以这里要注意，没索引的列不要轻易的锁，不要以为有行锁就可以为所欲为，并不是这样的。</p>
+<h3 id="间隙锁和临键锁"><a href="#间隙锁和临键锁" class="headerlink" title="间隙锁和临键锁"></a>间隙锁和临键锁</h3><p>前面说了，记录锁需要加到记录上，但是如果<strong>要给此时还未存在的记录加锁怎么办</strong>？也就是要预防幻读的出现！</p>
+<p>这时候间隙锁就派上用场了，它是给间隙加上锁。</p>
+<p>比如此时有 1、3、5、10 这四条记录，之前的文章分析过，数据页中还有两条虚拟的记录，分别是 <code>Infimum</code> 和 <code>Supremum</code>。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/TJoGOsWO_image_mianshiya.png"
+                      alt="image.png" width="697px" 
+                >
+
+<p>可以看到，记录之前都有间隙，<strong>那间隙锁呢，锁的就是这个间隙</strong>！</p>
+<p>比如我把 3 和 5 之间的间隙锁了，此时要插入 id &#x3D; 4 的记录，就会被这个间隙锁给阻塞了，这样就避免了幻读的产生！也就实现了锁定未插入的记录的需求！</p>
+<p>还有个 <code>Next-Key Locks</code> 就是记录锁+间隙锁，像上面间隙锁的举例，只能锁定(3,5) 这个区间，而 <code>Next-Key Locks</code> 是一个前开后闭的区间(3,5]，这样能防止查询 id&#x3D;5 的这个幻读。</p>
+<p>间隙锁之间不会冲突，<strong>间隙锁的唯一目的就是防止其他事务插入数据到间隙中</strong> ，所以即使两个间隙锁要锁住相同的间隙也没有关系，因为它们的目的是一致的。</p>
+<p>间隙锁可以显式禁用，它是在事务隔离级别为可重复读的时候生效的，如果将事务隔离级别更改为 READ COMMITTED，就会禁用了，此时，间隙锁对于搜索和索引扫描是禁用的，仅用于外键约束检查和重复键检查。</p>
+<h3 id="插入意向锁"><a href="#插入意向锁" class="headerlink" title="插入意向锁"></a>插入意向锁</h3><p>插入意向锁，即 Insert Intention Locks，<strong>它也是一类和间隙相关锁</strong>，但是它不是锁定间隙，而是等待某个间隙。比如上面举例的 id &#x3D; 4 的那个事务 C ，由于被间隙锁给阻塞了，所以事务 C 会生成一个插入意向锁，表明等待这个间隙锁的释放。</p>
+<p>并且插入意向锁之间不会阻塞，因为它们的目的也是只等待这个间隙被释放，所以插入意向锁之间没有冲突。</p>
+<p>它的目的不在于锁定资源防止别人访问，我个人觉得更像是为了遵循 MySQL 的锁代码实现而为之。</p>
+<p><strong>锁其实就是内存里面的一个结构</strong>，每个事务为某个记录或者间隙上锁就是创建一个锁对象来争抢资源。</p>
+<p>如果某个事务没有抢到资源，那也会生成一个锁对象，只是状态是等待的，而当拥有资源的事务释放锁之后，就会寻找正在等待当前资源的锁结构，然后选一个让它获得资源并唤醒对应的事务使之得以执行。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/W99AP5cD_image_mianshiya.png"
+                      alt="image.png" width="503px" 
+                >
+
+<p>所以按照这么个逻辑，<strong>那些在等待间隙锁的插入事务，也需要对应的建立一个锁结构，然后锁类型是插入意向锁</strong>。</p>
+<p>这样一来，间隙锁的事务在释放间隙锁的时候，才能得以找到那些等待插入的事务，然后进行唤醒，而由锁的类型也可以得知是插入意向锁，之间不需要阻塞，所以可以一起执行插入。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1772087337535152129/VwKY3SBK_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<h3 id="Auto-Inc-Lock"><a href="#Auto-Inc-Lock" class="headerlink" title="Auto-Inc Lock"></a>Auto-Inc Lock</h3><p>Auto-Inc Lock 是一个特殊的表级锁，用于自增列插入数据时使用。 在插入一条数据的时候，需要在表上加个 Auto-Inc Lock，然后为自增列分配递增的值，在语句插入结束之后，再释放 Auto-Inc Lock。</p>
+<p>在 MySQL 5.1.22 版本之后，又弄了个互斥量来进行自增减的累加。互斥量的性能高于 Auto-Inc Lock，因为 Auto-Inc Lock是语句插入完毕之后才释放锁，而互斥量是在语句插入的时候，<strong>获得递增值之后，就可以释放锁</strong>，所以性能更好。</p>
+<p>但是我们还需要考虑主从的情况，由于<strong>并发插入</strong>的情况，基于 statement -based binlog 复制时，自增的值顺序无法把控，可能会导致主从数据不一致。</p>
+<p>所以 MySQL 有个 innodb_autoinc_lock_mode 配置，一共有三个值：</p>
+<ul>
+<li>0，只用 Auto-Inc Lock。</li>
+<li>1，<strong>默认值</strong>，对于插入前已知插入行数的插入，用互斥量，对于插入前不知道具体插入数的插入，用 Auto-Inc Lock，这样即使基于 statement -based binlog 复制也是安全的。</li>
+<li>2，只用互斥量。</li>
+</ul>
+<h3 id="扩展学习"><a href="#扩展学习" class="headerlink" title="扩展学习"></a>扩展学习</h3><p>还有一个谓词锁，Predicate Locks，这个比较少见，大家了解下就好了。</p>
+<p>InnoDB 是支持空间数据的，所以有空间索引，为了处理涉及空间索引的操作的锁定，next-key locking 不好使，因为多维数据中没有绝对排序的概念，因此不清楚 “下一个” key 在哪。</p>
+<p>所以为了支持具有空间索引的表的隔离级别，InnoDB 使用谓词锁。</p>
+<p>空间索引包含最小边界矩形（MBR）值，因此 InnodB 通过在用于查询的 MBR 值上设置谓词锁定，使得 InnoDB 在索引上执行一致性读， 其他事务无法插入或修改与查询条件匹配的行。</p>
+
+        </div>
+
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/%E5%90%8E%E7%AB%AF/">#后端</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/MySQL/">#MySQL</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">#数据库</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2025/03/11/%E9%9D%A2%E8%AF%95/25%E5%B1%8A%E6%98%A5%E6%8B%9B%E5%90%8E%E7%AB%AF%E7%83%AD%E9%A2%98/606.MySQL%E4%B8%AD%E7%9A%84%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">MySQL 中的事务隔离级别有哪些？</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2025/03/11/%E9%9D%A2%E8%AF%95/25%E5%B1%8A%E6%98%A5%E6%8B%9B%E5%90%8E%E7%AB%AF%E7%83%AD%E9%A2%98/610.MySQL%E7%9A%84%E4%B9%90%E8%A7%82%E9%94%81%E5%92%8C%E6%82%B2%E8%A7%82%E9%94%81%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">MySQL 的乐观锁和悲观锁是什么？</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+                <div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="gitalk-container"></div>
+    <script data-swup-reload-script
+            src="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js"></script>
+    <script data-swup-reload-script>
+
+        function loadGitalk() {
+            let __gitalk__pathname = decodeURI(location.pathname);
+            const __gitalk__pathnameLength = __gitalk__pathname.length;
+            const __gitalk__pathnameMaxLength = 50;
+            if (__gitalk__pathnameLength > __gitalk__pathnameMaxLength) {
+                __gitalk__pathname = __gitalk__pathname.substring(0, __gitalk__pathnameMaxLength - 3) + '...';
+            }
+
+            try {
+                Gitalk && new Gitalk({
+                    clientID: 'Ov23liThu5oe4YmmlNAw',
+                    clientSecret: 'bdde0e1d1af3b4e01fc6e172c7926c42ee09e8d3',
+                    repo: 'javai-comment',
+                    owner: 'sherwin28',
+                    admin: ['sherwin28'],
+                    id: __gitalk__pathname,
+                    language: 'en',
+                    proxy: 'https://github.com/login/oauth/access_token'
+                }).render('gitalk-container');
+
+            } catch (e) {
+                window.Gitalk = null;
+            }
+        }
+
+        if ('true') {
+            const loadGitalkTimeout = setTimeout(() => {
+                loadGitalk();
+                clearTimeout(loadGitalkTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadGitalk);
+        }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">MySQL 中有哪些锁类型？</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MySQL-%E4%B8%AD%E6%9C%89%E5%93%AA%E4%BA%9B%E9%94%81%E7%B1%BB%E5%9E%8B%EF%BC%9F"><span class="nav-text">MySQL 中有哪些锁类型？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9E%E7%AD%94%E9%87%8D%E7%82%B9"><span class="nav-text">回答重点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E7%9F%A5%E8%AF%86"><span class="nav-text">扩展知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B1%E4%BA%AB%E9%94%81%E5%92%8C%E6%8E%92%E4%BB%96%E9%94%81"><span class="nav-text">共享锁和排他锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%83%E6%95%B0%E6%8D%AE%E9%94%81"><span class="nav-text">元数据锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%84%8F%E5%90%91%E9%94%81"><span class="nav-text">意向锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%B0%E5%BD%95%E9%94%81"><span class="nav-text">记录锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%B4%E9%9A%99%E9%94%81%E5%92%8C%E4%B8%B4%E9%94%AE%E9%94%81"><span class="nav-text">间隙锁和临键锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%92%E5%85%A5%E6%84%8F%E5%90%91%E9%94%81"><span class="nav-text">插入意向锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Auto-Inc-Lock"><span class="nav-text">Auto-Inc Lock</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E5%AD%A6%E4%B9%A0"><span class="nav-text">扩展学习</span></a></li></ol></li></ol></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+            <div class="customize-info my-1">2024 Java+AI技术分享版权所有</div>
+        
+        
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+
+        
+            <div class="icp-info my-1"><a target="_blank" rel="nofollow" href="
+                
+                    https://beian.miit.gov.cn/
+                
+                ">粤ICP备2024326496号-1</a></div>
+        
+        
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+    
+<script src="/js/libs/anime.min.js"></script>
+
+
+
+
+
+    
+<script src="/js/tools/tocToggle.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/layouts/toc.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/plugins/tabs.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+<script src="/js/libs/moment-with-locales.min.js" data-swup-reload-script=""></script>
+
+
+<script src="/js/layouts/essays.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+</body>
+</html>

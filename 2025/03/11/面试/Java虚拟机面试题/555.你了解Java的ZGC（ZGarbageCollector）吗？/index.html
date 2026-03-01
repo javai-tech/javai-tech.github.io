@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Sherwin.Wei">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2025/03/11/面试/java虚拟机面试题/555.你了解java的zgc（zgarbagecollector）吗？/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="你了解 Java 的 ZGC（Z Garbage Collector）吗？回答重点ZGC（Z Garbage Collector）是Java 11引入的低延迟垃圾回收器，旨在支持大内存（可以高达数 TB）的应用程序，并保持短的GC停顿时间。 主要特点：  并发收集：ZGC的收集过程大部分是在应用线程运行的同时进行，最大限度地减少了停顿时间。 指针压缩：使用指针压缩技术，减少内存占用并提高性能。 无">
+<meta property="og:type" content="article">
+<meta property="og:title" content="你了解 Java 的 ZGC（Z Garbage Collector）吗？">
+<meta property="og:url" content="http://example.com/2025/03/11/%E9%9D%A2%E8%AF%95/Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%9D%A2%E8%AF%95%E9%A2%98/555.%E4%BD%A0%E4%BA%86%E8%A7%A3Java%E7%9A%84ZGC%EF%BC%88ZGarbageCollector%EF%BC%89%E5%90%97%EF%BC%9F/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="你了解 Java 的 ZGC（Z Garbage Collector）吗？回答重点ZGC（Z Garbage Collector）是Java 11引入的低延迟垃圾回收器，旨在支持大内存（可以高达数 TB）的应用程序，并保持短的GC停顿时间。 主要特点：  并发收集：ZGC的收集过程大部分是在应用线程运行的同时进行，最大限度地减少了停顿时间。 指针压缩：使用指针压缩技术，减少内存占用并提高性能。 无">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1777886594896760834/MR3TFxnu_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1777886594896760834/4QyPaxY4_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1777886594896760834/xbTfrwgz_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1777886594896760834/bS8s8WAS_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1777886594896760834/puFigCUN_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1777886594896760834/9QaxOLul_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1777886594896760834/EcGfU2O3_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1777886594896760834/31T8sq6h_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1777886594896760834/IvAYkX6B_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1777886594896760834/LhuXfjMI_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1777886594896760834/Vi3q1JoY_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1777886594896760834/BYPkO0yY_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1777886594896760834/I3MapoWU_image_mianshiya.png">
+<meta property="article:published_time" content="2025-03-10T16:01:03.000Z">
+<meta property="article:modified_time" content="2025-03-10T16:01:03.055Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="JVM">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://pic.javai.tech/mianshiya/question_picture/1777886594896760834/MR3TFxnu_image_mianshiya.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/javai-avatar.png" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/javai-avatar.png">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/javai-avatar.png">
+    <!--- Page Info-->
+    
+    <title>
+        
+            你了解 Java 的 ZGC（Z Garbage Collector）吗？ | javai
+        
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    <!--- Inject Part-->
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css">
+
+    
+<link rel="stylesheet" href="/fonts/Geist/geist.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+    
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":false,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"java与ai","subtitle":{"text":["java与ai结合一定会更强更远!","今日事，今天毕!","明天会更好！","一个人可以走的很快，但是一群人却可以走的更远。","今人不见古时月，今月曾经照古人。"],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"style":"default","links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.7.3","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"面试":{"path":"/categories/面试/","icon":"fa-regular paper-plane"},"chat":{"path":"/chat","icon":"fa-regular wechat"},"learn":{"path":"/learn","icon":"fa-regular users"},"国学":{"path":"/guoxue"},"智医":{"path":"/zhiyi"},"五行":{"path":"/wuxing"},"关于我":{"path":"/aboutme","icon":"fa-regular user"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":null},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}}};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container flex flex-col justify-between min-h-dvh">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container px-6 md:px-12">
+    <div class="navbar-content transition-navbar ">
+        <div class="left">
+            
+                <a class="logo-image h-8 w-8 sm:w-10 sm:h-10 mr-3" href="/">
+                    <img src="/images/javai-avatar.png" class="w-full h-full rounded-sm">
+                </a>
+            
+            <a class="logo-title" href="/">
+                
+                javai
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/categories/%E9%9D%A2%E8%AF%95/"
+                                        >
+                                    <i class="fa-regular paper-plane fa-fw"></i>
+                                    面试
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/chat"
+                                        >
+                                    <i class="fa-regular wechat fa-fw"></i>
+                                    CHAT
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/learn"
+                                        >
+                                    <i class="fa-regular users fa-fw"></i>
+                                    LEARN
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/guoxue"
+                                        >
+                                    
+                                    国学
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/zhiyi"
+                                        >
+                                    
+                                    智医
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/wuxing"
+                                        >
+                                    
+                                    五行
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/aboutme"
+                                        >
+                                    <i class="fa-regular user fa-fw"></i>
+                                    关于我
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/categories/%E9%9D%A2%E8%AF%95/"
+                        >
+                            <span>
+                                面试
+                            </span>
+                            
+                                <i class="fa-regular paper-plane fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/chat"
+                        >
+                            <span>
+                                CHAT
+                            </span>
+                            
+                                <i class="fa-regular wechat fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/learn"
+                        >
+                            <span>
+                                LEARN
+                            </span>
+                            
+                                <i class="fa-regular users fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/guoxue"
+                        >
+                            <span>
+                                国学
+                            </span>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/zhiyi"
+                        >
+                            <span>
+                                智医
+                            </span>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/wuxing"
+                        >
+                            <span>
+                                五行
+                            </span>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/aboutme"
+                        >
+                            <span>
+                                关于我
+                            </span>
+                            
+                                <i class="fa-regular user fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+
+            
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">87</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">36</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">531</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                <div class="w-full flex items-center pt-6 justify-start">
+                    <h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">你了解 Java 的 ZGC（Z Garbage Collector）吗？</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/javai-avatar.png">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">Sherwin.Wei</span>
+                        
+                            <span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv8</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2025-03-11 00:01:03</span>
+        <span class="mobile">2025-03-11 00:01:03</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2025-03-11 00:01:03</span>
+            <span class="mobile">2025-03-11 00:01:03</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E9%9D%A2%E8%AF%95/">面试</a>&nbsp;
+                        </li>
+                    
+                    
+                
+                    
+                        <li>
+                            | <a href="/categories/Java-%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%9D%A2%E8%AF%95%E9%A2%98/">Java 虚拟机面试题</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/Java/">Java</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/JVM/">JVM</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <h1 id="你了解-Java-的-ZGC（Z-Garbage-Collector）吗？"><a href="#你了解-Java-的-ZGC（Z-Garbage-Collector）吗？" class="headerlink" title="你了解 Java 的 ZGC（Z Garbage Collector）吗？"></a>你了解 Java 的 ZGC（Z Garbage Collector）吗？</h1><h2 id="回答重点"><a href="#回答重点" class="headerlink" title="回答重点"></a>回答重点</h2><p>ZGC（Z Garbage Collector）是Java 11引入的低延迟垃圾回收器，旨在支持大内存（可以高达数 TB）的应用程序，并保持短的GC停顿时间。</p>
+<p><strong>主要特点：</strong></p>
+<ul>
+<li>并发收集：ZGC的收集过程大部分是在应用线程运行的同时进行，最大限度地减少了停顿时间。</li>
+<li>指针压缩：使用指针压缩技术，减少内存占用并提高性能。</li>
+<li>无停顿（或极小停顿）：GC的停顿时间通常在毫秒级，对于大多数应用来说几乎不可察觉。</li>
+</ul>
+<p><strong>工作机制：</strong></p>
+<ul>
+<li>分代收集：ZGC采用分代的方式管理内存，包括年轻代和老年代。</li>
+<li>记录和重标记：通过记忆集跟踪对象的引用关系，以便在GC过程中快速识别活动对象</li>
+</ul>
+<h2 id="扩展知识"><a href="#扩展知识" class="headerlink" title="扩展知识"></a>扩展知识</h2><p>ZGC 是 Java11 引入的新垃圾回收器，垃圾收集器设计出来都有目标的，有些是为了更高的吞吐，有些是为了更低的延迟。</p>
+<p>所以我们先看看 ZGC 的目标。</p>
+<h3 id="ZGC-的目标"><a href="#ZGC-的目标" class="headerlink" title="ZGC 的目标"></a>ZGC 的目标</h3><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1777886594896760834/MR3TFxnu_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+ 
+
+<p>可以看到它的<strong>目标就是低延迟</strong>，保证最大停顿时间在几毫秒之内，不管你堆多大或者存活的对象有多少。</p>
+<p>可以处理 8MB-16TB 的堆。</p>
+<p>咱们就按 openjdk 的 wiki 来了解 zgc。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1777886594896760834/4QyPaxY4_image_mianshiya.png"
+                      alt="image.png" width="712px" 
+                >
+关键字：并发、基于Region、整理内存、支持NUMA、用了染色指针、用了读屏障，对了 ZGC 用的是 STAB。
+
+<h3 id="Concurrent"><a href="#Concurrent" class="headerlink" title="Concurrent"></a>Concurrent</h3><p>这个 Concurrent 的意思是和应用线程并发执行，ZGC 一共分了 10 个阶段，只有 3 个很短暂的阶段是 STW 的。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1777886594896760834/xbTfrwgz_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+可以看到只有初始标记、再标记、初始转移阶段是 STW 的。
+
+<p>初始标记就扫描 GC Roots 直接可达的，耗时很短，重新标记一般而言也很短，<strong>如果超过 1ms 会再次进入并发标记阶段再来一遍</strong>，所以影响不大。</p>
+<p>初始转移阶段也是扫描 GC Roots 也很短，所以可以认为 ZGC 几乎是并发的。</p>
+<p>而且之所以说停顿时间不会随着堆的大小和存活对象的数量增加而增加，是因为 STW 几乎只和 GC Roots 集合大小有关，和堆大小没啥关系。</p>
+<p>这其实就是 ZGC 超过 G1 很关键的一个地方， G1 的对象转移需要 STW 所以堆大需要转移对象多，停顿的时间就长了，<strong>而 ZGC 有并发转移</strong>。</p>
+<p>不过并发回收有个情况就是回收的时候应用线程还是在产生新的对象，所以需要预留一些空间给并发时候生成的新对象。</p>
+<p>如果对象分配过快导致内存不够，在 CMS 中是发生 Full gc，而 ZGC 则是阻塞应用线程。</p>
+<p>所以要注意 ZGC 触发的时间。</p>
+<p>ZGC 有自适应算法来触发也有固定时间触发，所以可以根据实际场景来修改 ZGC 触发时间，防止过晚触发而内存分配过快导致线程阻塞。</p>
+<p>还有设置 ParallelGCThreads 和 ConcGCThreads，分别是 STW 并行时候的线程数和并发阶段的线程数来加快回收的速度。</p>
+<p>不过 ConcGCThreads 数量需要注意，<strong>因为此阶段是和应用线程并发，如果线程数过多会影响应用线程</strong>。</p>
+<p>其实 ZGC 的每个阶段都是串行的，所以理论上其实可以不需要分两类线程，那为什么分了这两类线程？</p>
+<p>就是为了灵活设置。分成两类就可以通过配置来调优，达到性能最大值。</p>
+<p>对了上面提到 ZGC 的 STW 和 GC Roots 集合大小有关系，所以如果在会生成很多线程、动态加载很多 ClassLoader 等情况下会增加 ZGC 的停顿时间。</p>
+<p>这点需要注意。</p>
+<h3 id="Region-based"><a href="#Region-based" class="headerlink" title="Region-based"></a>Region-based</h3><p>为了能更细粒度的控制内存的分配，和 G1 一样 ZGC 也将堆划分成很多分区。</p>
+<p>分了三种：2MB、32MB 和 X*MB（受操作系统控制）。</p>
+<p>下图为源码中的注释：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1777886594896760834/bS8s8WAS_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+ 
+
+<p>对于回收的策略是优先收集小区，中、大区尽量不回收。</p>
+<h3 id="Compacting"><a href="#Compacting" class="headerlink" title="Compacting"></a>Compacting</h3><p>和 G1 一样都分区了所以肯定从整体来看像是标记-复制算法，所以也是会整理的。</p>
+<p>因此 ZGC 也不会产生内存碎片。</p>
+<p>具体的流程下文再做分析。</p>
+<h3 id="NUMA-aware"><a href="#NUMA-aware" class="headerlink" title="NUMA-aware"></a>NUMA-aware</h3><p>以前的 G1 是不支持的，不过在 JDK14 G1 也支持了。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1777886594896760834/puFigCUN_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<p>可能有的同学对 NUMA 不太熟悉，没事我先来解释一波。</p>
+<p>在早期处理器都是单核的，因为根据<strong>摩尔定律</strong>，处理器的性能每隔一段时间就可以成指数型增长。</p>
+<p>而近年来这个增长的速度逐渐变缓，于是很多厂商就推出了双核多核的计算机。</p>
+<p>早期 CPU 通过前端总线到北桥到内存总线然后才访问到内存。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1777886594896760834/9QaxOLul_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<p>这个架构被称为 SMP （Symmetric Multi-Processor），因为任一个 CPU 对内存的访问速度是一致的，不用考虑不同内存地址之间的差异，所以也称一致内存访问（Uniform Memory Access， UMA ）。</p>
+<p>这个核心越加越多，渐渐的<strong>总线和北桥就成为瓶颈</strong>，那不能够啊，于是就想了个办法。</p>
+<p>把 CPU 和内存集成到一个单元上，这个就是非一致内存访问 （Non-Uniform Memory Access，NUMA）。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1777886594896760834/EcGfU2O3_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+简单的说就是把内存分一分，每个 CPU 访问自己的本地的内存比较快，访问别人的远程内存就比较慢。
+
+<p>当然也可以多个 CPU 享受一块内存或者多块，如下图所示：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1777886594896760834/31T8sq6h_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<p>但是因为内存被切分为本地内存和远程内存，当某个模块比较“热”的时候，就可能产生本地内存爆满，而远程内存都很空闲的情况。</p>
+<p>比如 64G 内存一分为二，模块一的内存用了31G，而另一个模块的内存用了5G，且模块一只能用本地内存，这就产生了内存不平衡问题。</p>
+<p>如果有些策略规定<strong>不能访问远程内存</strong>的时候，就会出现明明还有很多内存却产生 SWAP(将部分内存置换到硬盘中) 的情况。</p>
+<p>即使允许访问远程内存那也比本地内存访问速率相差较大，这是使用 NUMA 需要考虑的问题。</p>
+<p>ZGC 对 NUMA 的支持是小分区分配时会优先从本地内存分配，如果本地内存不足则从远程内存分配。</p>
+<p>对于中、大分区的话就交由操作系统决定。</p>
+<p>上述做法的原因是生成的绝大部分都是小分区对象，因此优先本地分配速度较快，而且也不易造成内存不平衡的情况。</p>
+<p>而中、大分区对象较大，如果都从本地分配则可能会导致内存不平衡的情况。</p>
+<h3 id="Using-colored-pointers"><a href="#Using-colored-pointers" class="headerlink" title="Using colored pointers"></a>Using colored pointers</h3><p>染色指针其实就是从 64 位的指针中，拿几位来标识对象此时的情况，分别表示 Marked0、Marked1、Remapped、Finalizable。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1777886594896760834/IvAYkX6B_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<p>我们再来看下源码中的注释，非常的清晰直观：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1777886594896760834/LhuXfjMI_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<p>0-41 这 42 位就是正常的地址，所以说 ZGC 最大支持 4TB (理论上可以16TB)的内存，因为就 42 位用来表示地址。</p>
+<p>也因此 ZGC 不支持 32 位指针，也不支持指针压缩。</p>
+<p>然后用 42-45 位来作为标志位，其实不管这个标志位是啥指向的都是同一个对象。</p>
+<p>这是通过<strong>多重映射</strong>来做的，很简单就是<strong>多个虚拟地址指向同一个物理地址</strong>，不过对象地址是 0001…. 还是0010….还是0100….. 对应的都是同一个物理地址即可。</p>
+<p>具体这几个标记位怎么用的，待下文回收流程分析再解释。</p>
+<p>不过这里先提个问题，<strong>为什么就支持 4TB，不是还有很多位没用吗</strong>？</p>
+<p>首先 X86_64 的地址总线只有 48 条 ，所以最多其实只能用 48 位，指令集是 64 位没错，但是硬件层面就支持 48 位。</p>
+<p>因为基本上没有多少系统支持这么大的内存，那支持 64 位就没必要了，所以就支持到 48 位。</p>
+<p>那现在对象地址就用了 42 位，染色指针用了 4 位，不是还有 2 位可以用吗？</p>
+<p>是的，理论上可以支持 16 TB，不过暂时认为 4TB 够了，所以暂做保留，仅此而已没啥特别的含义。</p>
+<h3 id="Using-load-barriers"><a href="#Using-load-barriers" class="headerlink" title="Using load barriers"></a>Using load barriers</h3><p>在 CMS 和 G1 中都用到了写屏障，而 ZGC 用到了读屏障。</p>
+<p>写屏障是在对象引用赋值时候的 AOP，而读屏障是在读取引用时的 AOP。</p>
+<p>比如 <code>Object a = obj.foo;</code>，这个过程就会触发读屏障。</p>
+<p>也正是用了读屏障，ZGC 可以并发转移对象，而 G1 用的是写屏障，所以转移对象时候只能 STW。</p>
+<p>简单的说就是 GC 线程转移对象之后，应用线程读取对象时，可以利用读屏障通过指针上的标志来判断对象是否被转移。</p>
+<p>如果是的话修正对象的引用，按照上面的例子，不仅 a 能得到最新的引用地址，obj.foo 也会被更新，这样下次访问的时候一切都是正常的，就没有消耗了。</p>
+<p>下图展示了读屏障的效果，其实就是转移的时候找地方记一下即 forwardingTable，然后读的时候触发引用的修正。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1777886594896760834/Vi3q1JoY_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<p>这种也称之为“自愈”，不仅赋值的引用时最新的，自身引用也修正了。</p>
+<p><strong>染色指针和读屏障是 ZGC 能实现并发转移的关键所在</strong>。</p>
+<h3 id="ZGC-回收流程解析"><a href="#ZGC-回收流程解析" class="headerlink" title="ZGC 回收流程解析"></a>ZGC 回收流程解析</h3><p> ZGC 的步骤大致可分为三大阶段分别是标记、转移、重定位。</p>
+<ul>
+<li>标记：从根开始标记所有存活对象</li>
+<li>转移：选择部分活跃对象转移到新的内存空间上</li>
+<li>重定位：因为对象地址变了，所以之前指向老对象的指针都要换到新对象地址上。</li>
+</ul>
+<p>并且这三个阶段都是并发的。</p>
+<p>这是意识上的阶段，<strong>具体的实现上重定位其实是糅合在标记阶段的</strong>。</p>
+<p>在标记的时候如果发现引用的还是老的地址则会修正成新的地址，然后再进行标记。</p>
+<p>简单的说就是从第一个 GC 开始经历了标记，然后转移了对象，这个时候不会重定位，只会记录对象都转移到哪里了。</p>
+<p>在第二个 GC 开始标记的时候发现这个对象是被转移了，然后发现引用还是老的，则进行重定位，即修改成新的引用。</p>
+<p>所以说重定位是糅合在下一步的标记阶段中。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1777886594896760834/BYPkO0yY_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<p>我再简单说一下十个步骤。</p>
+<p>不过步骤里有些不影响整体回收流程的，我就不多加分析了。</p>
+<p>我们的目的<strong>不是深入 ZGC 实现的细节，而是了解 ZGC 大致的突出点和简单流程即可</strong>。</p>
+<p>面试够用就行。</p>
+<h4 id="初始标记"><a href="#初始标记" class="headerlink" title="初始标记"></a>初始标记</h4><p>这个阶段其实大家应该很熟悉，CMS、G1 都有这个阶段，<strong>这个阶段是 STW 的，仅标记根直接可达的对象，压到标记栈中</strong>。</p>
+<p>当然还有其他动作，比如重置 TLAB、判断是否要清除软引用等等，不做具体分析。</p>
+<h4 id="并发标记"><a href="#并发标记" class="headerlink" title="并发标记"></a>并发标记</h4><p>就是根据初始标记的对象开始并发遍历对象图，还会统计每个 region 的存活对象的数量。</p>
+<p>这个并发标记其实有个细节，标记栈其实只有一个，但是并发标记的线程有多个。</p>
+<p>为了减少之间的竞争每个线程其实会分到不同的标记带来执行。</p>
+<p>你就理解为标记栈被分割为好几块，每个线程负责其中的一块进行遍历标记对象，就和1.7 Hashmap 的segment 一样。</p>
+<p>那肯定有的线程标记的快，有的标记的慢，那么<strong>先空闲下来的线程会去窃取别人的任务来执行</strong>，从而实现负载均衡。</p>
+<p>看到这有没有想到啥？没错就是 ForkJoinPool 的工作窃取机制！</p>
+<h4 id="再标记阶段"><a href="#再标记阶段" class="headerlink" title="再标记阶段"></a>再标记阶段</h4><p>这一阶段是 STW 的，因为并发阶段应用线程还是在运行的，所以会修改对象的引用导致漏标的情况。</p>
+<p>因此需要个再标记阶段来标记漏标的那些对象。</p>
+<p>如果这个阶段执行的时间过长，就会再次进入到并发标记阶段，因为 ZGC 的目标就是低延迟，所以一有高延迟的苗头就得扼制。</p>
+<p>这个阶段还会做非强根并行标记，非强根指的是：系统字典、JVMTI、JFR、字符串表。</p>
+<p>有些非强根可以并发，有些不行，具体不做分析。</p>
+<h4 id="非强引用并发标记和引用并发处理"><a href="#非强引用并发标记和引用并发处理" class="headerlink" title="非强引用并发标记和引用并发处理"></a>非强引用并发标记和引用并发处理</h4><p>就是上一步非强根的遍历，然后引用就软引用、弱引用、虚引用的一些处理。</p>
+<p>这个阶段是并发的。</p>
+<h4 id="重置转移集"><a href="#重置转移集" class="headerlink" title="重置转移集"></a>重置转移集</h4><p>还记得标记时候的重定位么？在写读屏障时候提到的 forwardingTable 就是个映射集，你可以理解为 key 就是对象转移前的地址，value 是对象转移后的地址。</p>
+<p>不过这个映射集在标记阶段已经用了，也就是说标记的时候已经重定位完了，所以现在没用了。</p>
+<p>但新一轮的垃圾回收需要还是要用到这个映射集的。</p>
+<p>因此在这个阶段对那些转移分区的地址映射集做一个复位的操作。</p>
+<h4 id="回收无效分区"><a href="#回收无效分区" class="headerlink" title="回收无效分区"></a>回收无效分区</h4><p>回收那些物理内存已经被释放的无效的虚拟内存页面。</p>
+<p>就是在内存紧张的时候会释放物理内存，如果同时释放虚拟空间的话也不能释放分区，因为<strong>分区需要在新一轮标记完成之后才能释放</strong>。</p>
+<p>所以就会有无效的虚拟内存页面存在，在这个阶段回收。</p>
+<h4 id="选择待回收的分区"><a href="#选择待回收的分区" class="headerlink" title="选择待回收的分区"></a>选择待回收的分区</h4><p>这和 G1 一样，因为会有很多可以回收的分区，会筛选垃圾较多的分区，来作为这次回收的分区集合。</p>
+<h4 id="初始化待转移集合的转移表"><a href="#初始化待转移集合的转移表" class="headerlink" title="初始化待转移集合的转移表"></a>初始化待转移集合的转移表</h4><p>这一步就是初始化待回收的分区的 forwardingTable。</p>
+<h4 id="初始转移"><a href="#初始转移" class="headerlink" title="初始转移"></a>初始转移</h4><p>这个阶段其实就是从根集合出发，如果对象在转移的分区集合中，则在新的分区分配对象空间。</p>
+<p>如果不在转移分区集合中，则将对象标记为 Remapped。</p>
+<p>注意这个阶段是 STW，只转移根直接可达的对象。</p>
+<h4 id="并发转移"><a href="#并发转移" class="headerlink" title="并发转移"></a>并发转移</h4><p>这个阶段和并发标记阶段就很类似了，从上一步转移的对象开始遍历，做并发转移。</p>
+<p>这一步很关键。 </p>
+<p>G1 的转移对象整体都需要 STW，而 ZGC 做到了并发转移，所以延迟会低很多。</p>
+<p>至此十个步骤就完毕了，一次 GC 结束。</p>
+<p>可以还能同学对染色指针的几个标记位有点懵，没事看了下文就懂了。</p>
+<h3 id="染色指针的标记位"><a href="#染色指针的标记位" class="headerlink" title="染色指针的标记位"></a>染色指针的标记位</h3><p>来分析下几个标记位，M0、M1、Remapped。</p>
+<p>先来介绍个名词，<strong>地址视图</strong>：指的就是此时地址指针的标记位。</p>
+<p>比如标记位现在是 M0，那么此时的视图就是 M0 视图。</p>
+<p>在垃圾回收开始前视图是 Remapped 。</p>
+<p>在<strong>进入标记标记</strong>时。</p>
+<p><strong>标记线程</strong>访问发现对象地址视图是 Remapped 这时候将指针标记为 M0，即将地址视图置为 M0，表示活跃对象。</p>
+<p>如果扫描到对象地址视图是 M0 则说明这个对象是标记开始之后新分配的或者已经标记过的对象，所以无需处理。</p>
+<p><strong>应用线程</strong> 如果创建新对象，则将其地址视图置为 M0，如果访问的对象地址视图是 Remapped 则将其置为 M0，并且递归标记其引用的对象。</p>
+<p>如果访问到的是 M0 ，则无需操作。</p>
+<p><strong>标记阶段结束后</strong>，ZGC 会使用一个对象活跃表来存储这些对象地址，此时活跃的对象地址视图是 M0。</p>
+<p><strong>并发转移阶段</strong>，地址视图被置为 Remapped 。</p>
+<p>也就是说 <strong>GC 线程</strong>如果访问到对象，此时对象地址视图是 M0，并且存在或活跃表中，则将其转移，并将地址视图置为 Remapped 。</p>
+<p>如果在活跃表中，但是地址视图已经是 Remapped 说明已经被转移了，不做处理。</p>
+<p><strong>应用线程</strong>此时创建新对象，地址视图会设为  Remapped 。</p>
+<p>此时访问对象如果对象在活跃表中，且地址视图为 Remapped  说明转移过了，不做处理。</p>
+<p>如果地址视图为 M0，则说明还未转移，则需要转移，并将其地址视图置为 Remapped  。</p>
+<p>如果访问到的对象不在活跃表中，则不做处理。</p>
+<p><strong>那 M1 什么用</strong>？</p>
+<p>M1 是在下一次 GC 时候用的，下一次的 GC 就用 M1来标记，不用 M0。</p>
+<p>再下一次再换过来。</p>
+<p>简单的说就是 M1 标识本次垃圾回收中活跃的对象，而 M0 是上一次回收被标记的对象，但是没有被转移，在本次回收中也没有被标记活跃的对象。</p>
+<p>其实从上面的分析以及得知，如果没有被转移就会停留在 M0 这个地址视图。</p>
+<p>而下一次 GC 如果还是用 M0 来标识那混淆了这两种对象。</p>
+<p>所以搞了个 M1。</p>
+<p>至此染色指针这几个标志位应该就很清晰了，我在用图来示意一下。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1777886594896760834/I3MapoWU_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<p>不清晰的同学建议再多看几遍标记位的变更，不复杂的。</p>
+<h3 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h3><p>简单的总结下，ZGC 就是通过多阶段的并发和几个短暂的 STW 阶段来达到低延迟的特性。</p>
+<p>利用指针染色技术和读屏障实现并发转移对象，利用 STAB 保证并发阶段不会漏标对象。</p>
+<p>看到这，我相信大家对于 ZGC 有了一定的了解，面试够用了。</p>
+<p>对了 ZGC 还不分代，就是没分新生代和老年代。</p>
+<p><strong>ZGC 的不分代其实是它的缺点</strong>，因为分代比较难实现，不过以后应该会加上吧（<strong>JDK 21 实现分代了</strong>）。</p>
+<p>其实从现代垃圾收集器的演进可以看出就是往并发上面靠，目标就是减少停顿的时间。</p>
+<p>不过并发需要注意内存分配的速率，因为<strong>并发导致一次垃圾回收总的时间变长了</strong>。</p>
+<p>如果内存分配过快那就回收不过来了，因此都需要预留内存空间或者说要更大的内存空间来应对快速的分配速率。</p>
+
+        </div>
+
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/Java/">#Java</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/JVM/">#JVM</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2025/03/11/%E9%9D%A2%E8%AF%95/Java%E5%B9%B6%E5%8F%91%E9%9D%A2%E8%AF%95%E9%A2%98/514.%E4%B8%BA%E4%BB%80%E4%B9%88Netty%E4%B8%8D%E4%BD%BF%E7%94%A8ThreadLocal%E8%80%8C%E6%98%AF%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BA%86%E4%B8%80%E4%B8%AAFastThreadLocal%EF%BC%9F/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">为什么 Netty 不使用 ThreadLocal 而是自定义了一个 FastThreadLocal ？</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2025/03/11/%E9%9D%A2%E8%AF%95/SpringCloud%E9%9D%A2%E8%AF%95%E9%A2%98/772.%E4%BB%80%E4%B9%88%E6%83%85%E5%86%B5%E4%B8%8B%E9%9C%80%E8%A6%81%E4%BD%BF%E7%94%A8%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%EF%BC%8C%E6%9C%89%E5%93%AA%E4%BA%9B%E6%96%B9%E6%A1%88%EF%BC%9F/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">什么情况下需要使用分布式事务，有哪些方案？</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+                <div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="gitalk-container"></div>
+    <script data-swup-reload-script
+            src="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js"></script>
+    <script data-swup-reload-script>
+
+        function loadGitalk() {
+            let __gitalk__pathname = decodeURI(location.pathname);
+            const __gitalk__pathnameLength = __gitalk__pathname.length;
+            const __gitalk__pathnameMaxLength = 50;
+            if (__gitalk__pathnameLength > __gitalk__pathnameMaxLength) {
+                __gitalk__pathname = __gitalk__pathname.substring(0, __gitalk__pathnameMaxLength - 3) + '...';
+            }
+
+            try {
+                Gitalk && new Gitalk({
+                    clientID: 'Ov23liThu5oe4YmmlNAw',
+                    clientSecret: 'bdde0e1d1af3b4e01fc6e172c7926c42ee09e8d3',
+                    repo: 'javai-comment',
+                    owner: 'sherwin28',
+                    admin: ['sherwin28'],
+                    id: __gitalk__pathname,
+                    language: 'en',
+                    proxy: 'https://github.com/login/oauth/access_token'
+                }).render('gitalk-container');
+
+            } catch (e) {
+                window.Gitalk = null;
+            }
+        }
+
+        if ('true') {
+            const loadGitalkTimeout = setTimeout(() => {
+                loadGitalk();
+                clearTimeout(loadGitalkTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadGitalk);
+        }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">你了解 Java 的 ZGC（Z Garbage Collector）吗？</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%A0%E4%BA%86%E8%A7%A3-Java-%E7%9A%84-ZGC%EF%BC%88Z-Garbage-Collector%EF%BC%89%E5%90%97%EF%BC%9F"><span class="nav-text">你了解 Java 的 ZGC（Z Garbage Collector）吗？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9E%E7%AD%94%E9%87%8D%E7%82%B9"><span class="nav-text">回答重点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E7%9F%A5%E8%AF%86"><span class="nav-text">扩展知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ZGC-%E7%9A%84%E7%9B%AE%E6%A0%87"><span class="nav-text">ZGC 的目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Concurrent"><span class="nav-text">Concurrent</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Region-based"><span class="nav-text">Region-based</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Compacting"><span class="nav-text">Compacting</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NUMA-aware"><span class="nav-text">NUMA-aware</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Using-colored-pointers"><span class="nav-text">Using colored pointers</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Using-load-barriers"><span class="nav-text">Using load barriers</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ZGC-%E5%9B%9E%E6%94%B6%E6%B5%81%E7%A8%8B%E8%A7%A3%E6%9E%90"><span class="nav-text">ZGC 回收流程解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%93%E8%89%B2%E6%8C%87%E9%92%88%E7%9A%84%E6%A0%87%E8%AE%B0%E4%BD%8D"><span class="nav-text">染色指针的标记位</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%80%E5%90%8E"><span class="nav-text">最后</span></a></li></ol></li></ol></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+            <div class="customize-info my-1">2024 Java+AI技术分享版权所有</div>
+        
+        
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+
+        
+            <div class="icp-info my-1"><a target="_blank" rel="nofollow" href="
+                
+                    https://beian.miit.gov.cn/
+                
+                ">粤ICP备2024326496号-1</a></div>
+        
+        
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+    
+<script src="/js/libs/anime.min.js"></script>
+
+
+
+
+
+    
+<script src="/js/tools/tocToggle.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/layouts/toc.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/plugins/tabs.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+<script src="/js/libs/moment-with-locales.min.js" data-swup-reload-script=""></script>
+
+
+<script src="/js/layouts/essays.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+</body>
+</html>

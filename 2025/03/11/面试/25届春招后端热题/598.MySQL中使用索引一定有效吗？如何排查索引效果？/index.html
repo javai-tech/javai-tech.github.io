@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Sherwin.Wei">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2025/03/11/面试/25届春招后端热题/598.mysql中使用索引一定有效吗？如何排查索引效果？/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="MySQL 中使用索引一定有效吗？如何排查索引效果？回答重点索引不一定有效。 例如查询条件中不包含索引列、低基数列索引效果不佳，或查询条件复杂且不匹配索引的顺序。 对于一些小表，MySQL可能选择全表扫描而非使用索引，因为全表扫描的开销可能更小。 最终是否用上索引是根据 MySQL 成本计算决定的，评估 CPU 和 I&#x2F;O 成本最终选择用辅助索引还是全表扫描。有时候确实是全表扫描成本低所">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL 中使用索引一定有效吗？如何排查索引效果？">
+<meta property="og:url" content="http://example.com/2025/03/11/%E9%9D%A2%E8%AF%95/25%E5%B1%8A%E6%98%A5%E6%8B%9B%E5%90%8E%E7%AB%AF%E7%83%AD%E9%A2%98/598.MySQL%E4%B8%AD%E4%BD%BF%E7%94%A8%E7%B4%A2%E5%BC%95%E4%B8%80%E5%AE%9A%E6%9C%89%E6%95%88%E5%90%97%EF%BC%9F%E5%A6%82%E4%BD%95%E6%8E%92%E6%9F%A5%E7%B4%A2%E5%BC%95%E6%95%88%E6%9E%9C%EF%BC%9F/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="MySQL 中使用索引一定有效吗？如何排查索引效果？回答重点索引不一定有效。 例如查询条件中不包含索引列、低基数列索引效果不佳，或查询条件复杂且不匹配索引的顺序。 对于一些小表，MySQL可能选择全表扫描而非使用索引，因为全表扫描的开销可能更小。 最终是否用上索引是根据 MySQL 成本计算决定的，评估 CPU 和 I&#x2F;O 成本最终选择用辅助索引还是全表扫描。有时候确实是全表扫描成本低所">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/ZntLbLzK_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/HVBvqDrV_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/zyRAxq7W_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/cvin1EHM_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/8A3jgr6D_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/7iFNheEb_image.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/ygO50NH7_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/VBr62i2c_image_mianshiya.png">
+<meta property="article:published_time" content="2025-03-10T16:01:02.000Z">
+<meta property="article:modified_time" content="2025-03-10T16:01:02.964Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="后端">
+<meta property="article:tag" content="MySQL">
+<meta property="article:tag" content="数据库">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/ZntLbLzK_image_mianshiya.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/javai-avatar.png" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/javai-avatar.png">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/javai-avatar.png">
+    <!--- Page Info-->
+    
+    <title>
+        
+            MySQL 中使用索引一定有效吗？如何排查索引效果？ | javai
+        
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    <!--- Inject Part-->
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css">
+
+    
+<link rel="stylesheet" href="/fonts/Geist/geist.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+    
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":false,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"java与ai","subtitle":{"text":["java与ai结合一定会更强更远!","今日事，今天毕!","明天会更好！","一个人可以走的很快，但是一群人却可以走的更远。","今人不见古时月，今月曾经照古人。"],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"style":"default","links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.7.3","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"面试":{"path":"/categories/面试/","icon":"fa-regular paper-plane"},"chat":{"path":"/chat","icon":"fa-regular wechat"},"learn":{"path":"/learn","icon":"fa-regular users"},"国学":{"path":"/guoxue"},"智医":{"path":"/zhiyi"},"五行":{"path":"/wuxing"},"关于我":{"path":"/aboutme","icon":"fa-regular user"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":null},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}}};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container flex flex-col justify-between min-h-dvh">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container px-6 md:px-12">
+    <div class="navbar-content transition-navbar ">
+        <div class="left">
+            
+                <a class="logo-image h-8 w-8 sm:w-10 sm:h-10 mr-3" href="/">
+                    <img src="/images/javai-avatar.png" class="w-full h-full rounded-sm">
+                </a>
+            
+            <a class="logo-title" href="/">
+                
+                javai
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/categories/%E9%9D%A2%E8%AF%95/"
+                                        >
+                                    <i class="fa-regular paper-plane fa-fw"></i>
+                                    面试
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/chat"
+                                        >
+                                    <i class="fa-regular wechat fa-fw"></i>
+                                    CHAT
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/learn"
+                                        >
+                                    <i class="fa-regular users fa-fw"></i>
+                                    LEARN
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/guoxue"
+                                        >
+                                    
+                                    国学
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/zhiyi"
+                                        >
+                                    
+                                    智医
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/wuxing"
+                                        >
+                                    
+                                    五行
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/aboutme"
+                                        >
+                                    <i class="fa-regular user fa-fw"></i>
+                                    关于我
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/categories/%E9%9D%A2%E8%AF%95/"
+                        >
+                            <span>
+                                面试
+                            </span>
+                            
+                                <i class="fa-regular paper-plane fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/chat"
+                        >
+                            <span>
+                                CHAT
+                            </span>
+                            
+                                <i class="fa-regular wechat fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/learn"
+                        >
+                            <span>
+                                LEARN
+                            </span>
+                            
+                                <i class="fa-regular users fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/guoxue"
+                        >
+                            <span>
+                                国学
+                            </span>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/zhiyi"
+                        >
+                            <span>
+                                智医
+                            </span>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/wuxing"
+                        >
+                            <span>
+                                五行
+                            </span>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/aboutme"
+                        >
+                            <span>
+                                关于我
+                            </span>
+                            
+                                <i class="fa-regular user fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+
+            
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">87</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">36</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">531</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                <div class="w-full flex items-center pt-6 justify-start">
+                    <h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">MySQL 中使用索引一定有效吗？如何排查索引效果？</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/javai-avatar.png">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">Sherwin.Wei</span>
+                        
+                            <span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv8</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2025-03-11 00:01:02</span>
+        <span class="mobile">2025-03-11 00:01:02</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2025-03-11 00:01:02</span>
+            <span class="mobile">2025-03-11 00:01:02</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E9%9D%A2%E8%AF%95/">面试</a>&nbsp;
+                        </li>
+                    
+                    
+                
+                    
+                        <li>
+                            | <a href="/categories/25-%E5%B1%8A%E6%98%A5%E6%8B%9B%E5%90%8E%E7%AB%AF%E7%83%AD%E9%A2%98/">25 届春招后端热题</a>&nbsp;
+                        </li>
+                    
+                    
+                
+                    
+                        <li>
+                            | <a href="/categories/MySQL-%E9%9D%A2%E8%AF%95%E9%A2%98/">MySQL 面试题</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E5%90%8E%E7%AB%AF/">后端</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/MySQL/">MySQL</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <h1 id="MySQL-中使用索引一定有效吗？如何排查索引效果？"><a href="#MySQL-中使用索引一定有效吗？如何排查索引效果？" class="headerlink" title="MySQL 中使用索引一定有效吗？如何排查索引效果？"></a>MySQL 中使用索引一定有效吗？如何排查索引效果？</h1><h2 id="回答重点"><a href="#回答重点" class="headerlink" title="回答重点"></a>回答重点</h2><p><strong>索引不一定有效</strong>。</p>
+<p>例如查询条件中不包含索引列、低基数列索引效果不佳，或查询条件复杂且不匹配索引的顺序。</p>
+<p>对于一些小表，MySQL可能选择全表扫描而非使用索引，因为全表扫描的开销可能更小。</p>
+<p>最终是否用上索引是根据 MySQL 成本计算决定的，评估 CPU 和 I&#x2F;O 成本最终选择用辅助索引还是全表扫描。有时候确实是全表扫描成本低所以没用上索引。但有时候由于一些统计数据的不准确，导致成本计算误判，而没用上索引。</p>
+<p><strong>排查索引效果的方法</strong>：使用 <code>EXPLAIN</code> 命令，通过在查询前加上<code>EXPLAIN</code>，可以查看 MySQL 选择的执行计划，了解是否使用了索引、使用了哪个索引、估算的行数等信息。</p>
+<p>主要观察 <code>EXPLAIN</code> 结果以下几点：</p>
+<ul>
+<li>type（访问类型）：这个属性显示了查询使用的访问方法，例如 <code>ALL</code>、<code>index</code>、<code>range </code>等。当查询使用索引时，这个属性通常会显示为 <code>index</code> 或 <code>range</code> ，表示查询使用了索引访问。如果这个值是 <code>ALL</code> ，则表示查询执行了全表扫描，没有使用索引。</li>
+<li>key（使用的索引）：这个属性显示了查询使用的索引，如果查询使用了索引，则会显示索引的名称。如果这个值是 <code>NULL</code>，则表示查询没有使用索引。</li>
+<li>rows（扫描的行数）：这个属性显示了查询扫描的行数，需要评估下扫描量。</li>
+</ul>
+<h2 id="扩展知识"><a href="#扩展知识" class="headerlink" title="扩展知识"></a>扩展知识</h2><h3 id="确定索引真的生效了吗？"><a href="#确定索引真的生效了吗？" class="headerlink" title="确定索引真的生效了吗？"></a>确定索引真的生效了吗？</h3><p>索引失效的场景有很多，也是面试官经常喜欢问的，可以根据具体场景进行排查，典型场景可以分为以下几点（实际索引的选择会根据 mysql 优化器的成本评定，答案最后会提到）：</p>
+<h4 id="1）使用了联合索引却不符合最左前缀"><a href="#1）使用了联合索引却不符合最左前缀" class="headerlink" title="1）使用了联合索引却不符合最左前缀"></a>1）使用了联合索引却不符合最左前缀</h4><p>举个例子：小鱼对 <code>user</code> 表建立了一个联合索引为 <code>name_age_id</code> 的联合索引。</p>
+<p>他使用以下 SQL 查询<code>select * from user where age = 10 and id = 1;</code> </p>
+<p>这样的写法恰恰不满足最左前缀原则，索引就失效啦。</p>
+<h4 id="2）索引中使用了运算"><a href="#2）索引中使用了运算" class="headerlink" title="2）索引中使用了运算"></a>2）索引中使用了运算</h4><p>例如这个 SQL <code>select * from user where id + 3 = 8</code>。这样会导致全表扫描计算 <code>id</code> 的值再进行比较，使得索引失效。</p>
+<h4 id="3）索引上使用了函数也会失效"><a href="#3）索引上使用了函数也会失效" class="headerlink" title="3）索引上使用了函数也会失效"></a>3）索引上使用了函数也会失效</h4><p>例如：<code>select * from user where LOWER(name) like &#39;cong%&#39;;</code>。这样也会导致索引失效，索引参与了函数处理，会导致去全表扫描。</p>
+<h4 id="4）-like-的随意使用"><a href="#4）-like-的随意使用" class="headerlink" title="4） like 的随意使用"></a>4） like 的随意使用</h4><p>例如：<code>select * from user where name like &#39;%cong%&#39;;</code>因为索引是从左到右来进行排序查找的，占位符直接放在了最左边开头，可能会导致直接全表扫描，这种情况就会导致索引失效。</p>
+<h4 id="5）or-的随意使用"><a href="#5）or-的随意使用" class="headerlink" title="5）or 的随意使用"></a>5）or 的随意使用</h4><p><code>user</code> 当前只有一个索引 <code>name</code> 。此时执行以下SQL ：<code>select * from user where name= &#39;cong&#39; or age = 18;</code> 这可能也会导致索引失效，因为 age 没有索引。</p>
+<h4 id="6）随意的字段类型使用"><a href="#6）随意的字段类型使用" class="headerlink" title="6）随意的字段类型使用"></a>6）随意的字段类型使用</h4><p>不小心将 <code>varchar</code> 类型的 <code>name</code> 条件匹配了 <code>int</code> 类型字段。SQL 是这样的 <code>select * from user where name = 1;</code>，在代码中涉及 隐式转换 ！等于 <code>select * from user where CAST(name AS signed int) = 1;</code>，这就变成了第三条索引上使用了函数，导致索引失效。</p>
+<p>除此之外还有<strong>隐式字符编码转换</strong>的问题，即联表查询的时候，如果不同表之间的关联字段字符编码不一致，也会导致隐式转换编码，等于变相用上了函数，使得索引失效。</p>
+<h4 id="7）不同的参数也会导致索引失效"><a href="#7）不同的参数也会导致索引失效" class="headerlink" title="7）不同的参数也会导致索引失效"></a>7）不同的参数也会导致索引失效</h4><p>这个就是我在回答重点里面说的“是否用上索引是根据 MySQL 成本计算决定的”。不同的参数 MySQL 评估成本不一致，有时候会选择使用索引，有时候会选择全表扫描，<strong>特别是在复杂查询（联表、子查询、需要回表等）的情况下</strong>。</p>
+<p>比如根据商品从订单表查询，收集商品对应的所有买家的订单信息。如果传入的商品 id 是个热点商品，占据这家店铺 80% 的销量，那么本次查询对订单表很可能是全表查询，如果是冷门商品，则很可能是走索引查询。</p>
+<h4 id="8）表中两个不同字段进行比较"><a href="#8）表中两个不同字段进行比较" class="headerlink" title="8）表中两个不同字段进行比较"></a>8）表中两个不同字段进行比较</h4><p>例如这样的SQL :<code>select * from user where id &gt; age;</code> ，将 <code>id</code> 跟 <code>age</code> 字段做了比较，索引失效。</p>
+<h4 id="9）使用了-order-by"><a href="#9）使用了-order-by" class="headerlink" title="9）使用了 order by"></a>9）使用了 order by</h4><p>当 <code>order by</code> 后面跟的 <strong>不是主键</strong> 或者 <strong>不是覆盖索引</strong> 会导致不走索引。</p>
+<h3 id="为什么索引生效了反而查询变慢了呢？"><a href="#为什么索引生效了反而查询变慢了呢？" class="headerlink" title="为什么索引生效了反而查询变慢了呢？"></a>为什么索引生效了反而查询变慢了呢？</h3><p>确认是否选对了索引！MySQL 根据优化器会评估成本选择对应的索引，但有时候 MySQL 因为估计值不准确，导致选错了索引，因此查询速度反而更慢。</p>
+<h3 id="关于使用索引的进一步认识"><a href="#关于使用索引的进一步认识" class="headerlink" title="关于使用索引的进一步认识"></a>关于使用索引的进一步认识</h3><p>为了故事可以顺利的发展，先来一张表， DDL 如下：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/ZntLbLzK_image_mianshiya.png"
+                      alt="image.png" width="607" 
+                >
+
+<p>现在要执行这个语句<code>SELECT * FROM yes.t1 where f3 = 11</code>;</p>
+<p>你觉得用的是哪个索引？</p>
+<p>很多同学可能会觉得虽然有 idx_f2_f3 这个联合索引，但是查询条件是 f3，没有 f2，不符合最左匹配原则，所以很显然只能进行全表扫描。</p>
+<p>我们来 explain 一下，看看：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/HVBvqDrV_image_mianshiya.png"
+                      alt="image.png" width="624" 
+                >
+
+<p>可以看到结果，key 是 idx_f2_f3 ，所以这个查询用上了 idx_f2_f3 这个索引！这里可能有人就理解不了，怎么不符合最左索引原则也能用上联合索引了呢？</p>
+<p>从 explain 结果来看，确实用上的联合索引，<strong>但是它的 type 是 index，所以它不是你认为的那种用上索引</strong>，它等于全扫描的联合索引来获取结果。现在不太理解没事，听下面好好解释。</p>
+<h4 id="到底什么叫用了索引？"><a href="#到底什么叫用了索引？" class="headerlink" title="到底什么叫用了索引？"></a>到底什么叫用了索引？</h4><p>我们都知道 InnoDB 是基于聚簇索引来构建数据的，在没有创建其它二级索引的前提下，你查询数据就必须且只能用聚簇索引，因为数据就只在这个索引上，那你找数据不用这个索引那用什么呢？</p>
+<p>如果你建起了其他二级索引，那么查找数据就可能不用聚簇索引，而是只用上二级索引就能直接得到想要的数据(就是上面查询的例子)。</p>
+<p>综上所述，<strong>你在 InnoDB 查找任何数据，都只能用索引</strong>。</p>
+<p>那为什么平日里有人说这个不走索引，走了全表扫描呢？</p>
+<p>我们都知道默认 InnoDB 的索引结构是 B+ 树，这个树有个特性，它的叶子节点之间是通过链表相连的。</p>
+<p>所以只要我们找到<strong>主键索引</strong>最左边的叶子结点，然后往右顺序遍历扫描，就能得到这张表的所有记录，这样的扫描方式就叫全表扫描。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/zyRAxq7W_image_mianshiya.png"
+                      alt="image.png" width="651" 
+                >
+
+<blockquote>
+<p>小贴士：我不清楚 MySQL 是记录了最左叶子节点的位置还是根据根节点查找到最左叶子节点的，反正意思就是那个意思，不影响我们理解全表扫描。</p>
+</blockquote>
+<p>那什么叫用上索引？</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/cvin1EHM_image_mianshiya.png"
+                      alt="image.png" width="683" 
+                >
+
+<p>看红色的查询路线没，能利用树的快速查找能力来定位到数据所在的页，这样的查询才能算用上索引。</p>
+<p>那从主键索引反推到二级索引，其实是一样的。能利用二级索引树的特性来查找数据，就是用上了索引。</p>
+<p>但是如果用不上二级索引树的快速查找，是否有像全表扫描这样，直接扫描二级索引的所有叶子节点的操作呢？</p>
+<p>有的，就是我们上面的例子，我再把执行结果的截图搬下来：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/8A3jgr6D_image_mianshiya.png"
+                      alt="image.png" width="713" 
+                >
+
+<p>这次查询 MySQL 就是全扫描二级索引 idx_f2_f3 来直接返回所要的数据。</p>
+<p>原因就是二级索引已经包含了查询所要到全部数据:f1、f2、f3，所以直接全扫描二级索引即可。</p>
+<p>可以看到 explain 的 <strong>type&#x3D;index</strong>，即全扫描二级索引。</p>
+<p>这也叫用上了索引。</p>
+<p>此时我们换用 f2 来作为查询条件，这样就符合最左匹配原则了，我们来看看 explain 有什么区别：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/7iFNheEb_image.png"
+                      alt="image.png" width="671" 
+                >
+
+<p>可以看到还是用了 idx_f2_f3 ，只是 type 变成 ref ，这个 ref 就表明可以与常量进行等值匹配时来快速查询得到结果。</p>
+<p>这也叫用上了索引。</p>
+<p>好了，我们来总结一下到底什么叫用了索引：</p>
+<ul>
+<li>利用主键索引快速查找</li>
+<li>利用二级索引快速查找</li>
+<li>全扫描二级索引进行查找</li>
+</ul>
+<p>以上这三种就是我们平日里所说的用上了索引，然后全扫描主键索引就是我们所说的全表扫描（等价于没用上索引，但是我们知道它其实是用上了主键索引对吧？）。</p>
+<p>至此，我想你应该已经清楚，到底什么叫用了索引了。</p>
+<h4 id="小疑惑"><a href="#小疑惑" class="headerlink" title="小疑惑"></a>小疑惑</h4><p>关于 MySQL 索引的一些认识都讲完了，不过看了上面的例子，有些同学可能会有点疑惑：</p>
+<blockquote>
+<p>既然都要全扫描，为什么要扫描二级索引，而不是主键索引？</p>
+</blockquote>
+<p>因为主键索引存储了所有的数据，包括数据行相关的事务ID、回滚指针等等。</p>
+<p>而二级索引不包含这些，它只有主键值和索引列的值。</p>
+<p>所以相对而言直接读取二级索引开销会更小一些，<strong>所以在索引能覆盖返回值的时候，一般都会选择二级索引来查找</strong>。</p>
+<p>比如我把上面的表再加个字段：f4。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/ygO50NH7_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<p>现在我们再来执行<code>SELECT * FROM yes.t1 where f3 = 11;</code></p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/VBr62i2c_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<p>可以看到，这个时候就没用上二级索引了，而是直接全表扫描了。原因就是二级索引无法覆盖返回值，因为多了个 f4 的字段。</p>
+<p>如果用了 idx_f2_f3 这个索引，想要得到 f4 的值，还需要再得到的主键再去主键索引里面进行查找，然后才能得到 f4 的值，这样回表的效率就低了。</p>
+<p>当然其实结果还不一定，有时候也有可能 MySQL 的统计信息有误，用错了索引。因为 MySQL 是基于成本来选择执行计划的，有 I&#x2F;O 成本和 CPU 成本，哪个索引成本低就用哪个索引。</p>
+<h3 id="MySQL-如何选择执行计划-I-O-成本和-CPU-成本，即如何选择合适的索引-？"><a href="#MySQL-如何选择执行计划-I-O-成本和-CPU-成本，即如何选择合适的索引-？" class="headerlink" title="MySQL 如何选择执行计划(I&#x2F;O 成本和 CPU 成本，即如何选择合适的索引)？"></a>MySQL 如何选择执行计划(I&#x2F;O 成本和 CPU 成本，即如何选择合适的索引)？</h3><ul>
+<li><a class="link"   target="_blank" rel="noopener" href="https://www.mianshiya.com/bank/1791003439968264194/question/1811361311347494913" >2640. MySQL 的查询优化器如何选择执行计划？  <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></li>
+</ul>
+
+        </div>
+
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/%E5%90%8E%E7%AB%AF/">#后端</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/MySQL/">#MySQL</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">#数据库</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2025/03/11/%E9%9D%A2%E8%AF%95/25%E5%B1%8A%E6%98%A5%E6%8B%9B%E5%90%8E%E7%AB%AF%E7%83%AD%E9%A2%98/594.MySQL%E7%B4%A2%E5%BC%95%E7%9A%84%E6%9C%80%E5%B7%A6%E5%89%8D%E7%BC%80%E5%8C%B9%E9%85%8D%E5%8E%9F%E5%88%99%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">MySQL 索引的最左前缀匹配原则是什么？</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2025/03/11/%E9%9D%A2%E8%AF%95/25%E5%B1%8A%E6%98%A5%E6%8B%9B%E5%90%8E%E7%AB%AF%E7%83%AD%E9%A2%98/597.%E5%9C%A8MySQL%E4%B8%AD%E5%BB%BA%E7%B4%A2%E5%BC%95%E6%97%B6%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E5%93%AA%E4%BA%9B%E4%BA%8B%E9%A1%B9%EF%BC%9F/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">在 MySQL 中建索引时需要注意哪些事项？</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+                <div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="gitalk-container"></div>
+    <script data-swup-reload-script
+            src="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js"></script>
+    <script data-swup-reload-script>
+
+        function loadGitalk() {
+            let __gitalk__pathname = decodeURI(location.pathname);
+            const __gitalk__pathnameLength = __gitalk__pathname.length;
+            const __gitalk__pathnameMaxLength = 50;
+            if (__gitalk__pathnameLength > __gitalk__pathnameMaxLength) {
+                __gitalk__pathname = __gitalk__pathname.substring(0, __gitalk__pathnameMaxLength - 3) + '...';
+            }
+
+            try {
+                Gitalk && new Gitalk({
+                    clientID: 'Ov23liThu5oe4YmmlNAw',
+                    clientSecret: 'bdde0e1d1af3b4e01fc6e172c7926c42ee09e8d3',
+                    repo: 'javai-comment',
+                    owner: 'sherwin28',
+                    admin: ['sherwin28'],
+                    id: __gitalk__pathname,
+                    language: 'en',
+                    proxy: 'https://github.com/login/oauth/access_token'
+                }).render('gitalk-container');
+
+            } catch (e) {
+                window.Gitalk = null;
+            }
+        }
+
+        if ('true') {
+            const loadGitalkTimeout = setTimeout(() => {
+                loadGitalk();
+                clearTimeout(loadGitalkTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadGitalk);
+        }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">MySQL 中使用索引一定有效吗？如何排查索引效果？</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MySQL-%E4%B8%AD%E4%BD%BF%E7%94%A8%E7%B4%A2%E5%BC%95%E4%B8%80%E5%AE%9A%E6%9C%89%E6%95%88%E5%90%97%EF%BC%9F%E5%A6%82%E4%BD%95%E6%8E%92%E6%9F%A5%E7%B4%A2%E5%BC%95%E6%95%88%E6%9E%9C%EF%BC%9F"><span class="nav-text">MySQL 中使用索引一定有效吗？如何排查索引效果？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9E%E7%AD%94%E9%87%8D%E7%82%B9"><span class="nav-text">回答重点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E7%9F%A5%E8%AF%86"><span class="nav-text">扩展知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A1%AE%E5%AE%9A%E7%B4%A2%E5%BC%95%E7%9C%9F%E7%9A%84%E7%94%9F%E6%95%88%E4%BA%86%E5%90%97%EF%BC%9F"><span class="nav-text">确定索引真的生效了吗？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E7%B4%A2%E5%BC%95%E7%94%9F%E6%95%88%E4%BA%86%E5%8F%8D%E8%80%8C%E6%9F%A5%E8%AF%A2%E5%8F%98%E6%85%A2%E4%BA%86%E5%91%A2%EF%BC%9F"><span class="nav-text">为什么索引生效了反而查询变慢了呢？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E4%BD%BF%E7%94%A8%E7%B4%A2%E5%BC%95%E7%9A%84%E8%BF%9B%E4%B8%80%E6%AD%A5%E8%AE%A4%E8%AF%86"><span class="nav-text">关于使用索引的进一步认识</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MySQL-%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9%E6%89%A7%E8%A1%8C%E8%AE%A1%E5%88%92-I-O-%E6%88%90%E6%9C%AC%E5%92%8C-CPU-%E6%88%90%E6%9C%AC%EF%BC%8C%E5%8D%B3%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9%E5%90%88%E9%80%82%E7%9A%84%E7%B4%A2%E5%BC%95-%EF%BC%9F"><span class="nav-text">MySQL 如何选择执行计划(I&#x2F;O 成本和 CPU 成本，即如何选择合适的索引)？</span></a></li></ol></li></ol></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+            <div class="customize-info my-1">2024 Java+AI技术分享版权所有</div>
+        
+        
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+
+        
+            <div class="icp-info my-1"><a target="_blank" rel="nofollow" href="
+                
+                    https://beian.miit.gov.cn/
+                
+                ">粤ICP备2024326496号-1</a></div>
+        
+        
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+    
+<script src="/js/libs/anime.min.js"></script>
+
+
+
+
+
+    
+<script src="/js/tools/tocToggle.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/layouts/toc.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/plugins/tabs.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+<script src="/js/libs/moment-with-locales.min.js" data-swup-reload-script=""></script>
+
+
+<script src="/js/layouts/essays.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+</body>
+</html>

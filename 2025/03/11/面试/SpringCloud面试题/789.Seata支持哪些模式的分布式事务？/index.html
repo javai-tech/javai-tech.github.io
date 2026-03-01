@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Sherwin.Wei">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2025/03/11/面试/springcloud面试题/789.seata支持哪些模式的分布式事务？/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="Seata 支持哪些模式的分布式事务？回答重点Seata 目前支持四种事务模式，分别是 AT、TCC、Saga 以及 XA 模式：  AT 模式：通过代理数据库操作来实现分布式事务管理。Seata 在业务操作前后自动生成回滚日志，在提交时直接提交本地事务，在回滚时利用日志进行数据的还原。 TCC 模式：是一种两阶段提交。将一个操作拆分为三个步骤：Try（预留资源）、Confirm（确认操作）、Ca">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Seata 支持哪些模式的分布式事务？">
+<meta property="og:url" content="http://example.com/2025/03/11/%E9%9D%A2%E8%AF%95/SpringCloud%E9%9D%A2%E8%AF%95%E9%A2%98/789.Seata%E6%94%AF%E6%8C%81%E5%93%AA%E4%BA%9B%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%EF%BC%9F/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Seata 支持哪些模式的分布式事务？回答重点Seata 目前支持四种事务模式，分别是 AT、TCC、Saga 以及 XA 模式：  AT 模式：通过代理数据库操作来实现分布式事务管理。Seata 在业务操作前后自动生成回滚日志，在提交时直接提交本地事务，在回滚时利用日志进行数据的还原。 TCC 模式：是一种两阶段提交。将一个操作拆分为三个步骤：Try（预留资源）、Confirm（确认操作）、Ca">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/rDoco4O5_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/0fDW6gdq_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/we6G4ck0_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/TkOHHbdG_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/HOpGxupF_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/6SxA850o_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/rRWjij2F_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/WV7jWL5n_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/mWKi0LYb_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/tgZN6RAw_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/RMmkK7gx_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/syrd0A5n_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/udcGsHU9_image_mianshiya.png">
+<meta property="article:published_time" content="2025-03-10T16:01:03.000Z">
+<meta property="article:modified_time" content="2025-03-10T16:01:03.085Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="后端">
+<meta property="article:tag" content="Spring Cloud">
+<meta property="article:tag" content="微服务">
+<meta property="article:tag" content="Seata">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/rDoco4O5_image_mianshiya.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/javai-avatar.png" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/javai-avatar.png">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/javai-avatar.png">
+    <!--- Page Info-->
+    
+    <title>
+        
+            Seata 支持哪些模式的分布式事务？ | javai
+        
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    <!--- Inject Part-->
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css">
+
+    
+<link rel="stylesheet" href="/fonts/Geist/geist.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+    
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":false,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"java与ai","subtitle":{"text":["java与ai结合一定会更强更远!","今日事，今天毕!","明天会更好！","一个人可以走的很快，但是一群人却可以走的更远。","今人不见古时月，今月曾经照古人。"],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"style":"default","links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.7.3","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"面试":{"path":"/categories/面试/","icon":"fa-regular paper-plane"},"chat":{"path":"/chat","icon":"fa-regular wechat"},"learn":{"path":"/learn","icon":"fa-regular users"},"国学":{"path":"/guoxue"},"智医":{"path":"/zhiyi"},"五行":{"path":"/wuxing"},"关于我":{"path":"/aboutme","icon":"fa-regular user"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":null},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}}};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container flex flex-col justify-between min-h-dvh">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container px-6 md:px-12">
+    <div class="navbar-content transition-navbar ">
+        <div class="left">
+            
+                <a class="logo-image h-8 w-8 sm:w-10 sm:h-10 mr-3" href="/">
+                    <img src="/images/javai-avatar.png" class="w-full h-full rounded-sm">
+                </a>
+            
+            <a class="logo-title" href="/">
+                
+                javai
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/categories/%E9%9D%A2%E8%AF%95/"
+                                        >
+                                    <i class="fa-regular paper-plane fa-fw"></i>
+                                    面试
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/chat"
+                                        >
+                                    <i class="fa-regular wechat fa-fw"></i>
+                                    CHAT
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/learn"
+                                        >
+                                    <i class="fa-regular users fa-fw"></i>
+                                    LEARN
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/guoxue"
+                                        >
+                                    
+                                    国学
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/zhiyi"
+                                        >
+                                    
+                                    智医
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/wuxing"
+                                        >
+                                    
+                                    五行
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/aboutme"
+                                        >
+                                    <i class="fa-regular user fa-fw"></i>
+                                    关于我
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/categories/%E9%9D%A2%E8%AF%95/"
+                        >
+                            <span>
+                                面试
+                            </span>
+                            
+                                <i class="fa-regular paper-plane fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/chat"
+                        >
+                            <span>
+                                CHAT
+                            </span>
+                            
+                                <i class="fa-regular wechat fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/learn"
+                        >
+                            <span>
+                                LEARN
+                            </span>
+                            
+                                <i class="fa-regular users fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/guoxue"
+                        >
+                            <span>
+                                国学
+                            </span>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/zhiyi"
+                        >
+                            <span>
+                                智医
+                            </span>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/wuxing"
+                        >
+                            <span>
+                                五行
+                            </span>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/aboutme"
+                        >
+                            <span>
+                                关于我
+                            </span>
+                            
+                                <i class="fa-regular user fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+
+            
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">87</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">36</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">531</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                <div class="w-full flex items-center pt-6 justify-start">
+                    <h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">Seata 支持哪些模式的分布式事务？</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/javai-avatar.png">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">Sherwin.Wei</span>
+                        
+                            <span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv8</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2025-03-11 00:01:03</span>
+        <span class="mobile">2025-03-11 00:01:03</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2025-03-11 00:01:03</span>
+            <span class="mobile">2025-03-11 00:01:03</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E9%9D%A2%E8%AF%95/">面试</a>&nbsp;
+                        </li>
+                    
+                    
+                
+                    
+                        <li>
+                            | <a href="/categories/SpringCloud-%E9%9D%A2%E8%AF%95%E9%A2%98/">SpringCloud 面试题</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E5%90%8E%E7%AB%AF/">后端</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/Spring-Cloud/">Spring Cloud</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/">微服务</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/Seata/">Seata</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <h1 id="Seata-支持哪些模式的分布式事务？"><a href="#Seata-支持哪些模式的分布式事务？" class="headerlink" title="Seata 支持哪些模式的分布式事务？"></a>Seata 支持哪些模式的分布式事务？</h1><h2 id="回答重点"><a href="#回答重点" class="headerlink" title="回答重点"></a>回答重点</h2><p>Seata 目前支持四种事务模式，分别是 <strong>AT、TCC、Saga 以及 XA 模式</strong>：</p>
+<ul>
+<li><strong>AT 模式</strong>：通过代理数据库操作来实现分布式事务管理。Seata 在业务操作前后自动生成回滚日志，在提交时直接提交本地事务，在回滚时利用日志进行数据的还原。</li>
+<li><strong>TCC 模式</strong>：是一种两阶段提交。将一个操作拆分为三个步骤：Try（预留资源）、Confirm（确认操作）、Cancel（回滚操作）。开发者需要自己实现每个步骤的逻辑。</li>
+<li><strong>Saga 模式</strong>：是一种长事务模式，它将全局事务拆解为多个有序的小事务，每个事务都有对应的补偿操作。若某个事务失败，按照相反的顺序依次调用补偿操作</li>
+<li><strong>XA 模式</strong>：是基于<strong>两阶段提交协议（2PC）</strong> 的标准化分布式事务管理模式。Seata 的 XA 模式通过协调多个资源管理器的事务提交和回滚来实现全局事务的管理</li>
+</ul>
+<h2 id="扩展知识"><a href="#扩展知识" class="headerlink" title="扩展知识"></a>扩展知识</h2><p>以下内容参考自 <a class="link"   target="_blank" rel="noopener" href="https://seata.apache.org/zh-cn/docs/user/mode/at" >seata 官网 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<h3 id="AT-模式"><a href="#AT-模式" class="headerlink" title="AT 模式"></a>AT 模式</h3><p>根据官网描述：AT 模式是 Seata 创新的一种非侵入式的分布式事务解决方案，Seata 在内部做了对数据库操作的代理层，我们使用 Seata AT 模式时，实际上用的是 Seata 自带的数据源代理 DataSourceProxy，Seata 在这层代理中加入了很多逻辑，比如插入回滚 undo_log 日志，检查全局锁等。</p>
+<p><strong>简单来说</strong>：</p>
+<ul>
+<li>第一阶段 Seata 会拦截 SQL，在数据更新之前，记录修改之前的数据。</li>
+<li>二阶段负责业务的回滚或提交。如果一阶段本地事务提交失败，则全局回滚，反之全局提交。回滚时用到的就是一阶段记录的修改之前的数据，生成反向 SQL 回滚数据。</li>
+</ul>
+<p>使用很简单，代码中通过 @GlobalTransactional 注解即可自动管理事务。</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GlobalTransactional</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">purchase</span><span class="params">(String userId, String commodityCode, <span class="type">int</span> count, <span class="type">int</span> money)</span> &#123;</span><br><span class="line">    jdbcTemplateA.update(<span class="string">&quot;update stock_tbl set count = count - ? where commodity_code = ?&quot;</span>, <span class="keyword">new</span> <span class="title class_">Object</span>[] &#123;count, commodityCode&#125;);</span><br><span class="line">    jdbcTemplateB.update(<span class="string">&quot;update account_tbl set money = money - ? where user_id = ?&quot;</span>, <span class="keyword">new</span> <span class="title class_">Object</span>[] &#123;money, userId&#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>AT 模式的全局事务是由以下三部分协同完成的：</p>
+<ul>
+<li>事务管理器（TM）：管理全局事务的生命周期，负责标识事务的开始和结束。</li>
+<li>事务协调器（TC）：负责管理全局事务的状态和分支事务的提交、回滚。</li>
+<li>资源管理器（RM）：管理本地事务资源和数据回滚，负责执行具体的数据库操作，并向 TC 注册分支事务。</li>
+</ul>
+<p>我们直接参考官网对 AT 模式的描述与解释，即可进一步理解 AT 模式的原理。</p>
+<h4 id="写隔离"><a href="#写隔离" class="headerlink" title="写隔离"></a>写隔离</h4><ul>
+<li>一阶段本地事务提交前，需要确保先拿到 <strong>全局锁</strong> 。</li>
+<li>拿不到 <strong>全局锁</strong> ，不能提交本地事务。</li>
+<li>拿 <strong>全局锁</strong> 的尝试被限制在一定范围内，超出范围将放弃，并回滚本地事务，释放本地锁。</li>
+</ul>
+<p>以一个示例来说明：</p>
+<p>两个全局事务 tx1 和 tx2，分别对 a 表的 m 字段进行更新操作，m 的初始值 1000。</p>
+<p>tx1 先开始，开启本地事务，拿到本地锁，更新操作 m &#x3D; 1000 - 100 &#x3D; 900。本地事务提交前，先拿到该记录的 <strong>全局锁</strong> ，本地提交释放本地锁。</p>
+<p>tx2 后开始，开启本地事务，拿到本地锁，更新操作 m &#x3D; 900 - 100 &#x3D; 800。本地事务提交前，尝试拿该记录的 <strong>全局锁</strong> ，tx1 全局提交前，该记录的全局锁被 tx1 持有，tx2 需要重试等待 <strong>全局锁</strong> 。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/rDoco4O5_image_mianshiya.png"
+                      alt="image.png" width="702px" 
+                >
+
+<p>tx1 二阶段全局提交，释放 <strong>全局锁</strong> 。tx2 拿到 <strong>全局锁</strong> 提交本地事务。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/0fDW6gdq_image_mianshiya.png"
+                      alt="image.png" width="718px" 
+                >
+
+<p>如果 tx1 的二阶段全局回滚，则 tx1 需要重新获取该数据的本地锁，进行反向补偿的更新操作，实现分支的回滚。</p>
+<p>此时，如果 tx2 仍在等待该数据的 <strong>全局锁</strong>，同时持有本地锁，则 tx1 的分支回滚会失败。分支的回滚会一直重试，直到 tx2 的 <strong>全局锁</strong> 等锁超时，放弃 <strong>全局锁</strong> 并回滚本地事务释放本地锁，tx1 的分支回滚最终成功。</p>
+<p>因为整个过程 <strong>全局锁</strong> 在 tx1 结束前一直是被 tx1 持有的，所以不会发生 <strong>脏写</strong> 的问题。</p>
+<h4 id="读隔离"><a href="#读隔离" class="headerlink" title="读隔离"></a>读隔离</h4><p>在数据库本地事务隔离级别 <strong>读已提交（Read Committed）</strong> 或以上的基础上，Seata（AT 模式）的默认全局隔离级别是 <strong>读未提交（Read Uncommitted）</strong> 。</p>
+<p>如果应用在特定场景下，必需要求全局的 <strong>读已提交</strong> ，目前 Seata 的方式是通过 SELECT FOR UPDATE 语句的代理。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/we6G4ck0_image_mianshiya.png"
+                      alt="image.png" width="724px" 
+                >
+
+<p>SELECT FOR UPDATE 语句的执行会申请 <strong>全局锁</strong> ，如果 <strong>全局锁</strong> 被其他事务持有，则释放本地锁（回滚 SELECT FOR UPDATE 语句的本地执行）并重试。这个过程中，查询是被 block 住的，直到 <strong>全局锁</strong> 拿到，即读取的相关数据是 <strong>已提交</strong> 的，才返回。</p>
+<p>出于总体性能上的考虑，Seata 目前的方案并没有对所有 SELECT 语句都进行代理，<strong>仅针对 FOR UPDATE 的 SELECT 语句</strong>。</p>
+<h4 id="AT-工作机制示例"><a href="#AT-工作机制示例" class="headerlink" title="AT 工作机制示例"></a>AT 工作机制示例</h4><p>以一个示例来说明整个 AT 分支的工作过程。</p>
+<p>业务表：<code>product</code></p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Key</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id</td>
+<td>bigint(20)</td>
+<td>PRI</td>
+</tr>
+<tr>
+<td>name</td>
+<td>varchar(100)</td>
+<td></td>
+</tr>
+<tr>
+<td>since</td>
+<td>varchar(100)</td>
+<td></td>
+</tr>
+</tbody></table>
+<p>AT 分支事务的业务逻辑：</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">update</span> product <span class="keyword">set</span> name <span class="operator">=</span> <span class="string">&#x27;GTS&#x27;</span> <span class="keyword">where</span> name <span class="operator">=</span> <span class="string">&#x27;TXC&#x27;</span>;</span><br></pre></td></tr></table></figure></div>
+<p><strong>一阶段</strong></p>
+<p>过程：</p>
+<p>1）解析 SQL：得到 SQL 的类型（UPDATE），表（product），条件（where name &#x3D; ‘TXC’）等相关的信息。</p>
+<p>2）查询前镜像：根据解析得到的条件信息，生成查询语句，定位数据。</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> id, name, since <span class="keyword">from</span> product <span class="keyword">where</span> name <span class="operator">=</span> <span class="string">&#x27;TXC&#x27;</span>;</span><br></pre></td></tr></table></figure></div>
+<p>得到前镜像：</p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>name</th>
+<th>since</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>TXC</td>
+<td>2014</td>
+</tr>
+</tbody></table>
+<p>3）执行业务 SQL：更新这条记录的 name 为 ‘GTS’。</p>
+<p>4）查询后镜像：根据前镜像的结果，通过 <strong>主键</strong> 定位数据。</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> id, name, since <span class="keyword">from</span> product <span class="keyword">where</span> id <span class="operator">=</span> <span class="number">1</span>;</span><br></pre></td></tr></table></figure></div>
+<p>得到后镜像：</p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>name</th>
+<th>since</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>GTS</td>
+<td>2014</td>
+</tr>
+</tbody></table>
+<p>5）插入回滚日志：把前后镜像数据以及业务 SQL 相关的信息组成一条回滚日志记录，插入到 <code>UNDO_LOG</code> 表中。</p>
+<div class="highlight-container" data-rel="Json"><figure class="iseeu highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">	<span class="attr">&quot;branchId&quot;</span><span class="punctuation">:</span> <span class="number">641789253</span><span class="punctuation">,</span></span><br><span class="line">	<span class="attr">&quot;undoItems&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">&#123;</span></span><br><span class="line">		<span class="attr">&quot;afterImage&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">			<span class="attr">&quot;rows&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">&#123;</span></span><br><span class="line">				<span class="attr">&quot;fields&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">&#123;</span></span><br><span class="line">					<span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;id&quot;</span><span class="punctuation">,</span></span><br><span class="line">					<span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="number">4</span><span class="punctuation">,</span></span><br><span class="line">					<span class="attr">&quot;value&quot;</span><span class="punctuation">:</span> <span class="number">1</span></span><br><span class="line">				<span class="punctuation">&#125;</span><span class="punctuation">,</span> <span class="punctuation">&#123;</span></span><br><span class="line">					<span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;name&quot;</span><span class="punctuation">,</span></span><br><span class="line">					<span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="number">12</span><span class="punctuation">,</span></span><br><span class="line">					<span class="attr">&quot;value&quot;</span><span class="punctuation">:</span> <span class="string">&quot;GTS&quot;</span></span><br><span class="line">				<span class="punctuation">&#125;</span><span class="punctuation">,</span> <span class="punctuation">&#123;</span></span><br><span class="line">					<span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;since&quot;</span><span class="punctuation">,</span></span><br><span class="line">					<span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="number">12</span><span class="punctuation">,</span></span><br><span class="line">					<span class="attr">&quot;value&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2014&quot;</span></span><br><span class="line">				<span class="punctuation">&#125;</span><span class="punctuation">]</span></span><br><span class="line">			<span class="punctuation">&#125;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">			<span class="attr">&quot;tableName&quot;</span><span class="punctuation">:</span> <span class="string">&quot;product&quot;</span></span><br><span class="line">		<span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">		<span class="attr">&quot;beforeImage&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">			<span class="attr">&quot;rows&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">&#123;</span></span><br><span class="line">				<span class="attr">&quot;fields&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">&#123;</span></span><br><span class="line">					<span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;id&quot;</span><span class="punctuation">,</span></span><br><span class="line">					<span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="number">4</span><span class="punctuation">,</span></span><br><span class="line">					<span class="attr">&quot;value&quot;</span><span class="punctuation">:</span> <span class="number">1</span></span><br><span class="line">				<span class="punctuation">&#125;</span><span class="punctuation">,</span> <span class="punctuation">&#123;</span></span><br><span class="line">					<span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;name&quot;</span><span class="punctuation">,</span></span><br><span class="line">					<span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="number">12</span><span class="punctuation">,</span></span><br><span class="line">					<span class="attr">&quot;value&quot;</span><span class="punctuation">:</span> <span class="string">&quot;TXC&quot;</span></span><br><span class="line">				<span class="punctuation">&#125;</span><span class="punctuation">,</span> <span class="punctuation">&#123;</span></span><br><span class="line">					<span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;since&quot;</span><span class="punctuation">,</span></span><br><span class="line">					<span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="number">12</span><span class="punctuation">,</span></span><br><span class="line">					<span class="attr">&quot;value&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2014&quot;</span></span><br><span class="line">				<span class="punctuation">&#125;</span><span class="punctuation">]</span></span><br><span class="line">			<span class="punctuation">&#125;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">			<span class="attr">&quot;tableName&quot;</span><span class="punctuation">:</span> <span class="string">&quot;product&quot;</span></span><br><span class="line">		<span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">		<span class="attr">&quot;sqlType&quot;</span><span class="punctuation">:</span> <span class="string">&quot;UPDATE&quot;</span></span><br><span class="line">	<span class="punctuation">&#125;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">	<span class="attr">&quot;xid&quot;</span><span class="punctuation">:</span> <span class="string">&quot;xid:xxx&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>6）提交前，向 TC 注册分支：申请 <code>product</code> 表中，主键值等于 1 的记录的 <strong>全局锁</strong> 。</p>
+<p>7）本地事务提交：业务数据的更新和前面步骤中生成的 UNDO LOG 一并提交。</p>
+<p>8）将本地事务提交的结果上报给 TC。</p>
+<p><strong>二阶段-回滚</strong></p>
+<p>1）收到 TC 的分支回滚请求，开启一个本地事务，执行如下操作。</p>
+<p>2）通过 XID 和 Branch ID 查找到相应的 UNDO LOG 记录。</p>
+<p>3）数据校验：拿 UNDO LOG 中的后镜与当前数据进行比较，如果有不同，说明数据被当前全局事务之外的动作做了修改。这种情况，需要根据配置策略来做处理，详细的说明在另外的文档中介绍。</p>
+<p>4）根据 UNDO LOG 中的前镜像和业务 SQL 的相关信息生成并执行回滚的语句：</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">update</span> product <span class="keyword">set</span> name <span class="operator">=</span> <span class="string">&#x27;TXC&#x27;</span> <span class="keyword">where</span> id <span class="operator">=</span> <span class="number">1</span>;</span><br></pre></td></tr></table></figure></div>
+
+<p>5）提交本地事务。并把本地事务的执行结果（即分支事务回滚的结果）上报给 TC。</p>
+<p><strong>二阶段-提交</strong></p>
+<p>1）收到 TC 的分支提交请求，把请求放入一个异步任务的队列中，马上返回提交成功的结果给 TC。</p>
+<p>2）异步任务阶段的分支提交请求将异步和批量地删除相应 UNDO LOG 记录。</p>
+<h4 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h4><p><strong>回滚日志表</strong></p>
+<p>UNDO_LOG Table：不同数据库在类型上会略有差别。</p>
+<p>以 MySQL 为例：</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>branch_id</td>
+<td>bigint     PK</td>
+</tr>
+<tr>
+<td>xid</td>
+<td>varchar(100)</td>
+</tr>
+<tr>
+<td>context</td>
+<td>varchar(128)</td>
+</tr>
+<tr>
+<td>rollback_info</td>
+<td>longblob</td>
+</tr>
+<tr>
+<td>log_status</td>
+<td>tinyint</td>
+</tr>
+<tr>
+<td>log_created</td>
+<td>datetime</td>
+</tr>
+<tr>
+<td>log_modified</td>
+<td>datetime</td>
+</tr>
+</tbody></table>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 注意此处0.7.0+ 增加字段 context</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> `undo_log` (</span><br><span class="line">  `id` <span class="type">bigint</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span> AUTO_INCREMENT,</span><br><span class="line">  `branch_id` <span class="type">bigint</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  `xid` <span class="type">varchar</span>(<span class="number">100</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  `context` <span class="type">varchar</span>(<span class="number">128</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  `rollback_info` longblob <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  `log_status` <span class="type">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  `log_created` datetime <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  `log_modified` datetime <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  <span class="keyword">PRIMARY</span> KEY (`id`),</span><br><span class="line">  <span class="keyword">UNIQUE</span> KEY `ux_undo_log` (`xid`,`branch_id`)</span><br><span class="line">) ENGINE<span class="operator">=</span>InnoDB AUTO_INCREMENT<span class="operator">=</span><span class="number">1</span> <span class="keyword">DEFAULT</span> CHARSET<span class="operator">=</span>utf8;</span><br></pre></td></tr></table></figure></div>
+<h3 id="TCC"><a href="#TCC" class="headerlink" title="TCC"></a>TCC</h3><p>TCC 是一种侵入式的分布式事务解决方案，需要业务系统自行实现 Try，Confirm，Cancel 三个操作，对业务系统有着非常大的入侵性，设计相对复杂。整体是 <strong>两阶段提交</strong> 的模型。</p>
+<p>全局事务是由若干分支事务组成的，分支事务要满足 <strong>两阶段提交</strong> 的模型要求，即需要每个分支事务都具备自己的：</p>
+<ul>
+<li>一阶段 prepare 行为</li>
+<li>二阶段 commit 或 rollback 行为</li>
+</ul>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/TkOHHbdG_image_mianshiya.png"
+                      alt="image.png" width="853px" 
+                >
+
+<p>在两阶段提交协议中，资源管理器（RM, Resource Manager）需要提供“准备”、“提交”和“回滚” 3 个操作；而事务管理器（TM, Transaction Manager）分 2 阶段协调所有资源管理器，在第一阶段询问所有资源管理器“准备”是否成功，如果所有资源均“准备”成功则在第二阶段执行所有资源的“提交”操作，否则在第二阶段执行所有资源的“回滚”操作，保证所有资源的最终状态是一致的，要么全部提交要么全部回滚。</p>
+<p>资源管理器有很多实现方式，其中 TCC（Try-Confirm-Cancel）是资源管理器的一种服务化的实现；TCC 是一种比较成熟的分布式事务解决方案，可用于解决跨数据库、跨服务业务操作的数据一致性问题；TCC 其 Try、Confirm、Cancel 3 个方法均由业务编码实现，故 TCC 可以被称为是服务化的资源管理器。</p>
+<p>TCC 的 Try 操作作为一阶段，负责资源的检查和预留；Confirm 操作作为二阶段提交操作，执行真正的业务；Cancel 是二阶段回滚操作，执行预留资源的取消，使资源回到初始状态。</p>
+<h4 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h4><p>区别于在 AT 模式直接使用数据源代理来屏蔽分布式事务细节，业务方需要自行定义 TCC 资源的“准备”、“提交”和“回滚” 。比如在下方的例子中，</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">TccActionOne</span> &#123;</span><br><span class="line">    <span class="meta">@TwoPhaseBusinessAction(name = &quot;DubboTccActionOne&quot;, commitMethod = &quot;commit&quot;, rollbackMethod = &quot;rollback&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">prepare</span><span class="params">(BusinessActionContext actionContext, <span class="meta">@BusinessActionContextParameter(paramName = &quot;a&quot;)</span> String a)</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">commit</span><span class="params">(BusinessActionContext actionContext)</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">rollback</span><span class="params">(BusinessActionContext actionContext)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>Seata 会把一个 TCC 接口当成一个 Resource，也叫 TCC Resource。在业务接口中核心的注解是 <code>@TwoPhaseBusinessAction</code>，表示当前方法使用 TCC 模式管理事务提交，并标明了 Try，Confirm，Cancel 三个阶段。name属性，给当前事务注册了一个全局唯一的的 TCC bean name。同时 TCC 模式的三个执行阶段分别是：</p>
+<ul>
+<li>Try 阶段，预定操作资源（Prepare） 这一阶段所以执行的方法便是被 <code>@TwoPhaseBusinessAction</code> 所修饰的方法。如示例代码中的 <code>prepare</code> 方法。</li>
+<li>Confirm 阶段，执行主要业务逻辑（Commit） 这一阶段使用 <code>commitMethod</code> 属性所指向的方法，来执行Confirm 的工作。</li>
+<li>Cancel 阶段，事务回滚（Rollback） 这一阶段使用 <code>rollbackMethod</code> 属性所指向的方法，来执行 Cancel 的工作。</li>
+</ul>
+<p>其次，可以在 TCC 模式下使用 <code>BusinessActionContext</code> 在事务上下文中传递查询参数。如下属性：</p>
+<ul>
+<li><code>xid</code> 全局事务id</li>
+<li><code>branchId</code> 分支事务id</li>
+<li><code>actionName</code> 分支资源id，（resource id）</li>
+<li><code>actionContext</code> 业务传递的参数，可以通过 <code>@BusinessActionContextParameter</code> 来标注需要传递的参数。</li>
+</ul>
+<p>在定义好 TCC 接口之后，我们可以像 AT 模式一样，通过 <code>@GlobalTransactional</code> 开启一个分布式事务。</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GlobalTransactional</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">doTransactionCommit</span><span class="params">()</span>&#123;</span><br><span class="line">    tccActionOne.prepare(<span class="literal">null</span>,<span class="string">&quot;one&quot;</span>);</span><br><span class="line">    tccActionTwo.prepare(<span class="literal">null</span>,<span class="string">&quot;two&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>注意，如果 TCC 参与者是本地 bean（非远程RPC服务），本地 TCC bean 还需要在接口定义中添加 @LocalTCC 注解，比如,</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@LocalTCC</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">TccActionTwo</span> &#123;</span><br><span class="line">    <span class="meta">@TwoPhaseBusinessAction(name = &quot;TccActionTwo&quot;, commitMethod = &quot;commit&quot;, rollbackMethod = &quot;rollback&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">prepare</span><span class="params">(BusinessActionContext actionContext, <span class="meta">@BusinessActionContextParameter(paramName = &quot;a&quot;)</span> String a)</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">commit</span><span class="params">(BusinessActionContext actionContext)</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">rollback</span><span class="params">(BusinessActionContext actionContext)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="Saga-模式"><a href="#Saga-模式" class="headerlink" title="Saga 模式"></a>Saga 模式</h3><p>Saga 模式是 SEATA 提供的长事务解决方案，在 Saga 模式中，业务流程中每个参与者都提交本地事务，当出现某一个参与者失败则补偿前面已经成功的参与者，一阶段正向服务和二阶段补偿服务都由业务开发实现。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/HOpGxupF_image_mianshiya.png"
+                      alt="image.png" width="445px" 
+                >
+
+
+<h4 id="Saga-的实现-状态机引擎"><a href="#Saga-的实现-状态机引擎" class="headerlink" title="Saga 的实现(状态机引擎)"></a>Saga 的实现(状态机引擎)</h4><p>目前 SEATA 提供的 Saga 模式是基于状态机引擎来实现的，机制是：</p>
+<ol>
+<li>通过状态图来定义服务调用的流程并生成 json 状态语言定义文件</li>
+<li>状态图中一个节点可以是调用一个服务，节点可以配置它的补偿节点</li>
+<li>状态图 json 由状态机引擎驱动执行，当出现异常时状态引擎反向执行已成功节点对应的补偿节点将事务回滚(注意: 异常发生时是否进行补偿也可由用户自定义决定)</li>
+<li>可以实现服务编排需求，支持单项选择、并发、子流程、参数转换、参数映射、服务执行状态判断、异常捕获等功能</li>
+</ol>
+<p>示例状态图:</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/6SxA850o_image_mianshiya.png"
+                      alt="image.png" width="508px" 
+                >
+
+<h4 id="状态机引擎原理"><a href="#状态机引擎原理" class="headerlink" title="状态机引擎原理:"></a>状态机引擎原理:</h4><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/rRWjij2F_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<ul>
+<li>图中的状态图是先执行stateA, 再执行stateB，然后执行stateC</li>
+<li>“状态”的执行是基于事件驱动的模型，stateA执行完成后，会产生路由消息放入EventQueue，事件消费端从EventQueue取出消息，执行stateB</li>
+<li>在整个状态机启动时会调用Seata Server开启分布式事务，并生产xid, 然后记录”状态机实例”启动事件到本地数据库</li>
+<li>当执行到一个”状态”时会调用Seata Server注册分支事务，并生产branchId, 然后记录”状态实例”开始执行事件到本地数据库</li>
+<li>当一个”状态”执行完成后会记录”状态实例”执行结束事件到本地数据库, 然后调用Seata Server上报分支事务的状态</li>
+<li>当整个状态机执行完成, 会记录”状态机实例”执行完成事件到本地数据库, 然后调用Seata Server提交或回滚分布式事务</li>
+</ul>
+<h4 id="状态机引擎设计"><a href="#状态机引擎设计" class="headerlink" title="状态机引擎设计"></a>状态机引擎设计</h4><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/WV7jWL5n_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<p>状态机引擎的设计主要分成三层, 上层依赖下层，从下往上分别是：</p>
+<p>Eventing 层:</p>
+<ul>
+<li>实现事件驱动架构, 可以压入事件, 并由消费端消费事件, 本层不关心事件是什么消费端执行什么，由上层实现</li>
+</ul>
+<p>ProcessController 层:</p>
+<ul>
+<li>由于上层的Eventing驱动一个“空”流程引擎的执行，”state”的行为和路由都未实现, 由上层实现<blockquote>
+<p>基于以上两层理论上可以自定义扩展任何”流程”引擎</p>
+</blockquote>
+</li>
+</ul>
+<p>StateMachineEngine 层:</p>
+<ul>
+<li>实现状态机引擎每种state的行为和路由逻辑</li>
+<li>提供 API、状态机语言仓库</li>
+</ul>
+<h4 id="状态机的高可用设计"><a href="#状态机的高可用设计" class="headerlink" title="状态机的高可用设计"></a>状态机的高可用设计</h4><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/mWKi0LYb_image_mianshiya.png"
+                      alt="image.png" width="728px" 
+                >
+
+<p>状态机引擎是无状态的，它是内嵌在应用中。</p>
+<p>当应用正常运行时（图中上半部分）：</p>
+<ul>
+<li>状态机引擎会上报状态到Seata Server；</li>
+<li>状态机执行日志存储在业务的数据库中；</li>
+</ul>
+<p>当一台应用实例宕机时（图中下半部分）：</p>
+<ul>
+<li>Seata Server 会感知到，并发送事务恢复请求到还存活的应用实例；</li>
+<li>状态机引擎收到事务恢复请求后，从数据库里装载日志，并恢复状态机上下文继续执行；</li>
+</ul>
+<h3 id="XA-模式"><a href="#XA-模式" class="headerlink" title="XA 模式"></a>XA 模式</h3><p>在 Seata 定义的分布式事务框架内，利用事务资源（数据库、消息服务等）对 XA 协议的支持，以 XA 协议的机制来管理分支事务的一种 <strong>事务模式</strong>。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/tgZN6RAw_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<p><strong>执行阶段</strong>：</p>
+<ul>
+<li>可回滚：业务 SQL 操作放在 XA 分支中进行，由资源对 XA 协议的支持来保证 <em>可回滚</em></li>
+<li>持久化：XA 分支完成后，执行 XA prepare，同样，由资源对 XA 协议的支持来保证 <em>持久化</em>（即，之后任何意外都不会造成无法回滚的情况）</li>
+</ul>
+<p><strong>完成阶段</strong>：</p>
+<ul>
+<li>分支提交：执行 XA 分支的 commit</li>
+<li>分支回滚：执行 XA 分支的 rollback</li>
+</ul>
+<h4 id="整体运行机制"><a href="#整体运行机制" class="headerlink" title="整体运行机制"></a>整体运行机制</h4><p>XA 模式 运行在 Seata 定义的事务框架内：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/RMmkK7gx_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<p>执行阶段（E xecute）：</p>
+<ul>
+<li>XA start&#x2F;XA end&#x2F;XA prepare + SQL + 注册分支</li>
+</ul>
+<p>完成阶段（F inish）：</p>
+<ul>
+<li>XA commit&#x2F;XA rollback</li>
+</ul>
+<h4 id="数据源代理"><a href="#数据源代理" class="headerlink" title="数据源代理"></a>数据源代理</h4><p>XA 模式需要 XAConnection。</p>
+<p>获取 XAConnection 两种方式：</p>
+<ul>
+<li>方式一：要求开发者配置 XADataSource</li>
+<li>方式二：根据开发者的普通 DataSource 来创建</li>
+</ul>
+<p>第一种方式，给开发者增加了认知负担，需要为 XA 模式专门去学习和使用 XA 数据源，与 透明化 XA 编程模型的设计目标相违背。</p>
+<p>第二种方式，对开发者比较友好，和 AT 模式使用一样，开发者完全不必关心 XA 层面的任何问题，保持本地编程模型即可。</p>
+<p>我们优先设计实现第二种方式：数据源代理根据普通数据源中获取的普通 JDBC 连接创建出相应的 XAConnection。</p>
+<p>类比 AT 模式的数据源代理机制，如下：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/syrd0A5n_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<p>但是，第二种方法有局限：无法保证兼容的正确性。</p>
+<p>实际上，这种方法是在做数据库驱动程序要做的事情。不同的厂商、不同版本的数据库驱动实现机制是厂商私有的，我们只能保证在充分测试过的驱动程序上是正确的，开发者使用的驱动程序版本差异很可能造成机制的失效。</p>
+<p>这点在 Oracle 上体现非常明显。参见 Druid issue：<a class="link"   target="_blank" rel="noopener" href="https://github.com/alibaba/druid/issues/3707" >https://github.com/alibaba/druid/issues/3707 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>综合考虑，XA 模式的数据源代理设计需要同时支持第一种方式：基于 XA 数据源进行代理。</p>
+<p>类比 AT 模式的数据源代理机制，如下：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/udcGsHU9_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<h4 id="分支注册"><a href="#分支注册" class="headerlink" title="分支注册"></a>分支注册</h4><p>XA start 需要 Xid 参数。</p>
+<p>这个 Xid 需要和 Seata 全局事务的 XID 和 BranchId 关联起来，以便由 TC 驱动 XA 分支的提交或回滚。</p>
+<p>目前 Seata 的 BranchId 是在分支注册过程，由 TC 统一生成的，所以 XA 模式分支注册的时机需要在 XA start 之前。</p>
+<p>将来一个可能的优化方向：</p>
+<p>把分支注册尽量延后。类似 AT 模式在本地事务提交之前才注册分支，避免分支执行失败情况下，没有意义的分支注册。</p>
+<p>这个优化方向需要 BranchId 生成机制的变化来配合。BranchId 不通过分支注册过程生成，而是生成后再带着 BranchId 去注册分支。</p>
+<h4 id="XA-模式的使用"><a href="#XA-模式的使用" class="headerlink" title="XA 模式的使用"></a>XA 模式的使用</h4><p>从编程模型上，XA 模式与 AT 模式保持完全一致。</p>
+<p>可以参考 Seata 官网的样例：<a class="link"   target="_blank" rel="noopener" href="https://github.com/apache/incubator-seata-samples/tree/master/seata-xa" >seata-xa <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>样例场景是 Seata 经典的，涉及库存、订单、账户 3 个微服务的商品订购业务。</p>
+<p>在样例中，上层编程模型与 AT 模式完全相同。只需要修改数据源代理，即可实现 XA 模式与 AT 模式之间的切换。</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean(&quot;dataSource&quot;)</span></span><br><span class="line"><span class="keyword">public</span> DataSource <span class="title function_">dataSource</span><span class="params">(DruidDataSource druidDataSource)</span> &#123;</span><br><span class="line">    <span class="comment">// DataSourceProxy for AT mode</span></span><br><span class="line">    <span class="comment">// return new DataSourceProxy(druidDataSource);</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// DataSourceProxyXA for XA mode</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">DataSourceProxyXA</span>(druidDataSource);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+        </div>
+
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/%E5%90%8E%E7%AB%AF/">#后端</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/Spring-Cloud/">#Spring Cloud</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/">#微服务</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/Seata/">#Seata</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2025/03/11/%E9%9D%A2%E8%AF%95/SpringCloud%E9%9D%A2%E8%AF%95%E9%A2%98/772.%E4%BB%80%E4%B9%88%E6%83%85%E5%86%B5%E4%B8%8B%E9%9C%80%E8%A6%81%E4%BD%BF%E7%94%A8%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%EF%BC%8C%E6%9C%89%E5%93%AA%E4%BA%9B%E6%96%B9%E6%A1%88%EF%BC%9F/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">什么情况下需要使用分布式事务，有哪些方案？</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2025/03/11/%E9%9D%A2%E8%AF%95/%E5%90%8E%E7%AB%AF%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E9%9D%A2%E8%AF%95%E9%A2%98/1190.%E4%BB%80%E4%B9%88%E6%98%AF%E9%99%90%E6%B5%81%EF%BC%9F%E9%99%90%E6%B5%81%E7%AE%97%E6%B3%95%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F%E6%80%8E%E4%B9%88%E5%AE%9E%E7%8E%B0%E7%9A%84%EF%BC%9F/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">什么是限流？限流算法有哪些？怎么实现的？</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+                <div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="gitalk-container"></div>
+    <script data-swup-reload-script
+            src="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js"></script>
+    <script data-swup-reload-script>
+
+        function loadGitalk() {
+            let __gitalk__pathname = decodeURI(location.pathname);
+            const __gitalk__pathnameLength = __gitalk__pathname.length;
+            const __gitalk__pathnameMaxLength = 50;
+            if (__gitalk__pathnameLength > __gitalk__pathnameMaxLength) {
+                __gitalk__pathname = __gitalk__pathname.substring(0, __gitalk__pathnameMaxLength - 3) + '...';
+            }
+
+            try {
+                Gitalk && new Gitalk({
+                    clientID: 'Ov23liThu5oe4YmmlNAw',
+                    clientSecret: 'bdde0e1d1af3b4e01fc6e172c7926c42ee09e8d3',
+                    repo: 'javai-comment',
+                    owner: 'sherwin28',
+                    admin: ['sherwin28'],
+                    id: __gitalk__pathname,
+                    language: 'en',
+                    proxy: 'https://github.com/login/oauth/access_token'
+                }).render('gitalk-container');
+
+            } catch (e) {
+                window.Gitalk = null;
+            }
+        }
+
+        if ('true') {
+            const loadGitalkTimeout = setTimeout(() => {
+                loadGitalk();
+                clearTimeout(loadGitalkTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadGitalk);
+        }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">Seata 支持哪些模式的分布式事务？</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Seata-%E6%94%AF%E6%8C%81%E5%93%AA%E4%BA%9B%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%EF%BC%9F"><span class="nav-text">Seata 支持哪些模式的分布式事务？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9E%E7%AD%94%E9%87%8D%E7%82%B9"><span class="nav-text">回答重点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E7%9F%A5%E8%AF%86"><span class="nav-text">扩展知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#AT-%E6%A8%A1%E5%BC%8F"><span class="nav-text">AT 模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCC"><span class="nav-text">TCC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Saga-%E6%A8%A1%E5%BC%8F"><span class="nav-text">Saga 模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XA-%E6%A8%A1%E5%BC%8F"><span class="nav-text">XA 模式</span></a></li></ol></li></ol></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+            <div class="customize-info my-1">2024 Java+AI技术分享版权所有</div>
+        
+        
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+
+        
+            <div class="icp-info my-1"><a target="_blank" rel="nofollow" href="
+                
+                    https://beian.miit.gov.cn/
+                
+                ">粤ICP备2024326496号-1</a></div>
+        
+        
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+    
+<script src="/js/libs/anime.min.js"></script>
+
+
+
+
+
+    
+<script src="/js/tools/tocToggle.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/layouts/toc.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/plugins/tabs.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+<script src="/js/libs/moment-with-locales.min.js" data-swup-reload-script=""></script>
+
+
+<script src="/js/layouts/essays.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+</body>
+</html>

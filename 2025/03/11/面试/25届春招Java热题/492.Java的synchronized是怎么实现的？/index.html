@@ -1,0 +1,1397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Sherwin.Wei">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2025/03/11/面试/25届春招java热题/492.java的synchronized是怎么实现的？/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="Java 的 synchronized 是怎么实现的？回答重点synchronized 实现原理依赖于 JVM 的 Monitor（监视器锁） 和 对象头（Object Header）。 当 synchronized 修饰在方法或代码块上时，会对特定的对象或类加锁，从而确保同一时刻只有一个线程能执行加锁的代码块。  synchronized 修饰方法：会在方法的访问标志中增加一个 ACC_SYNC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java 的 synchronized 是怎么实现的？">
+<meta property="og:url" content="http://example.com/2025/03/11/%E9%9D%A2%E8%AF%95/25%E5%B1%8A%E6%98%A5%E6%8B%9BJava%E7%83%AD%E9%A2%98/492.Java%E7%9A%84synchronized%E6%98%AF%E6%80%8E%E4%B9%88%E5%AE%9E%E7%8E%B0%E7%9A%84%EF%BC%9F/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Java 的 synchronized 是怎么实现的？回答重点synchronized 实现原理依赖于 JVM 的 Monitor（监视器锁） 和 对象头（Object Header）。 当 synchronized 修饰在方法或代码块上时，会对特定的对象或类加锁，从而确保同一时刻只有一个线程能执行加锁的代码块。  synchronized 修饰方法：会在方法的访问标志中增加一个 ACC_SYNC">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/Ysi96CQe_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/wU5oBYfv_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/2l0qVCj6_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/Tjxo6SFB_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/6v5xDiuq_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/cQtIkJjK_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/2tieAEtm_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/R9YYMISh_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/eCVjqRA4_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/7gIUeNQI_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/9zDTd1R3_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/EoxrnQRf_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/hEh00UF1_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/kcPYidUM_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/6fv4aybq_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/4KbigMiX_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/6tf6LNDS_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/yucX0re1_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/Gv4nKv2Q_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/agGWmNBl_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/1lVwqtKz_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/YAwGyNOX_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/r1ZdnaZP_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/RgFq6FVw_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/dhI1dsdp_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/W2pFUrO6_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/02ikizuD_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/GSfzWZKa_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/LKhjnxU3_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/QcU6W8gW_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/LcXnFbBF_image_mianshiya.png">
+<meta property="og:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/N9LHOkAp_image_mianshiya.png">
+<meta property="article:published_time" content="2025-03-10T16:01:02.000Z">
+<meta property="article:modified_time" content="2025-03-10T16:01:02.954Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="Java并发">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/Ysi96CQe_image_mianshiya.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/javai-avatar.png" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/javai-avatar.png">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/javai-avatar.png">
+    <!--- Page Info-->
+    
+    <title>
+        
+            Java 的 synchronized 是怎么实现的？ | javai
+        
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    <!--- Inject Part-->
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/assets/build/styles.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css">
+
+    
+<link rel="stylesheet" href="/fonts/Geist/geist.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+    
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":false,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"java与ai","subtitle":{"text":["java与ai结合一定会更强更远!","今日事，今天毕!","明天会更好！","一个人可以走的很快，但是一群人却可以走的更远。","今人不见古时月，今月曾经照古人。"],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"style":"default","links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.7.3","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"面试":{"path":"/categories/面试/","icon":"fa-regular paper-plane"},"chat":{"path":"/chat","icon":"fa-regular wechat"},"learn":{"path":"/learn","icon":"fa-regular users"},"国学":{"path":"/guoxue"},"智医":{"path":"/zhiyi"},"五行":{"path":"/wuxing"},"关于我":{"path":"/aboutme","icon":"fa-regular user"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":null},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}}};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container flex flex-col justify-between min-h-dvh">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container px-6 md:px-12">
+    <div class="navbar-content transition-navbar ">
+        <div class="left">
+            
+                <a class="logo-image h-8 w-8 sm:w-10 sm:h-10 mr-3" href="/">
+                    <img src="/images/javai-avatar.png" class="w-full h-full rounded-sm">
+                </a>
+            
+            <a class="logo-title" href="/">
+                
+                javai
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/categories/%E9%9D%A2%E8%AF%95/"
+                                        >
+                                    <i class="fa-regular paper-plane fa-fw"></i>
+                                    面试
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/chat"
+                                        >
+                                    <i class="fa-regular wechat fa-fw"></i>
+                                    CHAT
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/learn"
+                                        >
+                                    <i class="fa-regular users fa-fw"></i>
+                                    LEARN
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/guoxue"
+                                        >
+                                    
+                                    国学
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/zhiyi"
+                                        >
+                                    
+                                    智医
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/wuxing"
+                                        >
+                                    
+                                    五行
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/aboutme"
+                                        >
+                                    <i class="fa-regular user fa-fw"></i>
+                                    关于我
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/categories/%E9%9D%A2%E8%AF%95/"
+                        >
+                            <span>
+                                面试
+                            </span>
+                            
+                                <i class="fa-regular paper-plane fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/chat"
+                        >
+                            <span>
+                                CHAT
+                            </span>
+                            
+                                <i class="fa-regular wechat fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/learn"
+                        >
+                            <span>
+                                LEARN
+                            </span>
+                            
+                                <i class="fa-regular users fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/guoxue"
+                        >
+                            <span>
+                                国学
+                            </span>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/zhiyi"
+                        >
+                            <span>
+                                智医
+                            </span>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/wuxing"
+                        >
+                            <span>
+                                五行
+                            </span>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/aboutme"
+                        >
+                            <span>
+                                关于我
+                            </span>
+                            
+                                <i class="fa-regular user fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+
+            
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">87</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">36</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">531</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                <div class="w-full flex items-center pt-6 justify-start">
+                    <h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">Java 的 synchronized 是怎么实现的？</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/javai-avatar.png">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">Sherwin.Wei</span>
+                        
+                            <span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv8</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2025-03-11 00:01:02</span>
+        <span class="mobile">2025-03-11 00:01:02</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2025-03-11 00:01:02</span>
+            <span class="mobile">2025-03-11 00:01:02</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E9%9D%A2%E8%AF%95/">面试</a>&nbsp;
+                        </li>
+                    
+                    
+                
+                    
+                        <li>
+                            | <a href="/categories/25-%E5%B1%8A%E6%98%A5%E6%8B%9B-Java-%E7%83%AD%E9%A2%98/">25 届春招 Java 热题</a>&nbsp;
+                        </li>
+                    
+                    
+                
+                    
+                        <li>
+                            | <a href="/categories/Java-%E5%B9%B6%E5%8F%91%E9%9D%A2%E8%AF%95%E9%A2%98/">Java 并发面试题</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/Java/">Java</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/Java%E5%B9%B6%E5%8F%91/">Java并发</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <h1 id="Java-的-synchronized-是怎么实现的？"><a href="#Java-的-synchronized-是怎么实现的？" class="headerlink" title="Java 的 synchronized 是怎么实现的？"></a>Java 的 synchronized 是怎么实现的？</h1><h2 id="回答重点"><a href="#回答重点" class="headerlink" title="回答重点"></a>回答重点</h2><p><code>synchronized</code> 实现原理依赖于 JVM 的 Monitor（监视器锁） 和 对象头（Object Header）。</p>
+<p>当 <code>synchronized</code> 修饰在方法或代码块上时，会对特定的对象或类加锁，从而确保同一时刻只有一个线程能执行加锁的代码块。</p>
+<ul>
+<li><strong>synchronized 修饰方法</strong>：会在方法的访问标志中增加一个 <code>ACC_SYNCHRONIZED</code> 标志。每当一个线程访问该方法时，JVM 会检查方法的访问标志。如果包含 <code>ACC_SYNCHRONIZED</code> 标志，线程必须先获得该方法对应的对象的监视器锁（即对象锁），然后才能执行该方法，从而保证方法的同步性。</li>
+<li><strong>synchronized 修饰代码块</strong>：会在代码块的前后插入 <code>monitorenter</code> 和 <code>monitorexit</code> 字节码指令。可以把 <code>monitorenter</code> 理解为加锁，<code>monitorexit</code>理解为解锁。</li>
+</ul>
+<h2 id="扩展知识"><a href="#扩展知识" class="headerlink" title="扩展知识"></a>扩展知识</h2><h3 id="对象头（Object-Header）"><a href="#对象头（Object-Header）" class="headerlink" title="对象头（Object Header）"></a>对象头（Object Header）</h3><p>在 JVM 中，每个对象的内存布局主要由两部分组成：</p>
+<ul>
+<li>Mark Word：用于存储对象的运行时数据，包括锁状态、哈希码、GC 分代信息等。</li>
+<li>Klass Pointer：指向对象的类型元数据，帮助 JVM 确定对象的类型信息。</li>
+</ul>
+<p>Mark Word 是实现 synchronized 的关键，因为它会根据锁的状态保存不同的信息，具体包括：</p>
+<ul>
+<li>未锁定状态：Mark Word 存储对象的哈希码和 GC 分代信息。</li>
+<li>偏向锁状态：Mark Word 保存获取该锁的线程 ID 和一些偏向锁标志位。</li>
+<li>轻量级锁状态：Mark Word 存储的是指向栈中锁记录的指针。</li>
+<li>重量级锁状态：Mark Word 存储的是指向 Monitor 对象的指针。</li>
+</ul>
+<h3 id="锁的升级与优化"><a href="#锁的升级与优化" class="headerlink" title="锁的升级与优化"></a>锁的升级与优化</h3><p>为了提高 synchronized 的性能，JVM 从 JDK 1.6 开始引入了锁的优化机制，包括<strong>偏向锁、轻量级锁、重量级锁</strong>，这些状态会根据线程的竞争情况进行动态升级或降级。</p>
+<h4 id="偏向锁"><a href="#偏向锁" class="headerlink" title="偏向锁"></a>偏向锁</h4><p>在没有锁竞争的情况下，锁总是“偏向”于第一个获得它的线程。偏向锁通过减少不必要的 CAS 操作来提高性能。</p>
+<ul>
+<li>加锁过程：当线程第一次请求锁时，JVM 会将该线程的 ID 记录在对象头的 Mark Word 中，表示锁偏向于该线程。后续该线程再进入该锁时，无需进行额外的同步操作。</li>
+<li>撤销偏向锁：如果在偏向锁持有期间，另一个线程请求同一把锁，JVM 会撤销偏向锁，并升级为轻量级锁。</li>
+</ul>
+<h4 id="轻量级锁"><a href="#轻量级锁" class="headerlink" title="轻量级锁"></a>轻量级锁</h4><p>轻量级锁适用于多个线程短时间内争用同一锁的场景。</p>
+<ul>
+<li>加锁过程：当线程进入同步块时，JVM 会在当前线程的栈帧中创建一个锁记录（Lock Record），并将对象头中的 Mark Word 拷贝到锁记录中。线程尝试使用 CAS 操作将对象头中的 Mark Word 更新为指向锁记录的指针。如果成功，则表示该线程获取了锁；如果失败，则表示其他线程已经持有该锁，此时锁会升级为重量级锁。</li>
+<li>解锁过程：线程退出同步块时，JVM 会将对象头中的 Mark Word 恢复为原始值。</li>
+</ul>
+<h4 id="重量级锁（Heavyweight-Locking）"><a href="#重量级锁（Heavyweight-Locking）" class="headerlink" title="重量级锁（Heavyweight Locking）"></a>重量级锁（Heavyweight Locking）</h4><p>当锁竞争激烈时，JVM 会升级为重量级锁，重量级锁使用操作系统的<strong>互斥量（Mutex）</strong> 机制来实现线程的阻塞与唤醒。</p>
+<ul>
+<li>加锁过程：如果线程无法通过轻量级锁获取锁，JVM 会将该锁升级为重量级锁，并将当前线程阻塞。</li>
+<li>解锁过程：当线程释放重量级锁时，JVM 会唤醒所有阻塞的线程，允许它们再次尝试获取锁。</li>
+</ul>
+<p><strong>锁升级总结</strong>：  </p>
+<ul>
+<li><strong>偏向锁</strong>：当一个线程第一次获取锁时，JVM 会将该线程标记为“偏向”状态，后续若该线程再获取该锁，几乎没有开销。</li>
+<li><strong>轻量级锁</strong>：当另一个线程尝试获取已经被偏向的锁时，锁会升级为轻量级锁，使用 CAS 操作来减少锁竞争的开销。</li>
+<li><strong>重量级锁</strong>：当 CAS 失败无法获取锁，锁会升级为重量级锁，线程会被挂起，直到锁被释放。</li>
+</ul>
+<h3 id="Synchronized-的可重入性"><a href="#Synchronized-的可重入性" class="headerlink" title="Synchronized 的可重入性"></a>Synchronized 的可重入性</h3><p><code>synchronized</code> 是可重入的，每获取一次锁，计数器加一，释放锁时，计数器减一，直到计数器为 0，锁才会真正释放。</p>
+<h3 id="锁消除和锁粗化"><a href="#锁消除和锁粗化" class="headerlink" title="锁消除和锁粗化"></a>锁消除和锁粗化</h3><ul>
+<li><strong>锁消除</strong>：JVM 会通过逃逸分析判断对象是否只在当前线程使用，如果是，那么会消除不必要的加锁操作。</li>
+<li><strong>锁粗化</strong>：当多个锁操作频繁出现时，JVM 会将这些锁操作合并，减少锁获取和释放的开销。</li>
+</ul>
+<h3 id="重量级锁的实现原理深入分析"><a href="#重量级锁的实现原理深入分析" class="headerlink" title="重量级锁的实现原理深入分析"></a>重量级锁的实现原理深入分析</h3><p>Synchronized 关键字可以修饰代码块，实例方法和静态方法，<strong>本质上都是作用于对象上</strong>。</p>
+<p>代码块作用于括号里面的对象，实例方法是当前的实例对象即 this ，而静态方法就是当前的类。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/Ysi96CQe_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<p>这里有个概念叫<strong>临界区</strong>。</p>
+<p>我们知道，之所以会有竞争是因为有共享资源的存在，多个线程都想要得到那个共享资源，所以就划分了一个区域，操作共享资源的代码就在区域内。</p>
+<p>可以理解为想要进入到这个区域就必须持有锁，不然就无法进入，这个区域叫临界区。</p>
+<h4 id="当用-Synchronized-修饰代码块时"><a href="#当用-Synchronized-修饰代码块时" class="headerlink" title="当用 Synchronized 修饰代码块时"></a>当用 Synchronized 修饰代码块时</h4><p>此时编译得到的字节码会有 monitorenter 和 monitorexit 指令，我习惯按照临界区来理解，enter 就是要进入临界区了，exit 就是要退出临界区了，与之对应的就是获得锁和解锁。</p>
+<p>实际上这两个指令还是和修饰代码块的那个对象相关的，也就是上文代码中的<code>lockObject</code>。</p>
+<p><strong>每个对象都有一个 monitor 对象于之关联</strong>，执行 monitorenter 指令的线程就是试图去获取 monitor 的所有权，抢到了就是成功获取锁了。</p>
+<p>这个 monitor 下文会详细分析，我们先看下生成的字节码是怎样的。</p>
+<p>图片上方是 lockObject 方法编译得到的字节码，下面就是 lockObject 方法，这样对着看比较容易理解。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/wU5oBYfv_image_mianshiya.png"
+                      alt="image.png" width="656px" 
+                >
+
+<p>从截图来看，执行 System.out 之前执行了 monitorenter 执行，这里执行争锁动作，拿到锁即可进入临界区。</p>
+<p>调用完之后有个 monitorexit 指令，表示释放锁，要出临界区了。</p>
+<p>图中我还标了一个 monitorexit 指令时，<strong>因为有异常的情况也需要解锁</strong>，不然就死锁了。</p>
+<p>从生成的字节码我们也可以得知，为什么 synchronized 不需要手动解锁？</p>
+<p>是有人在替我们负重前行啊！<strong>编译器生成的字节码都帮咱们做好了，异常的情况也考虑到了</strong>。</p>
+<h4 id="当用-synchronized-修饰方法时"><a href="#当用-synchronized-修饰方法时" class="headerlink" title="当用 synchronized 修饰方法时"></a>当用 synchronized 修饰方法时</h4><p>修饰方法生成的字节码和修饰代码块的不太一样，但本质上是一样。</p>
+<p>此时字节码中没有 monitorenter 和 monitorexit 指令，不过在<strong>当前方法的访问标记</strong>上做了手脚。</p>
+<p>我这里用的是 idea 的插件来看字节码，所以展示的字面结果不太一样，不过 flag 标记是一样的：0x0021 ，是 ACC_PUBLIC 和 ACC_SYNCHRONIZED 的结合。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/2l0qVCj6_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<p>原理就是修饰方法的时候在 flag 上标记 ACC_SYNCHRONIZED，在运行时常量池中通过 ACC_SYNCHRONIZED 标志来区分，这样 JVM 就知道这个方法是被 synchronized 标记的，于是在进入方法的时候就会进行执行争锁的操作，一样只有拿到锁才能继续执行。</p>
+<p>然后不论是正常退出还是异常退出，都会进行解锁的操作，所以本质还是一样的。</p>
+<h4 id="我们再来继续深入-synchronized"><a href="#我们再来继续深入-synchronized" class="headerlink" title="我们再来继续深入 synchronized"></a>我们再来继续深入 synchronized</h4><p>从上文我们已经知道 synchronized 是作用于对象身上的，但是没细说，我们接下来剖析一波。</p>
+<p>在 Java 中，对象结构分为对象头、实例数据和对齐填充。</p>
+<p>而对象头又分为：MarkWord 、 klass pointer、数组长度(只有数组才有)，我们的重点是锁，所以关注点只放在 MarkWord 上。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/Tjxo6SFB_image_mianshiya.png"
+                      alt="image.png" width="628px" 
+                >
+
+<p>我再画一下 64 位时 MarkWord 在不同状态下的内存布局</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/6v5xDiuq_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<p>MarkWord 结构之所以搞得这么复杂，是因为需要<strong>节省内存</strong>，让同一个内存区域在不同阶段有不同的用处。</p>
+<p>记住这个图啊，各种锁操作都和这个 MarkWord 有很强的联系。</p>
+<p>从图中可以看到，在重量级锁时，对象头的锁标记位为 10，并且会有一个指针指向这个 monitor 对象，所以锁对象和 monitor 两者就是这样关联的。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/cQtIkJjK_image_mianshiya.png"
+                      alt="image.png" width="539px" 
+                >
+
+<p>而这个 monitor 在 HotSpot 中是 c++ 实现的，叫 ObjectMonitor，它是管程的实现，也有叫监视器的。</p>
+<p>它长这样，重点字段我都注释了含义，还专门截了个头文件的注释：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/2tieAEtm_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<p>暂时记忆一下，等下源码和这几个字段关联很大。</p>
+<h4 id="synchronized-底层原理"><a href="#synchronized-底层原理" class="headerlink" title="synchronized 底层原理"></a>synchronized 底层原理</h4><p>先来一张图，结合上面 monitor 的注释，先看看，看不懂没关系，有个大致流转的印象即可：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/R9YYMISh_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<p>好，我们继续。</p>
+<p>前面我们提到了 monitorenter 这个指令，这个指令会执行下面的代码：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/eCVjqRA4_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<p>我们现在分析的是重量级锁，所以不关心偏向的代码，而 slow_enter 方法文章一开始的截图就是了，最终会执行到 <code>ObjectMonitor::enter</code> 这个方法中。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/7gIUeNQI_image_mianshiya.png"
+                      alt="image.png" width="651px" 
+                >
+
+<p>可以看到重点就是通过 CAS 把 ObjectMonitor 中的 _ owner 设置为当前线程，<strong>设置成功就表示获取锁成功</strong>。</p>
+<p>然后通过 recursions 的自增来表示重入。</p>
+<p>如果 CAS 失败的话，会执行下面的一个循环：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/9zDTd1R3_image_mianshiya.png"
+                      alt="image.png" width="579px" 
+                >
+
+<p>EnterI 的代码其实上面也已经截图了，这里再来一次，我把重要的入队操作加上，并且删除了一些不重要的代码：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/EoxrnQRf_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<p>先再尝试一下获取锁，不行的话就自适应自旋，还不行就包装成 ObjectWaiter 对象加入到 _ cxq 这个单向链表之中，挣扎一下还是没抢到锁的话，那么就要阻塞了，所以下面还有个阻塞的方法。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/hEh00UF1_image_mianshiya.png"
+                      alt="image.png" width="600px" 
+                >
+
+<p>可以看到不论哪个分支都会执行 <code>Self-&gt;_ParkEvent-&gt;park()</code>，这个就是上文提到的调用 <code>pthread_mutex_lock</code>。</p>
+<p>至此争抢锁的流程已经很清晰了，我再画个图来理一理。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/kcPYidUM_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<blockquote>
+<p>接下来再看看解锁的方法</p>
+</blockquote>
+<p><code>ObjectMonitor::exit</code> 就是解锁时会调用的方法。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/6fv4aybq_image_mianshiya.png"
+                      alt="image.png" width="532px" 
+                >
+
+<p>可重入锁就是根据 _ recursions 来判断的，重入一次 _ recursions++，解锁一次 _ recursions–，如果减到 0 说明需要释放锁了。</p>
+<p>然后<strong>此时解锁的线程还会唤醒之前等待的线程</strong>，这里有好几种模式，我们来看看。</p>
+<p>如果 <code>QMode == 2 &amp;&amp; _cxq != NULL</code>的时候：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/4KbigMiX_image_mianshiya.png"
+                      alt="image.png" width="661px" 
+                >
+
+<p>如果<code>QMode == 3 &amp;&amp; _cxq != NULL</code>的时候，我就截取了一部分代码：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/6tf6LNDS_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<p>如果 <code>QMode == 4 &amp;&amp; _cxq != NULL</code>的时候：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/yucX0re1_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<p>如果 QMode 不是 2 的话，最终会执行：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/Gv4nKv2Q_image_mianshiya.png"
+                      alt="image.png" width="545px" 
+                >
+
+<p>至此，解锁的流程就完毕了！我再画一波流程图：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/agGWmNBl_image_mianshiya.png"
+                      alt="image.png" width="529px" 
+                >
+
+<blockquote>
+<p>接下来再看看调用 wait 的方法</p>
+</blockquote>
+<p>没啥花头，就是将当前线程加入到 _ waitSet 这个双向链表中，然后再执行 <code>ObjectMonitor::exit</code> 方法来释放锁。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/1lVwqtKz_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<blockquote>
+<p>接下来再看看调用 notify 的方法</p>
+</blockquote>
+<p>也没啥花头，就是从 _ waitSet 头部拿节点，然后根据策略选择是放在 cxq 还是 EntryList 的头部或者尾部，并且进行唤醒。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/YAwGyNOX_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<p>至于 notifyAll 我就不分析了，一样的，无非就是做了个循环，全部唤醒。</p>
+<p>至此 synchronized 的几个操作都齐活了，出去可以说自己深入研究过  synchronized 了。</p>
+<p>现在再来看下这个图，应该心里很有数了。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/r1ZdnaZP_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<blockquote>
+<p>为什么会有_cxq 和 _EntryList 两个列表来放线程？</p>
+</blockquote>
+<p>因为会有多个线程会同时竞争锁，所以搞了个 _ cxq 这个单向链表基于 CAS 来 hold 住这些并发，然后另外搞一个 _ EntryList 这个双向链表，来在每次唤醒的时候搬迁一些线程节点，降低 _ cxq 的尾部竞争。</p>
+<blockquote>
+<p>引入自旋</p>
+</blockquote>
+<p>synchronized 的原理大致应该都清晰了，我们也知道了底层会用到系统调用，会有较大的开销，那思考一下该如何优化？</p>
+<p>从小标题就已经知道了，方案就是自旋，文章开头就已经说了，这里再提一提。</p>
+<p>自旋其实就是空转 CPU，执行一些无意义的指令，<strong>目的就是不让出 CPU 等待锁的释放</strong>。</p>
+<p>正常情况下锁获取失败就应该阻塞入队，但是有时候可能刚一阻塞，别的线程就释放锁了，然后再唤醒刚刚阻塞的线程，这就没必要了。</p>
+<p>所以在线程竞争不是很激烈的时候，稍微自旋一会儿，指不定不需要阻塞线程就能直接获取锁，这样就避免了不必要的开销，提高了锁的性能。</p>
+<p>但是<strong>自旋的次数又是一个难点</strong>，在竞争很激烈的情况，自旋就是在浪费 CPU，因为结果肯定是自旋一会让之后阻塞。</p>
+<p>所以 Java 引入的是自适应自旋，根据上次自旋次数，来动态调整自旋的次数，<strong>这就叫结合历史经验做事</strong>。</p>
+<p>**注意这是重量级锁的步骤，别忘了文章开头说的~**。</p>
+<blockquote>
+<p>至此，synchronized 重量级锁的原理应该就很清晰了吧? 小结一下</p>
+</blockquote>
+<p>synchronized 底层是利用 monitor 对象，CAS 和 mutex 互斥锁来实现的，内部会有等待队列(cxq 和 EntryList)和条件等待队列(waitSet)来存放相应阻塞的线程。</p>
+<p>未竞争到锁的线程存储到等待队列中，获得锁的线程调用 wait 后便存放在条件等待队列中，解锁和 notify 都会唤醒相应队列中的等待线程来争抢锁。</p>
+<p>然后由于阻塞和唤醒依赖于底层的操作系统实现，系统调用存在用户态与内核态之间的切换，所以有较高的开销，因此称之为重量级锁。</p>
+<p>所以又引入了自适应自旋机制，来提高锁的性能。</p>
+<h3 id="引入轻量级锁"><a href="#引入轻量级锁" class="headerlink" title="引入轻量级锁"></a>引入轻量级锁</h3><p>我们再思考一下，是否有这样的场景：<strong>多个线程都是在不同的时间段来请求同一把锁</strong>，此时根本就用不需要阻塞线程，连 monitor 对象都不需要，所以就引入了轻量级锁这个概念，避免了系统调用，减少了开销。</p>
+<p>在锁竞争不激烈的情况下，这种场景还是很常见的，可能是常态，所以轻量级锁的引入很有必要。</p>
+<p>在介绍轻量级锁的原理之前，再看看之前 MarkWord 图。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/RgFq6FVw_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<p>轻量级锁操作的就是对象头的 MarkWord 。</p>
+<p>如果判断当前处于无锁状态，会在当前线程栈的当前栈帧中划出一块叫 LockRecord 的区域，然后把锁对象的 MarkWord 拷贝一份到 LockRecord 中称之为 dhw(就是那个set_displaced_header 方法执行的)里。</p>
+<p>然后通过 CAS 把锁对象头指向这个 LockRecord 。</p>
+<p>轻量级锁的加锁过程：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/dhI1dsdp_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<p>如果当前是有锁状态，并且是当前线程持有的，则将 null 放到 dhw 中，这是重入锁的逻辑。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/W2pFUrO6_image_mianshiya.png"
+                      alt="image.png" width="640px" 
+                >
+
+<p>我们再看下轻量级锁解锁的逻辑：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/02ikizuD_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<p>逻辑还是很简单的，就是要把当前栈帧中 LockRecord 存储的 markword （dhw）通过 CAS 换回到对象头中。</p>
+<p>如果获取到的 dhw 是 null 说明此时是重入的，所以直接返回即可，否则就是利用 CAS 换，如果 CAS 失败说明此时有竞争，那么就膨胀！</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/GSfzWZKa_image_mianshiya.png"
+                      alt="image.png" width="490px" 
+                >
+
+<blockquote>
+<p>关于这个轻量级加锁我再多说几句。</p>
+</blockquote>
+<p>每次加锁肯定是在一个方法调用中，而方法调用就是有栈帧入栈，如果是轻量级锁重入的话那么此时入栈的栈帧里面的 dhw 就是 null，否则就是锁对象的 markword。</p>
+<p>这样在解锁的时候就能通过 dhw 的值来判断此时是否是重入的。</p>
+<h3 id="引入偏向锁"><a href="#引入偏向锁" class="headerlink" title="引入偏向锁"></a>引入偏向锁</h3><p>我们再思考一下，是否有这样的场景：一开始一直只有一个线程持有这个锁，也不会有其他线程来竞争，此时频繁的 CAS 是没有必要的，CAS 也是有开销的。</p>
+<p>所以 JVM 研究者们就搞了个偏向锁，就是偏向一个线程，那么这个线程就可以直接获得锁。</p>
+<p>我们再看看这个图，偏向锁在第二行。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/LKhjnxU3_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+<p>原理也不难，如果当前锁对象支持偏向锁，那么就会通过 CAS 操作：将当前线程的地址(也当做唯一ID)记录到 markword 中，并且将标记字段的最后三位设置为 101。</p>
+<p>之后有线程请求这把锁，只需要判断 markword 最后三位是否为 101，是否指向的是当前线程的地址。</p>
+<p>还有一个可能很多文章会漏的点，就是还需要判断 epoch 值是否和锁对象的<strong>类</strong>中的 epoch 值相同。</p>
+<p>如果都满足，那么说明当前线程持有该偏向锁，就可以直接返回。</p>
+<blockquote>
+<p>这 epoch 干啥用的？</p>
+</blockquote>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/QcU6W8gW_image_mianshiya.png"
+                      alt="image.png" width="496px" 
+                >
+
+<p>可以理解为是第几代偏向锁。</p>
+<p>偏向锁在有竞争的时候是要执行撤销操作的，其实就是要升级成轻量级锁。</p>
+<p>而当一类对象撤销的次数过多，比如有个 Yes 类的对象作为偏向锁，经常被撤销，次数到了一定阈值(XX:BiasedLockingBulkRebiasThreshold，默认为 20 )就会把当代的偏向锁废弃，把类的 epoch 加一。</p>
+<p>所以当类对象和锁对象的 epoch 值不等的时候，当前线程可以将该锁重偏向至自己，因为前一代偏向锁已经废弃了。</p>
+<p>不过<strong>为保证正在执行的持有锁的线程不能因为这个而丢失了锁</strong>，偏向锁撤销需要所有线程处于安全点，然后遍历所有线程的 Java 栈，<strong>找出该类已加锁的实例</strong>，并且将它们标记字段中的 epoch 值加 1。</p>
+<p>当撤销次数超过另一个阈值(XX:BiasedLockingBulkRevokeThreshold，默认值为 40)，则废弃此类的偏向功能，也就是说这个类都无法偏向了。</p>
+<blockquote>
+<p> 注意：JDK 15 版本偏向锁被废弃了，因为随着多核 CPU 和高并发应用的普及，偏向锁的性能优势逐渐变得不明显。<strong>在多线程竞争严重的情况下，偏向锁会引发较多的撤销和重偏向操作，反而对性能产生负面影响</strong>。</p>
+</blockquote>
+<p>至此整个 Synchronized 的流程应该都比较清楚了。</p>
+<p>我是反着来讲锁升级的过程的，因为事实上是先有的重量级锁，然后根据实际分析优化得到的偏向锁和轻量级锁。</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/LcXnFbBF_image_mianshiya.png"
+                      alt="image.png" width="638px" 
+                >
+
+<p>包括期间的一些细节应该也较为清楚了，我觉得对于 Synchronized 了解到这份上差不多了。</p>
+<p>我再搞了张 openjdk wiki 上的图，看看是不是很清晰了：</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="http://pic.javai.tech/mianshiya/question_picture/1783388929455529986/N9LHOkAp_image_mianshiya.png"
+                      alt="image.png" width="100%" 
+                >
+
+
+  
+
+
+
+
+        </div>
+
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/Java/">#Java</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/Java%E5%B9%B6%E5%8F%91/">#Java并发</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2025/03/11/%E9%9D%A2%E8%AF%95/Elasticsearch%E5%8E%9F%E7%90%86%E9%9D%A2%E8%AF%95%E9%A2%98/5883.%E4%BB%80%E4%B9%88%E6%98%AFFST%EF%BC%9F%E5%9C%A8Elasticsearch%E4%B8%AD%E6%9C%89%E5%93%AA%E4%BA%9B%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF%EF%BC%9F/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">什么是 FST？在 Elasticsearch 中有哪些应用场景？</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2024/11/04/%E7%94%9F%E6%B4%BB/%E7%A8%BB%E7%9B%9B%E5%92%8C%E5%A4%AB%EF%BC%9A%E8%B5%9A%E9%92%B1%E6%9C%80%E5%BF%AB%E7%9A%84%E5%9B%9B%E6%9D%A1%E8%B7%AF%EF%BC%8C%E4%BB%8E%E6%9C%AA%E6%94%B9%E5%8F%98/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">稻盛和夫：赚钱最快的四条路，从未改变</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+                <div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="gitalk-container"></div>
+    <script data-swup-reload-script
+            src="https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js"></script>
+    <script data-swup-reload-script>
+
+        function loadGitalk() {
+            let __gitalk__pathname = decodeURI(location.pathname);
+            const __gitalk__pathnameLength = __gitalk__pathname.length;
+            const __gitalk__pathnameMaxLength = 50;
+            if (__gitalk__pathnameLength > __gitalk__pathnameMaxLength) {
+                __gitalk__pathname = __gitalk__pathname.substring(0, __gitalk__pathnameMaxLength - 3) + '...';
+            }
+
+            try {
+                Gitalk && new Gitalk({
+                    clientID: 'Ov23liThu5oe4YmmlNAw',
+                    clientSecret: 'bdde0e1d1af3b4e01fc6e172c7926c42ee09e8d3',
+                    repo: 'javai-comment',
+                    owner: 'sherwin28',
+                    admin: ['sherwin28'],
+                    id: __gitalk__pathname,
+                    language: 'en',
+                    proxy: 'https://github.com/login/oauth/access_token'
+                }).render('gitalk-container');
+
+            } catch (e) {
+                window.Gitalk = null;
+            }
+        }
+
+        if ('true') {
+            const loadGitalkTimeout = setTimeout(() => {
+                loadGitalk();
+                clearTimeout(loadGitalkTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadGitalk);
+        }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">Java 的 synchronized 是怎么实现的？</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Java-%E7%9A%84-synchronized-%E6%98%AF%E6%80%8E%E4%B9%88%E5%AE%9E%E7%8E%B0%E7%9A%84%EF%BC%9F"><span class="nav-text">Java 的 synchronized 是怎么实现的？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9E%E7%AD%94%E9%87%8D%E7%82%B9"><span class="nav-text">回答重点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E7%9F%A5%E8%AF%86"><span class="nav-text">扩展知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E5%A4%B4%EF%BC%88Object-Header%EF%BC%89"><span class="nav-text">对象头（Object Header）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%81%E7%9A%84%E5%8D%87%E7%BA%A7%E4%B8%8E%E4%BC%98%E5%8C%96"><span class="nav-text">锁的升级与优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Synchronized-%E7%9A%84%E5%8F%AF%E9%87%8D%E5%85%A5%E6%80%A7"><span class="nav-text">Synchronized 的可重入性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%81%E6%B6%88%E9%99%A4%E5%92%8C%E9%94%81%E7%B2%97%E5%8C%96"><span class="nav-text">锁消除和锁粗化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E9%87%8F%E7%BA%A7%E9%94%81%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%E6%B7%B1%E5%85%A5%E5%88%86%E6%9E%90"><span class="nav-text">重量级锁的实现原理深入分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%95%E5%85%A5%E8%BD%BB%E9%87%8F%E7%BA%A7%E9%94%81"><span class="nav-text">引入轻量级锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%95%E5%85%A5%E5%81%8F%E5%90%91%E9%94%81"><span class="nav-text">引入偏向锁</span></a></li></ol></li></ol></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+            <div class="customize-info my-1">2024 Java+AI技术分享版权所有</div>
+        
+        
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+
+        
+            <div class="icp-info my-1"><a target="_blank" rel="nofollow" href="
+                
+                    https://beian.miit.gov.cn/
+                
+                ">粤ICP备2024326496号-1</a></div>
+        
+        
+        
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+
+</main>
+
+
+    
+<script src="/js/libs/Swup.min.js"></script>
+
+<script src="/js/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+
+<script src="/js/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/utils.js" type="module"></script>
+
+<script src="/js/main.js" type="module"></script>
+
+<script src="/js/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/layouts/categoryList.js" type="module"></script>
+
+
+
+
+
+    
+<script src="/js/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/layouts/lazyload.js" type="module"></script>
+
+
+
+
+
+
+  
+<script src="/js/libs/Typed.min.js"></script>
+
+  
+<script src="/js/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+    
+<script src="/js/libs/anime.min.js"></script>
+
+
+
+
+
+    
+<script src="/js/tools/tocToggle.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/layouts/toc.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/plugins/tabs.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+<script src="/js/libs/moment-with-locales.min.js" data-swup-reload-script=""></script>
+
+
+<script src="/js/layouts/essays.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+</body>
+</html>
